@@ -13,9 +13,10 @@ public class PlayerInputs : MonoBehaviour
 
     void input(){
         movement.direction = Vector3.zero;
-        float horizontal = (float)Math.Round(Input.GetAxis("Horizontal"));
-        float vertical = (float)Math.Round(Input.GetAxis("Vertical"));
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        movement.direction = new Vector3(Math.Sign(horizontal), Math.Sign(vertical), 0);
+        movement.direction = new Vector3(horizontal, vertical, 0);
+        movement.direction.Normalize();
     }
 }
