@@ -370,21 +370,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 853639418847455988, guid: d671b8da997fb7a40b53c7bf771c3c2b,
-        type: 3}
-      propertyPath: m_Mass
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 853639418847455988, guid: d671b8da997fb7a40b53c7bf771c3c2b,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 853639418847455988, guid: d671b8da997fb7a40b53c7bf771c3c2b,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3782983747551055408, guid: d671b8da997fb7a40b53c7bf771c3c2b,
         type: 3}
       propertyPath: m_RootOrder
@@ -440,11 +425,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3782983747551055409, guid: d671b8da997fb7a40b53c7bf771c3c2b,
-        type: 3}
-      propertyPath: hitForce
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 3782983747551055414, guid: d671b8da997fb7a40b53c7bf771c3c2b,
         type: 3}
       propertyPath: m_Name
@@ -465,14 +445,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1458924323, guid: 2a06f8d05f600484db2c447a35d4b8e4, type: 3}
-      propertyPath: m_Mass
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1458924323, guid: 2a06f8d05f600484db2c447a35d4b8e4, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 6493638853205329073, guid: 2a06f8d05f600484db2c447a35d4b8e4,
         type: 3}
       propertyPath: m_Name
@@ -538,10 +510,5 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 3782983747718006965}
-    - target: {fileID: 6493638853205329077, guid: 2a06f8d05f600484db2c447a35d4b8e4,
-        type: 3}
-      propertyPath: hitForce
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a06f8d05f600484db2c447a35d4b8e4, type: 3}
