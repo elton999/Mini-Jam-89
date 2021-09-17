@@ -6,19 +6,22 @@ public class Enemy : MonoBehaviour
 {
     public Transform target;
     Movement movement;
+    [SerializeField] float minDistance;
     void Start()
     {
         movement = GetComponent<Movement>();
     }
     void Update()
     {
-        if(Vector3.Distance(transform.position, target.position) < 0.5f)
-            movement.direction = Vector3.zero;
+       
     }
 
     void FixedUpdate()
     {
-        updateTargetPosition();
+         if(Vector3.Distance(transform.position, target.position) < minDistance)
+            movement.direction = Vector3.zero;
+         else
+            updateTargetPosition();
     }
 
     void updateTargetPosition(){
