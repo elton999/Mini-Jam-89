@@ -11,11 +11,6 @@ public class Enemy : MonoBehaviour
     {
         movement = GetComponent<Movement>();
     }
-    void Update()
-    {
-       
-    }
-
     void FixedUpdate()
     {
          if(Vector3.Distance(transform.position, target.position) < minDistance)
@@ -27,5 +22,13 @@ public class Enemy : MonoBehaviour
     void updateTargetPosition(){
         movement.direction =  target.position - transform.position;
         movement.direction.Normalize();
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+         if(other.collider.CompareTag("Player"))
+            movement.takeHit(
+                movement.direction == Vector3.zero ? -other.gameObject.GetComponent<Movement>().direction : movement.direction
+            );    
     }
 }

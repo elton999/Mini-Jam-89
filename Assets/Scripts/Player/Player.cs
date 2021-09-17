@@ -5,11 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] Movement movement;
-    private void OnCollisionEnter2D(Collision2D other)
+    Rigidbody2D rigidBody;
+
+    void Start()
     {
-        if(other.collider.CompareTag("Enemy"))
-            movement.takeHit(
-                movement.direction == Vector3.zero ? -other.gameObject.GetComponent<Movement>().direction : movement.direction
-            );
+        rigidBody = GetComponent<Rigidbody2D>();    
+    }
+    void FixedUpdate()
+    {
+        rigidBody.velocity = Vector2.zero;
     }
 }
