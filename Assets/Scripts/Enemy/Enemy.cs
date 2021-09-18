@@ -27,8 +27,6 @@ public class Enemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
          if(other.collider.CompareTag("Player"))
-            movement.takeHit(
-                movement.direction == Vector3.zero ? -other.gameObject.GetComponent<Movement>().direction : movement.direction
-            );    
+            movement.takeHit(-other.gameObject.GetComponent<Movement>().direction);    
     }
 }
