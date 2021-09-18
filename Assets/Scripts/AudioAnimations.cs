@@ -23,7 +23,8 @@ public class AudioAnimations : AnimData
 
     float pauseTimer = -1;
     void Update() {
-        UpdateVolumeControl();
+        if (startedVolumeControl)
+            UpdateVolumeControl();
 
         if (pauseTimer < 0) {
             if (started && !source.isPlaying)
@@ -43,17 +44,9 @@ public class AudioAnimations : AnimData
     public bool startOnStart = false;
     public int repetitions = 1; // how many times a single loop is played. =-1 for looping
     int remReps = 0;
-    public int loopStartIndex = -1;
+    public int loopStartIndex = 0;
     public bool randomizeLoops = false;
     public bool randomizeNonLoops = false;
-    // =-1 for no looping, just round-robin
-    // example =1: 0: 1, 2, 3, 1, 2, 3...
-    // example =2: 0, 1: 2, 3, 2, 3...
-    // example =3: 0, 1, 2: 3, 3...
-    // example =-1: 0, 1, 2, 3 x
-    // example =-1 with looping: 0, 1, 2, 3, 0...
-    // example =-1 with looping with random loops: 2, 1, 1, 3, 0, 3, 2...
-    // example =2 with random loops: 0, 1: 3, 2, 3, 2, 2..
 
     public float pauseTime = 0;
     public float pauseTimeVariation = 0;
@@ -68,9 +61,14 @@ public class AudioAnimations : AnimData
     int currentClipIndex = -1;
     void AttemptNextClip() {
         CycleClipIndex();
-        remReps--;
+        if (remReps > 0) remReps--;
         bool canRepeat = (remReps > 0 || repetitions == -1);
-        if (currentClipIndex >= clips.Count && canRepeat) {
+        if (!canRepeat) {
+            StopAudio();
+            return;
+        }
+
+        if (currentClipIndex >= clips.Count) {
             // Restart from loopStartIndex
             if (loopStartIndex > 0 && loopStartIndex < clips.Count) {
                 currentClipIndex = loopStartIndex;
@@ -85,10 +83,15 @@ public class AudioAnimations : AnimData
             return;
         }
 
-        source.clip = clips[currentClipIndex];
+        PlayClip();
     }
+    int numCycles = 0;
+    // bugs: remReps doesnt do full reps
+    // // currentClipIndex never reaches the loop since it's always randomized
     void CycleClipIndex() {
-        if (currentClipIndex >= loopStartIndex) {
+        numCycles++;
+        Debug.Log(currentClipIndex + " " + loopStartIndex);
+        if (currentClipIndex >= loopStartIndex && numCycles < loopStartIndex) {
             // Looping clips
             if (randomizeLoops)
                 currentClipIndex = RandomInLoop();
@@ -124,6 +127,10 @@ public class AudioAnimations : AnimData
         finished = false;
         remReps = repetitions;
         CycleClipIndex();
+        PlayClip();
+    }
+    void PlayClip() {
+        Debug.Log(currentClipIndex);
         source.clip = clips[currentClipIndex];
         source.Play();
     }

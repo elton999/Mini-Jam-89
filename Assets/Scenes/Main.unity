@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 641567998}
   m_Layer: 0
   m_Name: Test
-  m_TagString: Untagged
+  m_TagString: SFX
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -493,15 +493,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 85430f2f8b1913444841ba62eef1e99c, type: 3}
+  - {fileID: 8300000, guid: 54a04add6ff7e7c41ac30cbb6a28abbd, type: 3}
+  - {fileID: 8300000, guid: 5ed84a6485a158e4ca1b3157627b638d, type: 3}
   startOnStart: 1
-  repetitions: 1
+  repetitions: -1
   loopStartIndex: -1
   randomizeLoops: 0
   randomizeNonLoops: 0
-  pauseTime: 0
+  pauseTime: 1
   pauseTimeVariation: 0
   finished: 0
   volumeMultiplier: 1
