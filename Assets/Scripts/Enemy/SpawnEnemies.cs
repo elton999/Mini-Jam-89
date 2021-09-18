@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour
@@ -7,7 +8,6 @@ public class SpawnEnemies : MonoBehaviour
     int currentEnemiesNumber = 0;
     [SerializeField] float delayBetweenSpawn;
     float currentTime = 0;
-    [SerializeField] GameObject enemyObject;
     [SerializeField] Transform target;
 
     void Update()
@@ -21,8 +21,7 @@ public class SpawnEnemies : MonoBehaviour
     void setEnemy(){
         currentTime += Time.deltaTime;
         if(currentTime >= delayBetweenSpawn){
-            var enemy = Instantiate(
-                enemyObject, 
+            var enemy = ObjectPooler.Instance.SpwanFromPool(
                 transform.position + new Vector3(Random.Range(-rangeSpawn, rangeSpawn),Random.Range(-rangeSpawn, rangeSpawn),1), 
                 Quaternion.identity
             );

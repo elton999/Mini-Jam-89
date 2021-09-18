@@ -216,8 +216,6 @@ MonoBehaviour:
   rangeSpawn: 3.03
   maxSpawn: 5
   delayBetweenSpawn: 3
-  enemyObject: {fileID: 6493638853205329073, guid: 2a06f8d05f600484db2c447a35d4b8e4,
-    type: 3}
   target: {fileID: 1491025533}
 --- !u!4 &512347456
 Transform:
@@ -445,8 +443,6 @@ MonoBehaviour:
   rangeSpawn: 2.8
   maxSpawn: 5
   delayBetweenSpawn: 3
-  enemyObject: {fileID: 6493638853205329073, guid: 2a06f8d05f600484db2c447a35d4b8e4,
-    type: 3}
   target: {fileID: 1491025533}
 --- !u!4 &1259164630
 Transform:
@@ -461,6 +457,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1311047912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1311047914}
+  - component: {fileID: 1311047913}
+  m_Layer: 0
+  m_Name: Object Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1311047913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311047912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79054c810101bf94c9d8fa446646e1d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - tag: enemy
+    prefab: {fileID: 6493638853205329073, guid: 2a06f8d05f600484db2c447a35d4b8e4,
+      type: 3}
+    size: 10
+--- !u!4 &1311047914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311047912}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.3937693, y: 6.1481123, z: -24.489828}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1491025531
 GameObject:
