@@ -9,8 +9,8 @@ public class AudioController : AnimData
     // // volume adjustment from UI
 
     // Guide to audio:
-    // // for music, assign a reference to MusicAnimations, then mu.StartMusic() and mu.StopMusic()
-    // // for SFX, assign a ref to AudioSource, then call src.PlayOneShot(src.clip)
+    // // for music or complicated SFX, assign a reference to AudioAnimations, then aa.StartAudio() and aa.StopAudio()
+    // // for simple SFX that might need several instances to play at once, assign a ref to an AudioSource, then call src.PlayOneShot(src.clip)
 
     public List<AudioSource> musicAudio; // tag sources with Music or add here
     public List<AudioSource> sfxAudio; // tag sources with SFX or add here
@@ -48,15 +48,18 @@ public class AudioController : AnimData
     void ApplyMusicVolume() {
         float combined = Settings.masterVolume * Settings.musicVolume;
         for (int i = 0; i < musicAudio.Count; i++) {
-            MusicAnimations ma = musicAudio[i].GetComponent<MusicAnimations>();
-            float musicVolumeMultiplier = (ma == null)? 1 : ma.musicVolumeMultiplier;
-            musicAudio[i].volume = combined * musicVolumeMultiplier;
+            AudioAnimations aa = musicAudio[i].GetComponent<AudioAnimations>();
+            float volumeMultiplier = (aa == null)? 1 : aa.volumeMultiplier;
+            musicAudio[i].volume = combined * volumeMultiplier;
         }
     }
     void ApplySFXVolume() {
         float combined = Settings.masterVolume * Settings.sfxVolume;
-        for (int i = 0; i < sfxAudio.Count; i++)
-            sfxAudio[i].volume = combined;
+        for (int i = 0; i < sfxAudio.Count; i++) {
+            AudioAnimations aa = sfxAudio[i].GetComponent<AudioAnimations>();
+            float volumeMultiplier = (aa == null)? 1 : aa.volumeMultiplier;
+            sfxAudio[i].volume = combined * volumeMultiplier;
+        }
     }
 
     

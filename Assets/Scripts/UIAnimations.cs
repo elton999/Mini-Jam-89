@@ -10,22 +10,17 @@ public class UIAnimations : AnimData
     public UIAnimData uiData;
     public List<Image> targetImages;
     public List<TMP_Text> targetTexts;
-    public int repetitions = 1;
+    public int repetitions = 1; // how many times a single loop is played
     public bool looping = false;
     public bool startOnStart = false;
 
     void Start() {
-        CalculateAnimTime();
         if (startOnStart)
             StartAnimation();
     }
-    float animTime = 0;
-    void CalculateAnimTime() {
-        animTime = uiData.animTime();
-    }
 
 
-    float timer = 0;
+    float timer = -1;
     int remReps = 0;
     void Update() {
         bool canAnim = (remReps > 0 || looping);
@@ -37,7 +32,7 @@ public class UIAnimations : AnimData
             timer += Time.deltaTime;
             uiData.ApplyTo(targetImages, targetTexts, timer);
         }
-        else if (timer >= animTime) {
+        else if (timer >= uiData.animTime()) {
             timer = -1;
             if (!looping) {
                 remReps--;
@@ -48,12 +43,12 @@ public class UIAnimations : AnimData
     }
 
     bool started = false;
-    void StartAnimation() {
+    public void StartAnimation() {
         started = true;
         finished = false;
         remReps = repetitions;
     }
-    void StopAnimation() {
+    public void StopAnimation() {
         started = false;
         finished = true;
         remReps = 0;

@@ -8,7 +8,7 @@ public class SpriteAnimations : AnimData
 
     public SpriteAnimData frameData;
     public RenderAnimData renderData;
-    public int repetitions = 1;
+    public int repetitions = 1; // how many times a single loop is played
     public bool looping = false;
     public bool startOnStart = false;
 
@@ -31,7 +31,7 @@ public class SpriteAnimations : AnimData
     }
 
 
-    float timer = 0;
+    float timer = -1;
     int remReps = 0;
     void Update() {
         bool canAnim = (remReps > 0 || looping);
@@ -55,12 +55,12 @@ public class SpriteAnimations : AnimData
     }
 
     bool started = false;
-    void StartAnimation() {
+    public void StartAnimation() {
         started = true;
         finished = false;
         remReps = repetitions;
     }
-    void StopAnimation() {
+    public void StopAnimation() {
         started = false;
         finished = true;
         remReps = 0;
