@@ -34,6 +34,7 @@ public class AudioAnimations : AnimData
             pauseTimer += Time.deltaTime;
         }
         else {
+            CalculatePauseTime();
             AttemptNextClip();
             pauseTimer = -1;
         }
@@ -42,7 +43,7 @@ public class AudioAnimations : AnimData
 
     public List<AudioClip> clips;
     public bool startOnStart = false;
-    public int repetitions = 1; // how many times a single loop is played. =-1 for looping
+    public int repetitions = 1; // = -1 for looping
     int remReps = 0;
     public int loopStartIndex = 0;
     public bool randomizeLoops = false;
@@ -54,44 +55,40 @@ public class AudioAnimations : AnimData
     void CalculatePauseTime() {
         float r = 2*Random.value - 1;
         currentPauseTime = pauseTime + r * pauseTimeVariation;
+        Debug.Log(currentPauseTime);
     }
 
 
-
+    int numCycles = 0;
     int currentClipIndex = -1;
+    void CalculateFirstClip() {
+        if (loopStartIndex > 0 && randomizeNonLoops)
+            currentClipIndex = RandomNonLoop();
+        else if (randomizeLoops)
+            currentClipIndex = RandomInLoop();
+        else currentClipIndex = 0;
+    }
     void AttemptNextClip() {
         CycleClipIndex();
-        if (remReps > 0) remReps--;
-        bool canRepeat = (remReps > 0 || repetitions == -1);
-        if (!canRepeat) {
-            StopAudio();
-            return;
-        }
-
-        if (currentClipIndex >= clips.Count) {
-            // Restart from loopStartIndex
-            if (loopStartIndex > 0 && loopStartIndex < clips.Count) {
-                currentClipIndex = loopStartIndex;
+        // Reset to beginning after loop
+        if (numCycles >= clips.Count) {
+            if (remReps > 0 || repetitions == -1) {
+                numCycles = 0;
+                CalculateFirstClip();
+                remReps--;
             }
-            // Restart from 0
-            else currentClipIndex = 0;
-        }
-
-        // If still out of bounds
-        if (currentClipIndex >= clips.Count) {
-            StopAudio();
-            return;
+            else {
+                StopAudio();
+                return;
+            }
         }
 
         PlayClip();
     }
-    int numCycles = 0;
-    // bugs: remReps doesnt do full reps
-    // // currentClipIndex never reaches the loop since it's always randomized
+    
     void CycleClipIndex() {
-        numCycles++;
-        Debug.Log(currentClipIndex + " " + loopStartIndex);
-        if (currentClipIndex >= loopStartIndex && numCycles < loopStartIndex) {
+        //Debug.Log(currentClipIndex + " " + loopStartIndex);
+        if (numCycles >= loopStartIndex-1) {
             // Looping clips
             if (randomizeLoops)
                 currentClipIndex = RandomInLoop();
@@ -103,8 +100,10 @@ public class AudioAnimations : AnimData
                 currentClipIndex = RandomNonLoop();
             else currentClipIndex++;
         }
+        numCycles++;
     }
     int RandomInLoop() {
+        //Debug.Log("loop");
         if (loopStartIndex >= clips.Count) {
             Debug.LogError("Cant find random looping audio clip because loop start index is out of bounds.");
             return -1;
@@ -112,6 +111,7 @@ public class AudioAnimations : AnimData
         return Random.Range(loopStartIndex, clips.Count);
     }
     int RandomNonLoop() {
+        //Debug.Log("non");
         if (loopStartIndex <= 0) {
             Debug.LogError("Cant find random non-looping audio clip because all clips are loopable.");
             return -1;
@@ -125,12 +125,14 @@ public class AudioAnimations : AnimData
     public void StartAudio() {
         started = true;
         finished = false;
-        remReps = repetitions;
-        CycleClipIndex();
+        remReps = repetitions-1;
+        numCycles = 0;
+        pauseTimer = -1;
+        CalculateFirstClip();
         PlayClip();
     }
     void PlayClip() {
-        Debug.Log(currentClipIndex);
+        //Debug.Log(currentClipIndex + " " + numCycles);
         source.clip = clips[currentClipIndex];
         source.Play();
     }
@@ -138,6 +140,8 @@ public class AudioAnimations : AnimData
         started = false;
         finished = true;
         remReps = 0;
+        numCycles = 0;
+        pauseTimer = -1;
         source.Stop();
         StopVolumeControl();
     }
@@ -173,6 +177,7 @@ public class AudioAnimations : AnimData
         else if (timerVC >= 0) {
             timerVC += Time.deltaTime;
             volumeMultiplier = currentVolumeControlData.GetCurrent(timerVC);
+            //Debug.Log(volumeMultiplier);
         }
         else if (timerVC >= currentVolumeControlData.animTime()) {
             timerVC = -1;

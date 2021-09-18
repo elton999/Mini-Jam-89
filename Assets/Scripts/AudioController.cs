@@ -62,5 +62,11 @@ public class AudioController : AnimData
         }
     }
 
+
+    void Update() {
+        ApplyMusicVolume();
+        ApplySFXVolume();
+    }
+
     
 }

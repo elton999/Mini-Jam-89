@@ -110,7 +110,7 @@ public class CanvasController : MonoBehaviour
     // Debug
     public float DebugSizeSlider = 0;
     void Update() {
-        SetSize(DebugSizeSlider);
+        //SetSize(DebugSizeSlider);
     }
 
 }
