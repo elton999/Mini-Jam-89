@@ -11,6 +11,11 @@ public class CycleSystem : MonoBehaviour
 
     public int pointsPerLevel = 50;
 
+    [HideInInspector]
+    public int pumpkinPoints;
+    [HideInInspector]
+    public int plantPoints;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,15 +29,28 @@ public class CycleSystem : MonoBehaviour
 
     }
 
-    public void distributeGrowthPoints()
+    public void CalculateDistribution()
     {
-        int pumpGrowth = pumpkin.levelGrowthPoints;
-        int plantGrowth = plant.levelGrowthPoints;
+        int pumpGrowth = (pumpkin.levelGrowthPoints==0)?1:pumpkin.levelGrowthPoints;
+        int plantGrowth = (plant.levelGrowthPoints==0)?1:plant.levelGrowthPoints;
+
+        Debug.Log(pumpGrowth);
+        Debug.Log(plantGrowth);
 
         float ratio = calculateRatio(pumpGrowth, plantGrowth);
 
-        pumpkin.increaseGrowthPoints( (int)(pointsPerLevel * ratio));
-        plant.increaseGrowthPoints((int)(pointsPerLevel * (1/ratio)));
+        Debug.Log(ratio);
+
+        pumpkinPoints = (int)(pointsPerLevel * ratio);
+        plantPoints = (int)(pointsPerLevel * (1 - ratio));
+    }
+
+    public void distributeGrowthPoints()
+    {
+        
+
+        pumpkin.increaseGrowthPoints(pumpkinPoints);
+        plant.increaseGrowthPoints(plantPoints);
 
         /*
         if (ratio < 0.25)
@@ -55,6 +73,6 @@ public class CycleSystem : MonoBehaviour
 
     public float calculateRatio(int pmG, int plG)
     {
-        return pmG / plG;
+        return pmG / (float)plG;
     }
 }
