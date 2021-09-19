@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour
 
     private Tool selectedTool;
 
+    public bool holyPotionFlag = false;
+
     //will only work with one pumpkin
     [Header("Objects")]
     private Pumpkin pumpkin;
@@ -50,6 +52,20 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         updateSelectedTool();
+        if (Input.GetKey(KeyCode.E))
+        {
+            if (selectedTool == Tool.HolyBag)
+            {                
+                holyPotionFlag = true;
+            }
+        } else if (Input.GetKeyUp(KeyCode.E))
+        {
+            if (selectedTool == Tool.HolyBag)
+            {                
+                holyPotionFlag = false;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (withinRangePumpkin)
@@ -61,11 +77,7 @@ public class Inventory : MonoBehaviour
                 else if (selectedTool == Tool.EvilBag)
                 {
                     pumpkin.increaseEvilLevel(evilAmount);
-                }
-                else if (selectedTool == Tool.HolyBag)
-                {
-                    pumpkin.reduceEvilLevel(purifyrAmount);
-                }
+                }                
             }
             else if(withinRangePlant)
             {
