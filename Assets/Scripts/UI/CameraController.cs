@@ -82,6 +82,13 @@ public class CameraController : MonoBehaviour
     Vector3 oldTargetPos;
     public float targetLerp = 0.9f;
     public float predictiveDistance = 2f;
+    bool following = false;
+    public void StartFollow() {
+        following = true;
+    }
+    public void StopFollow() {
+        following = false;
+    }
 
     void Start() {
         if (target == null)
@@ -94,13 +101,16 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        Vector3 targetPos = target.transform.position;
-        targetPos += offset;
-        targetPos += predictiveDistance * (Vector3)(target.transform.position - oldTargetPos).normalized;
-        targetPos = ClampWithinBounds(targetPos);
-        transform.position = Vector2.Lerp(transform.position, targetPos, targetLerp);
+        if (following) {
+            Vector3 targetPos = target.transform.position;
+            targetPos += offset;
+            targetPos += predictiveDistance * (Vector3)(target.transform.position - oldTargetPos).normalized;
+            targetPos = ClampWithinBounds(targetPos);
+            transform.position = Vector2.Lerp(transform.position, targetPos, targetLerp);
 
-        oldTargetPos = target.transform.position;
+            oldTargetPos = target.transform.position;
+        }
+        
     }
 
     public List<Vector2> bounds;
