@@ -48,7 +48,6 @@ public class Plant : MonoBehaviour
     public void increaseGrowthPoints(int amount)
     {        
         levelGrowthPoints += amount;
-        Debug.Log(levelGrowthPoints);
     }
 
     public void reduceGrowthPoints(int amount)

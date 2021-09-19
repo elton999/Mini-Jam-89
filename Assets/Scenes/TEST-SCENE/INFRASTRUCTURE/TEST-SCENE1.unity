@@ -570,7 +570,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &733180561
 GameObject:
@@ -1104,6 +1104,10 @@ PrefabInstance:
       propertyPath: shearAmount
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 1586741302, guid: d671b8da997fb7a40b53c7bf771c3c2b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3782983747551055408, guid: d671b8da997fb7a40b53c7bf771c3c2b,
         type: 3}
       propertyPath: m_RootOrder
@@ -1179,6 +1183,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6145974772798950644, guid: 9a88abac1f8599c4580a436ccb3c4122,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6145974773477819226, guid: 9a88abac1f8599c4580a436ccb3c4122,
         type: 3}
       propertyPath: m_Name

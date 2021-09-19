@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
 
     private Tool selectedTool;
 
+    [HideInInspector]
     public bool holyPotionFlag = false;
 
     //will only work with one pumpkin
@@ -33,13 +34,13 @@ public class Inventory : MonoBehaviour
 
     [Header("Tools and Amounts")]
     public int waterAmount = 100;
-    public int shearAmount = 5;
-    public int evilAmount = 5;
+    public int shearAmount = 5;    
     public int purifyrAmount = 5;
     public int growthAmount = 5;
 
     public float waterCountdown = 3f;
     public float plantCountdown = 3f;
+    public float evilCountdown = 3f;
 
 
     // Start is called before the first frame update
@@ -79,7 +80,17 @@ public class Inventory : MonoBehaviour
                 }
                 else if (selectedTool == Tool.EvilBag)
                 {
-                    pumpkin.increaseEvilLevel(evilAmount);
+                    if (!actionBubble.activeSelf)
+                    {
+                        bubbleText.text = "Applying evil potion...";
+                        actionBubble.SetActive(true);
+                    }
+                    evilCountdown -= Time.deltaTime;
+                    if (evilCountdown <= 0)
+                    {
+                        resetEvilAction();
+                        pumpkin.increaseEvilLevel();
+                    }                    
                 }
             }
             if (withinRangePlant)
@@ -108,40 +119,15 @@ public class Inventory : MonoBehaviour
             resetWaterAction();
             resetPlantAction();
         }
-
-        /*
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (withinRangePumpkin)
-            {
-                if (selectedTool == Tool.WateringCan)
-                {
-                    StartCoroutine(waterPlantAction());
-                }
-                else if (selectedTool == Tool.EvilBag)
-                {
-                    pumpkin.increaseEvilLevel(evilAmount);
-                }                
-            }
-            else if(withinRangePlant)
-            {
-                if (selectedTool == Tool.Shears)
-                {
-                    plant.reduceGrowthPoints(shearAmount);
-                }
-            }            
-        }
-        else
-        {
-            if(withinRangePumpkin && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A)||
-                Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D)))
-            {
-                actionBubble.SetActive(false);
-            }            
-        }*/
     }
 
-    private void resetPlantAction()
+    private void resetEvilAction()
+    {
+        actionBubble.SetActive(false);
+        evilCountdown = 3f;
+    }
+
+        private void resetPlantAction()
     {
         actionBubble.SetActive(false);
         plantCountdown = 3f;
