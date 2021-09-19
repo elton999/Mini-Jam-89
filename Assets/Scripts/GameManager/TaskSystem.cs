@@ -25,15 +25,13 @@ public class TaskSystem : MonoBehaviour
 
     public void activateNeedWaterUI()
     {
+        taskText.text = "NEW TASK:\nGive the pumpkin water!";
         TaskBubble.SetActive(true);
     }
 
     public void closeNeedWaterUI()
-    {
-        taskText.text = "NEW TASK:\nGive the pumpkin water!";
-        TaskBubble.SetActive(false);
+    {   
         StartCoroutine(showTaskComplete(1));
-        
     }
 
     IEnumerator showTaskComplete(int n)

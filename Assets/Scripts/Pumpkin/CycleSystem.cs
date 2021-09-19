@@ -11,6 +11,9 @@ public class CycleSystem : MonoBehaviour
 
     public int pointsPerLevel = 50;
 
+    public static int MaxPlantGrowth = 60;
+    public static float plantFactor = 0.4f;
+
     [HideInInspector]
     public int pumpkinPoints;
     [HideInInspector]

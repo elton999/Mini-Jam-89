@@ -39,6 +39,7 @@ public class Inventory : MonoBehaviour
     public int growthAmount = 5;
 
     public float waterCountdown = 3f;
+    public float plantCountdown = 3f;
 
 
     // Start is called before the first frame update
@@ -62,7 +63,7 @@ public class Inventory : MonoBehaviour
             }
             if (withinRangePumpkin)
             {
-                if (selectedTool == Tool.WateringCan)
+                if (selectedTool == Tool.WateringCan && pumpkin.inNeedOfWater)
                 {
                     if (!actionBubble.activeSelf)
                     {
@@ -81,6 +82,23 @@ public class Inventory : MonoBehaviour
                     pumpkin.increaseEvilLevel(evilAmount);
                 }
             }
+            if (withinRangePlant)
+            {
+                if(selectedTool == Tool.Shears && plant.inNeedOfPruning)
+                {
+                    if (!actionBubble.activeSelf)
+                    {
+                        bubbleText.text = "Pruning plant...";
+                        actionBubble.SetActive(true);
+                    }
+                    plantCountdown -= Time.deltaTime;
+                    if (plantCountdown <= 0)
+                    {
+                        resetPlantAction();
+                        plant.reduceGrowthPoints(shearAmount);
+                    }                    
+                }
+            }
         } else if (Input.GetKeyUp(KeyCode.E))
         {
             if (selectedTool == Tool.HolyBag)
@@ -88,6 +106,7 @@ public class Inventory : MonoBehaviour
                 holyPotionFlag = false;                
             }
             resetWaterAction();
+            resetPlantAction();
         }
 
         /*
@@ -120,6 +139,13 @@ public class Inventory : MonoBehaviour
                 actionBubble.SetActive(false);
             }            
         }*/
+    }
+
+    private void resetPlantAction()
+    {
+        actionBubble.SetActive(false);
+        plantCountdown = 3f;
+
     }
 
     private void resetWaterAction()

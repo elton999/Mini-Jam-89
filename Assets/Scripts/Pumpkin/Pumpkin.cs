@@ -26,7 +26,8 @@ public class Pumpkin : MonoBehaviour
     private int waterLevel = 100;
     public int waterLossRate = 2;
     public float waterFactor = 0.25f;
-    private bool inNeedOfWater = false;
+    [HideInInspector]
+    public bool inNeedOfWater = false;
 
 
 
@@ -51,7 +52,6 @@ public class Pumpkin : MonoBehaviour
             if(waterLevel - waterLossRate >= 0)
             {
                 waterLevel -= waterLossRate;
-                Debug.Log(waterLevel);
                 if (waterLevel < TotalWaterLevel * waterFactor)
                 {
                     if (!inNeedOfWater)
