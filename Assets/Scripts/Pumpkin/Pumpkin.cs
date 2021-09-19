@@ -14,10 +14,26 @@ public class Pumpkin : MonoBehaviour
     private Tier currentTier;
 
     [Header("General")]
-    public int accGrowthPoints;
+    private int accGrowthPoints;
+    [HideInInspector]
     public int levelGrowthPoints = 0;    
-    public int evilLevel = 0;
+    
     public TaskSystem taskSystem;
+    private bool taskEnabled = false;
+
+    //initial delay
+    public int initialDelay = 3;
+    private int initialCountdown = 3;
+    private bool initialHasEnded = false;
+
+    //Time between tasks
+    public int timeBetweenTasks = 3;
+    private int tbtCountdown = 3;
+    
+    public int waterTasks = 1;
+    private int currWaterTasks;
+    public int evilTasks = 1;
+    private int currEvilTasks;
 
     private float countdown = 1f;
 
@@ -26,14 +42,23 @@ public class Pumpkin : MonoBehaviour
     private int waterLevel = 100;
     public int waterLossRate = 2;
     public float waterFactor = 0.25f;
-    private bool inNeedOfWater = false;
-
+    [HideInInspector]
+    public bool inNeedOfWater = false;
+    private bool isWaterTask = false;
+    
+    [Header("Evil Potion")]    
+    public int evilWaitTime = 5;
+    private bool inNeedOfEvil = false;
+    private bool isEvilTask = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        initialCountdown = initialDelay;
+        currWaterTasks = waterTasks;
+        currEvilTasks = evilTasks;
+        tbtCountdown = timeBetweenTasks;
     }
 
     // Update is called once per frame
@@ -48,10 +73,79 @@ public class Pumpkin : MonoBehaviour
         else
         {
             countdown = 1;
-            if(waterLevel - waterLossRate >= 0)
+
+            if (!initialHasEnded)
+            {
+                initialCountdown--;
+                if (initialCountdown <= 0)
+                {
+                    initialCountdown = 0;
+                    initialHasEnded = true;
+                    DecideTasks();
+                }
+            }
+            else
+            {
+                if (taskEnabled)
+                {
+                    ManageTasks();
+                }
+                else
+                {
+                    Debug.Log(tbtCountdown);
+                    tbtCountdown--;
+                    if (tbtCountdown <= 0)
+                    {
+                        tbtCountdown = timeBetweenTasks;
+                        DecideTasks();
+                    }
+                }
+            }
+        }            
+    }
+
+    public void DecideTasks()
+    {
+        Debug.Log("Deciding Tasks");
+        if(currEvilTasks>0 || currWaterTasks > 0)
+        {
+            int randNum = Random.Range(1,3);
+            Debug.Log("RandNum is " + randNum);
+            if (randNum == 1)
+            {
+                if (currWaterTasks == 0)
+                {
+                    ToggleEvilTask();
+                }
+                else
+                {
+                    ToggleWaterTask();
+                }
+            }
+            else
+            {
+                if (currEvilTasks == 0)
+                {
+                    ToggleWaterTask();
+                }
+                else
+                {
+                    ToggleEvilTask();
+                }
+
+            }
+            EnableTasks();
+        }
+        
+    }
+    
+    public void ManageTasks()
+    {
+        if (isWaterTask)
+        {
+            if (waterLevel - waterLossRate >= 0)
             {
                 waterLevel -= waterLossRate;
-                Debug.Log(waterLevel);
                 if (waterLevel < TotalWaterLevel * waterFactor)
                 {
                     if (!inNeedOfWater)
@@ -61,31 +155,81 @@ public class Pumpkin : MonoBehaviour
                     inNeedOfWater = true;
                 }
             }
-            
         }
-    }  
+        else if (isEvilTask)
+        {
+            if (evilWaitTime <= 0)
+            {                
+                if (!inNeedOfEvil)
+                {
+                    taskSystem.activateNeedEvilUI();
+                    inNeedOfEvil = true;
+                    evilWaitTime = 5;
+                }
+            }
+            else
+            {
+                if (!inNeedOfEvil)
+                {
+                    evilWaitTime--;
+                }
+            }
+        }
+    }
+
+    //Task balance
+    public void ToggleWaterTask()
+    {
+        Debug.Log("Toggling Water Task");
+        isWaterTask = true;
+        isEvilTask = false;
+    }
+
+    public void ToggleEvilTask()
+    {
+        Debug.Log("Toggling Evil Task");
+        isWaterTask = false;
+        isEvilTask = true;
+    }
+
+    public void EnableTasks()
+    {
+        taskEnabled = true;
+    }
+
+    public void DisableTasks()
+    {
+        taskEnabled = false;
+        isWaterTask = false; 
+        isEvilTask = false;
+    }
+
+    //Actions
 
     public void increaseWater(int amount)
     {
         Debug.Log("Increasing water");
         waterLevel += amount;
+        currWaterTasks--;
         if (inNeedOfWater)
         {
             taskSystem.closeNeedWaterUI();
             inNeedOfWater = false;
-        }        
+        }
+        DisableTasks();
     }
 
-    public void reduceEvilLevel(int amount)
-    {
-        Debug.Log("Purifying Pumpkin"); ;
-        evilLevel -= amount;
-    }
 
-    public void increaseEvilLevel(int amount)
+    public void increaseEvilLevel()
     {
-        Debug.Log("Evilying Pumpkin"); ;
-        evilLevel += amount;
+        Debug.Log("Evilying Pumpkin");
+        currEvilTasks--;
+        if (inNeedOfEvil)
+        {
+            taskSystem.closeNeedEvilUI();
+            inNeedOfEvil = false;
+        }
+        DisableTasks();
     }
 
     public void increaseGrowthPoints(int amount)
