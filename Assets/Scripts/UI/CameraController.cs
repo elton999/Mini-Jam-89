@@ -85,6 +85,7 @@ public class CameraController : MonoBehaviour
     bool following = false;
     public void StartFollow() {
         following = true;
+        transform.position = target.position + offset;
     }
     public void StopFollow() {
         following = false;
@@ -93,7 +94,6 @@ public class CameraController : MonoBehaviour
     void Start() {
         if (target == null)
             Debug.LogError("Camera target is unassigned.");
-        else transform.position = target.position + offset;
     }
     void Update() {
         if (currentCutscene != null) {
