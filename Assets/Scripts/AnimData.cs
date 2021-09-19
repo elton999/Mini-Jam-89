@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class AnimData : MonoBehaviour
 {
 
     // Contains time-based functions to coordinate smooth animations
-    [System.Serializable] 
+    [System.Serializable]
     public class GeneralAnimData {
         public List<float> times; // times are cumulative - 1,2,3 would last 3s
         public bool isEmpty() {
@@ -57,16 +58,16 @@ public class AnimData : MonoBehaviour
             int nextIndex = (index == times.Count-1)? index : index+1;
             float progress = GetProgress(index, t);
 
-            currentColor = Color.Lerp(colors[index], colors[nextIndex], progress);
-            currentLocalScale = Vector2.Lerp(localScales[index], localScales[nextIndex], progress);
-            currentLocalPos = Vector2.Lerp(localPositions[index], localPositions[nextIndex], progress);
-            currentAngle = Mathf.Lerp(localAngles[index], localAngles[nextIndex], progress);
+            if (colors.Count > 0) currentColor = Color.Lerp(colors[index], colors[nextIndex], progress);
+            if (localScales.Count > 0) currentLocalScale = Vector2.Lerp(localScales[index], localScales[nextIndex], progress);
+            if (localPositions.Count > 0) currentLocalPos = Vector2.Lerp(localPositions[index], localPositions[nextIndex], progress);
+            if (localAngles.Count > 0) currentAngle = Mathf.Lerp(localAngles[index], localAngles[nextIndex], progress);
         }
         void ApplyCurrent(SpriteRenderer sr) {
-            sr.color = currentColor;
-            sr.transform.localScale = new Vector3(currentLocalScale.x, currentLocalScale.y, sr.transform.localScale.z);
-            sr.transform.localPosition = new Vector3(currentLocalPos.x, currentLocalPos.y, sr.transform.localPosition.z);
-            sr.transform.localEulerAngles = new Vector3(sr.transform.localEulerAngles.x, sr.transform.localEulerAngles.y, currentAngle);
+            if (colors.Count > 0) sr.color = currentColor;
+            if (localScales.Count > 0) sr.transform.localScale = new Vector3(currentLocalScale.x, currentLocalScale.y, sr.transform.localScale.z);
+            if (localPositions.Count > 0) sr.transform.localPosition = new Vector3(currentLocalPos.x, currentLocalPos.y, sr.transform.localPosition.z);
+            if (localAngles.Count > 0) sr.transform.localEulerAngles = new Vector3(sr.transform.localEulerAngles.x, sr.transform.localEulerAngles.y, currentAngle);
         }
         public void ApplyTo(SpriteRenderer sr, float t) {
             UpdateCurrent(t);
@@ -92,10 +93,12 @@ public class AnimData : MonoBehaviour
             sr.sprite = currentSprite;
         }
         public void ApplyTo(SpriteRenderer sr, float t) {
+            if (isEmpty()) return;
             UpdateCurrent(t);
             ApplyCurrent(sr);
         }
         public void ApplyTo(List<SpriteRenderer> sr, float t) {
+            if (isEmpty()) return;
             UpdateCurrent(t);
             for (int i = 0; i < sr.Count; i++)
                 ApplyCurrent(sr[i]);
@@ -120,28 +123,30 @@ public class AnimData : MonoBehaviour
             int nextIndex = (index == times.Count-1)? index : index+1;
             float progress = GetProgress(index, t);
 
-            currentColor = Color.Lerp(colors[index], colors[nextIndex], progress);
-            currentLocalScale = Vector2.Lerp(localScales[index], localScales[nextIndex], progress);
-            currentAnchPos = Vector2.Lerp(anchoredPositions[index], anchoredPositions[nextIndex], progress);
-            currentAngle = Mathf.Lerp(localAngles[index], localAngles[nextIndex], progress);
+            if (colors.Count > 0) currentColor = Color.Lerp(colors[index], colors[nextIndex], progress);
+            if (localScales.Count > 0) currentLocalScale = Vector2.Lerp(localScales[index], localScales[nextIndex], progress);
+            if (anchoredPositions.Count > 0) currentAnchPos = Vector2.Lerp(anchoredPositions[index], anchoredPositions[nextIndex], progress);
+            if (localAngles.Count > 0) currentAngle = Mathf.Lerp(localAngles[index], localAngles[nextIndex], progress);
         }
         void ApplyCurrent(Image img) {
-            img.color = currentColor;
-            img.rectTransform.localScale = new Vector3(currentLocalScale.x, currentLocalScale.y, img.transform.localScale.z);
-            img.rectTransform.anchoredPosition = currentAnchPos;
-            img.rectTransform.localEulerAngles = new Vector3(img.rectTransform.localEulerAngles.x, img.rectTransform.localEulerAngles.y, currentAngle);
+            if (colors.Count > 0) img.color = currentColor;
+            if (localScales.Count > 0) img.rectTransform.localScale = new Vector3(currentLocalScale.x, currentLocalScale.y, img.transform.localScale.z);
+            if (anchoredPositions.Count > 0) img.rectTransform.anchoredPosition = currentAnchPos;
+            if (localAngles.Count > 0) img.rectTransform.localEulerAngles = new Vector3(img.rectTransform.localEulerAngles.x, img.rectTransform.localEulerAngles.y, currentAngle);
         }
         void ApplyCurrent(TMP_Text txt) {
-            txt.color = currentColor;
-            txt.rectTransform.localScale = currentLocalScale;
-            txt.rectTransform.anchoredPosition = currentAnchPos;
-            txt.rectTransform.localEulerAngles = new Vector3(txt.rectTransform.localEulerAngles.x, txt.rectTransform.localEulerAngles.y, currentAngle);
+            if (colors.Count > 0) txt.color = currentColor;
+            if (localScales.Count > 0) txt.rectTransform.localScale = currentLocalScale;
+            if (anchoredPositions.Count > 0) txt.rectTransform.anchoredPosition = currentAnchPos;
+            if (localAngles.Count > 0) txt.rectTransform.localEulerAngles = new Vector3(txt.rectTransform.localEulerAngles.x, txt.rectTransform.localEulerAngles.y, currentAngle);
         }
         public void ApplyTo(Image img, float t) {
+            if (isEmpty()) return;
             UpdateCurrent(t);
             ApplyCurrent(img);
         }
         public void ApplyTo(TMP_Text txt, float t) {
+            if (isEmpty()) return;
             UpdateCurrent(t);
             ApplyCurrent(txt);
         }
@@ -169,6 +174,9 @@ public class AnimData : MonoBehaviour
             return Mathf.Lerp(values[index], values[nextIndex], progress);
         }
     }
+
+
+    [System.Serializable] public class Invoker : UnityEvent { }
 
 
 }
