@@ -100,6 +100,7 @@ public class CameraController : MonoBehaviour
         targetPos = ClampWithinBounds(targetPos);
         targetPos += (Vector3)GetShake();
         transform.position = Vector2.Lerp(transform.position, targetPos, targetLerp);
+        transform.position = transform.position + offset;
 
         oldTargetPos = target.transform.position;
     }
