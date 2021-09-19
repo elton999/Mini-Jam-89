@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e3f205b1e9b9c468aea7c111949bff, type: 3}
+  m_Name: New Rule Tile
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: -8460911783816821743, guid: bfc627c496c8a4f4795500f0a555e3e0,
+    type: 3}
+  m_DefaultColliderType: 0
+  m_TilingRules:
+  - m_Neighbors: 0000000000000000000000000000000000000000000000000000000000000000
+    m_Sprites:
+    - {fileID: 6873145421748755346, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 6873145421748755346, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: -6158017862683135366, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 7053852587108580715, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: -8460911783816821743, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 1075556888235869715, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 3078352637897610134, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: -9081218422203859894, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: -345231465959015461, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 7107251678592989930, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 1383626898866713395, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: -2052919242413823105, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: -7250234480938458681, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 6754265601342374077, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 992194497201817384, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    - {fileID: 992194497201817384, guid: bfc627c496c8a4f4795500f0a555e3e0, type: 3}
+    m_AnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_AutoTransform: 0
+    m_Output: 1
+    m_ColliderType: 0
