@@ -182,7 +182,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &6145974772798950645
 MonoBehaviour:
@@ -594,9 +594,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00630b5ded8d27f43b45a5c08a5ab8bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accGrowthPoints: 0
   levelGrowthPoints: 18
-  evilLevel: 0
   taskSystem: {fileID: 5118538748247958079}
+  initialDelay: 3
+  timeBetweenTasks: 3
+  waterTasks: 1
+  evilTasks: 1
   waterLossRate: 10
   waterFactor: 0.25
+  inNeedOfWater: 0
+  evilWaitTime: 5
