@@ -8,8 +8,14 @@ public class CameraController : MonoBehaviour
     [System.Serializable] public class Cutscene {
         public List<Vector2> path;
         public UIAnimations stopAnimation;
-        public float moveSpeed;
+        public float moveTime;
 
+        void CalculateSpeed() {
+            float pathDistance = 0;
+            for (int i = 0; i < path.Count-1; i++)
+                pathDistance += Vector2.Distance(path[i], path[i+1]);
+            moveSpeed = pathDistance / moveTime;
+        }
         void ApplyPos(Vector2 p) {
             cc.transform.position = (Vector3)p + cc.offset;
         }
@@ -19,6 +25,7 @@ public class CameraController : MonoBehaviour
             cc = _cc;
             ApplyPos(path[0]);
             passedIndex = 0;
+            CalculateSpeed();
         }
         public void Stop() { // not called by me
             if (stopAnimation == null) return;
@@ -27,6 +34,7 @@ public class CameraController : MonoBehaviour
         }
         CameraController cc;
         int passedIndex = 0;
+        float moveSpeed;
         public void MoveAlongPath(float deltaTime) {
             if (passedIndex >= path.Count-1) {
                 cc.StopCutscene();
