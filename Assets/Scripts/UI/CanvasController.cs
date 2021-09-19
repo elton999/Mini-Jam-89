@@ -8,8 +8,10 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CanvasScaler))]
 public class CanvasController : MonoBehaviour
 {
+    RectTransform rectTransform;
     CanvasScaler cs;
     void Start() {
+        rectTransform = GetComponent<RectTransform>();
         cs = GetComponent<CanvasScaler>();
 
         ResetToDefault();
@@ -83,10 +85,12 @@ public class CanvasController : MonoBehaviour
         Cursor.visible = !Settings.customCursor;
     }
     void UpdateCustomCursor() {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
-        Vector2 screen = new Vector2(Screen.width, Screen.height);
-        cursor.rectTransform.localPosition = 3.5f * ((Vector2)Input.mousePosition - screen / 2);
+        Debug.Log(Input.mousePosition + " " + cursor.rectTransform.anchoredPosition);
+        Vector2 mousePos = Input.mousePosition;
+        mousePos.x *= rectTransform.sizeDelta.x / Screen.width;
+        mousePos.y *= rectTransform.sizeDelta.y / Screen.height;
+        mousePos.y -= cursor.rectTransform.sizeDelta.y;
+        cursor.rectTransform.anchoredPosition = mousePos;
     }
 
 
