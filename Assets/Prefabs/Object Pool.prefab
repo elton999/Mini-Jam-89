@@ -47,4 +47,4 @@ MonoBehaviour:
   - tag: enemy
     prefab: {fileID: 6493638853205329073, guid: 2a06f8d05f600484db2c447a35d4b8e4,
       type: 3}
-    size: 10
+    size: 50

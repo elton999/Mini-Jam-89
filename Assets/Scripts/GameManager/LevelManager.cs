@@ -114,10 +114,6 @@ public class LevelManager : MonoBehaviour
 
     public void SetPumpkin(int n)
     {
-        Debug.Log("asldfjlk");
-        Debug.Log(n);
-        Debug.Log(pumpkinTasks[n].water);
-        Debug.Log(pumpkinTasks[n].evil);
         if (pumpkinTasks[n].water)
         {
             cycle.pumpkin.ActivateWaterTask();
