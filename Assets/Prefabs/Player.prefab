@@ -58,7 +58,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &1586741301
 MonoBehaviour:
@@ -438,8 +438,9 @@ MonoBehaviour:
   actionBubble: {fileID: 2035202823}
   bubbleText: {fileID: 1883018832}
   waterAmount: 100
-  shearAmount: 5
-  evilAmount: 5
+  shearAmount: 60
   purifyrAmount: 5
   growthAmount: 5
   waterCountdown: 3
+  plantCountdown: 3
+  evilCountdown: 3
