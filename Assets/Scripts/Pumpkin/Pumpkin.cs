@@ -31,9 +31,11 @@ public class Pumpkin : MonoBehaviour
     private int tbtCountdown = 3;
     
     public int waterTasks = 1;
-    private int currWaterTasks;
+    [HideInInspector]
+    public int currWaterTasks;
     public int evilTasks = 1;
-    private int currEvilTasks;
+    [HideInInspector]
+    public int currEvilTasks;
 
     private float countdown = 1f;
 

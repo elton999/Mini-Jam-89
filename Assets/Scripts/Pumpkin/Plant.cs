@@ -7,6 +7,7 @@ public class Plant : MonoBehaviour
 {
     [HideInInspector]
     public int levelGrowthPoints = 0;
+    public int growthRatePerSecond = 50;
     
     private float countdown=1f;
 
@@ -34,7 +35,7 @@ public class Plant : MonoBehaviour
             countdown = 1f;
             if (levelGrowthPoints <= CycleSystem.MaxPlantGrowth)
             {
-                increaseGrowthPoints(4);
+                increaseGrowthPoints(growthRatePerSecond);
                 if(levelGrowthPoints> CycleSystem.MaxPlantGrowth * CycleSystem.plantFactor)
                 {
                     inNeedOfPruning = true;
@@ -50,10 +51,10 @@ public class Plant : MonoBehaviour
         levelGrowthPoints += amount;
     }
 
-    public void reduceGrowthPoints(int amount)
+    public void reduceGrowthPoints()
     {
         Debug.Log("Reducing Plant Growth points");
-        levelGrowthPoints -= amount;
+        levelGrowthPoints = 0;
         inNeedOfPruning = false;
         closeNeedWaterUI();
     }

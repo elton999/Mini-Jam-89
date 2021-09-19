@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CycleSystem : MonoBehaviour
 {
-    private Plant plant;
+    private List<Plant> plants;
     private Pumpkin pumpkin;
     private string pumpkinTag = "Pumpkin";
     private string plantTag = "Plant";
 
     public int pointsPerLevel = 50;
 
-    public static int MaxPlantGrowth = 60;
-    public static float plantFactor = 0.4f;
+    public int growthPointsPerTaskDone = 50;
+    public int pointsPerPlantUnPruned = 40;
+
+    public static int MaxPlantGrowth = 1000;
+    public static float plantFactor = 0.6f;
 
     [HideInInspector]
     public int pumpkinPoints;
@@ -23,7 +26,12 @@ public class CycleSystem : MonoBehaviour
     void Start()
     {
         pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
-        plant = GameObject.FindGameObjectWithTag(plantTag).GetComponent<Plant>();
+        plants = new List<Plant>();
+        GameObject [] plantGOs = GameObject.FindGameObjectsWithTag(plantTag);
+        foreach(GameObject go in plantGOs)
+        {
+            plants.Add(go.GetComponent<Plant>());
+        }
     }
 
     // Update is called once per frame
@@ -34,13 +42,22 @@ public class CycleSystem : MonoBehaviour
 
     public void CalculateDistribution()
     {
-        int pumpGrowth = (pumpkin.levelGrowthPoints==0)?1:pumpkin.levelGrowthPoints;
-        int plantGrowth = (plant.levelGrowthPoints==0)?1:plant.levelGrowthPoints;
+        int pumpGrowth = (pumpkin.waterTasks - pumpkin.currWaterTasks) * growthPointsPerTaskDone +
+            (pumpkin.evilTasks - pumpkin.currEvilTasks) * growthPointsPerTaskDone;
+
+        int totalPlantGrowthPoints = 0;
+        foreach(Plant p in plants)
+        {
+            if (p.inNeedOfPruning)
+            {
+                totalPlantGrowthPoints += pointsPerPlantUnPruned;
+            }
+        }
 
         Debug.Log(pumpGrowth);
-        Debug.Log(plantGrowth);
+        Debug.Log(totalPlantGrowthPoints);
 
-        float ratio = calculateRatio(pumpGrowth, plantGrowth);
+        float ratio = calculateRatio(pumpGrowth, totalPlantGrowthPoints);
 
         Debug.Log(ratio);
 
@@ -53,7 +70,6 @@ public class CycleSystem : MonoBehaviour
         
 
         pumpkin.increaseGrowthPoints(pumpkinPoints);
-        plant.increaseGrowthPoints(plantPoints);
 
         /*
         if (ratio < 0.25)
@@ -77,6 +93,6 @@ public class CycleSystem : MonoBehaviour
 
     public float calculateRatio(int pmG, int plG)
     {
-        return pmG / (float)plG;
+        return pmG / ((float)plG + pmG);
     }
 }
