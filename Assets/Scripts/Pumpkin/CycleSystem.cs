@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CycleSystem : MonoBehaviour
 {
-    private Plant plant;
-    private Pumpkin pumpkin;
+    private List<Plant> plants;
+    [HideInInspector]
+    public Pumpkin pumpkin;
     private string pumpkinTag = "Pumpkin";
     private string plantTag = "Plant";
 
+    [HideInInspector]
+    public int CHANGE_plantsToBePruned = 0;
+    public float CHANGE_plantPercentage = 0.75f;
+
     public int pointsPerLevel = 50;
 
-    public static int MaxPlantGrowth = 60;
-    public static float plantFactor = 0.4f;
+    public int growthPointsPerTaskDone = 50;
+    public int pointsPerPlantUnPruned = 40;
+
+    public static int MaxPlantGrowth = 1000;
+    public static float plantFactor = 0.6f;
 
     [HideInInspector]
     public int pumpkinPoints;
@@ -23,7 +31,12 @@ public class CycleSystem : MonoBehaviour
     void Start()
     {
         pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
-        plant = GameObject.FindGameObjectWithTag(plantTag).GetComponent<Plant>();
+        plants = new List<Plant>();
+        GameObject [] plantGOs = GameObject.FindGameObjectsWithTag(plantTag);
+        foreach(GameObject go in plantGOs)
+        {
+            plants.Add(go.GetComponent<Plant>());
+        }
     }
 
     // Update is called once per frame
@@ -34,49 +47,38 @@ public class CycleSystem : MonoBehaviour
 
     public void CalculateDistribution()
     {
-        int pumpGrowth = (pumpkin.levelGrowthPoints==0)?1:pumpkin.levelGrowthPoints;
-        int plantGrowth = (plant.levelGrowthPoints==0)?1:plant.levelGrowthPoints;
+        int totalPlantGrowthPoints = 0;
+        foreach(Plant p in plants)
+        {
+            if (p.inNeedOfPruning)
+            {
+                totalPlantGrowthPoints += 1;
+            }
+        }
+        
+        Debug.Log(totalPlantGrowthPoints);
 
-        Debug.Log(pumpGrowth);
-        Debug.Log(plantGrowth);
-
-        float ratio = calculateRatio(pumpGrowth, plantGrowth);
+        float ratio = calculateRatio(totalPlantGrowthPoints);
 
         Debug.Log(ratio);
-
-        pumpkinPoints = (int)(pointsPerLevel * ratio);
-        plantPoints = (int)(pointsPerLevel * (1 - ratio));
+        plantPoints = (int)(pointsPerLevel * ratio * CHANGE_plantPercentage);
+        pumpkinPoints = (int)(pointsPerLevel*(1-CHANGE_plantPercentage) - (int)((((pumpkin.inNeedOfWater) ? 1 : 0) + ((pumpkin.inNeedOfEvil) ? 1 : 0) / 2) * (1 - CHANGE_plantPercentage)*pointsPerLevel))
+            + (int)(pointsPerLevel * (1- ratio) * CHANGE_plantPercentage);
+        
     }
 
     public void distributeGrowthPoints()
     {
-        
-
         pumpkin.increaseGrowthPoints(pumpkinPoints);
-        plant.increaseGrowthPoints(plantPoints);
-
-        /*
-        if (ratio < 0.25)
-        {
-
-        }
-        else if (ratio >= 0.25 && ratio < 0.5)
-        {
-
-        }
-        else if (ratio >= 0.5 && ratio < 0.75) 
-        { 
-        }
-        else if (ratio >= 0.75 && ratio <= 1.0f)
-        {
-
-        }
-        */
     }
 
 
-    public float calculateRatio(int pmG, int plG)
+    public float calculateRatio(int plG)
     {
-        return pmG / (float)plG;
+        if(CHANGE_plantsToBePruned == 0)
+        {
+            return 1;
+        }
+        return plantFactor = ((float)plG / CHANGE_plantsToBePruned);
     }
 }

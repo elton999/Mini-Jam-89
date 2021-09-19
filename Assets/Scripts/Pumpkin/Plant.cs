@@ -7,6 +7,9 @@ public class Plant : MonoBehaviour
 {
     [HideInInspector]
     public int levelGrowthPoints = 0;
+    public int growthRatePerSecond = 50;
+
+    public int CHANGE_usedInLvl = 1;
     
     private float countdown=1f;
 
@@ -19,7 +22,7 @@ public class Plant : MonoBehaviour
     public Text taskCompleteText;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         TaskBubble.SetActive(false);
         TaskCompleteBubble.SetActive(false);
@@ -27,14 +30,15 @@ public class Plant : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
+            /*
         countdown -= Time.deltaTime;
         if (countdown < 0)
         {
             countdown = 1f;
             if (levelGrowthPoints <= CycleSystem.MaxPlantGrowth)
             {
-                increaseGrowthPoints(4);
+                increaseGrowthPoints(growthRatePerSecond);
                 if(levelGrowthPoints> CycleSystem.MaxPlantGrowth * CycleSystem.plantFactor)
                 {
                     inNeedOfPruning = true;
@@ -42,6 +46,7 @@ public class Plant : MonoBehaviour
                 }
             }
         }
+            */
         
     }
 
@@ -50,21 +55,23 @@ public class Plant : MonoBehaviour
         levelGrowthPoints += amount;
     }
 
-    public void reduceGrowthPoints(int amount)
+    public void reduceGrowthPoints()
     {
         Debug.Log("Reducing Plant Growth points");
-        levelGrowthPoints -= amount;
+        levelGrowthPoints = 0;
         inNeedOfPruning = false;
-        closeNeedWaterUI();
+        closePruneUI();
     }
 
-    public void activateNeedWaterUI()
+    public void activatePruneUI()
     {
+        Debug.Log("Opening Prune UI");
+        inNeedOfPruning = true;
         taskText.text = "NEW TASK:\nPrune the plants!";
         TaskBubble.SetActive(true);
     }
 
-    public void closeNeedWaterUI()
+    public void closePruneUI()
     {        
         StartCoroutine(showTaskComplete(1));
     }

@@ -16,8 +16,12 @@ public class Pumpkin : MonoBehaviour
     [Header("General")]
     private int accGrowthPoints;
     [HideInInspector]
-    public int levelGrowthPoints = 0;    
-    
+    public int levelGrowthPoints = 0;
+
+
+    public int enemysInPumpkin = 0;
+
+
     public TaskSystem taskSystem;
     private bool taskEnabled = false;
 
@@ -31,13 +35,16 @@ public class Pumpkin : MonoBehaviour
     private int tbtCountdown = 3;
     
     public int waterTasks = 1;
-    private int currWaterTasks;
+    [HideInInspector]
+    public int currWaterTasks;
     public int evilTasks = 1;
-    private int currEvilTasks;
+    [HideInInspector]
+    public int currEvilTasks;
 
     private float countdown = 1f;
 
     [Header("Water")]
+    //public bool CHANGE_waterTask;
     const int TotalWaterLevel = 100;
     private int waterLevel = 100;
     public int waterLossRate = 2;
@@ -46,24 +53,41 @@ public class Pumpkin : MonoBehaviour
     public bool inNeedOfWater = false;
     private bool isWaterTask = false;
     
-    [Header("Evil Potion")]    
+    [Header("Evil Potion")]
+    //public bool CHANGE_evilTask;
     public int evilWaitTime = 5;
-    private bool inNeedOfEvil = false;
+    [HideInInspector]
+    public bool inNeedOfEvil = false;
     private bool isEvilTask = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        /*
         initialCountdown = initialDelay;
         currWaterTasks = waterTasks;
         currEvilTasks = evilTasks;
         tbtCountdown = timeBetweenTasks;
+        */
+    }
+
+    public void ActivateWaterTask()
+    {
+        inNeedOfWater = true;
+        taskSystem.activateNeedWaterUI();
+    }
+
+    public void ActivateEvilTask()
+    {
+        inNeedOfEvil = true;
+        taskSystem.activateNeedEvilUI();
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if (countdown > 0)
         {
             countdown -= Time.deltaTime;
@@ -101,7 +125,8 @@ public class Pumpkin : MonoBehaviour
                     }
                 }
             }
-        }            
+        } 
+        */
     }
 
     public void DecideTasks()

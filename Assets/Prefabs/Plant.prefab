@@ -557,6 +557,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelGrowthPoints: 0
+  growthRatePerSecond: 15
+  CHANGE_usedInLvl: 1
   inNeedOfPruning: 0
   TaskBubble: {fileID: 733180561}
   taskText: {fileID: 1046968686}

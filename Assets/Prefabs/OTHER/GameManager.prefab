@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 5473518530811899956}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,6 +147,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDay: 1
+  pumpkinTasks:
+  - water: 0
+    evil: 0
+  - water: 1
+    evil: 0
+  - water: 0
+    evil: 0
+  - water: 0
+    evil: 0
+  - water: 0
+    evil: 0
   levelTimeMinutes: 1
   isFinalLevel: 0
   countdownText: {fileID: 5473518532522037087}
@@ -249,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5473518532522037086
 RectTransform:
   m_ObjectHideFlags: 0
@@ -354,6 +365,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a2b0b09dfdafd408c4e0e974360942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pumpkin: {fileID: 0}
+  CHANGE_plantsToBePruned: 0
+  CHANGE_plantPercentage: 0.75
   pointsPerLevel: 50
+  growthPointsPerTaskDone: 50
+  pointsPerPlantUnPruned: 40
   pumpkinPoints: 0
   plantPoints: 0

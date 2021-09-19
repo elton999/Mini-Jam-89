@@ -9,6 +9,8 @@ TagManager:
   - Plant
   - Music
   - SFX
+  - Gravestone
+  - LevelManager
   layers:
   - Default
   - TransparentFX

@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
     void OnBecameInvisible() {
         if(isRunAway){
             isRunAway = false;
+            hitPumpkin = false;
             gameObject.SetActive(false);
         }
     }
@@ -49,8 +50,13 @@ public class Enemy : MonoBehaviour
         movement.direction.Normalize();
     }
 
+    public bool hitPumpkin = false;
     void OnCollisionEnter2D(Collision2D other)
     {
+        if(other.collider.CompareTag("Pumpkin") && !hitPumpkin){
+            other.gameObject.GetComponent<Pumpkin>().enemysInPumpkin++;
+            hitPumpkin = true;
+        }
          //if(other.collider.CompareTag("Player"))
          //   movement.takeHit(-other.gameObject.GetComponent<Movement>().direction);    
     }

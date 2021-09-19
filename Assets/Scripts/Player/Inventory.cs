@@ -18,10 +18,13 @@ public class Inventory : MonoBehaviour
     [HideInInspector]
     public bool holyPotionFlag = false;
 
+    public bool CHANGE_hasLeftGravestone = false;
+
     //will only work with one pumpkin
     [Header("Objects")]
     private Pumpkin pumpkin;
-    private Plant plant;
+    private Plant plant = null;
+    private LevelManager lvlManager;
 
     private bool withinRangePumpkin = false;
     private bool withinRangePlant = false;
@@ -34,13 +37,14 @@ public class Inventory : MonoBehaviour
 
     [Header("Tools and Amounts")]
     public int waterAmount = 100;
-    public int shearAmount = 5;    
-    public int purifyrAmount = 5;
-    public int growthAmount = 5;
 
-    public float waterCountdown = 3f;
-    public float plantCountdown = 3f;
-    public float evilCountdown = 3f;
+    public float waterTaskTime = 3f;
+    public float plantTaskTime = 3f;
+    public float evilTaskTime = 3f;
+
+    private float waterCountdown = 3f;
+    private float plantCountdown = 3f;
+    private float evilCountdown = 3f;
 
 
     // Start is called before the first frame update
@@ -48,9 +52,14 @@ public class Inventory : MonoBehaviour
     {
         selectedTool = Tool.WateringCan;
         pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
-        plant = GameObject.FindGameObjectWithTag(plantTag).GetComponent<Plant>();
+        lvlManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+        plant = null;
         actionBubble.SetActive(false);
+        waterTaskTime = waterCountdown;
+        plantTaskTime = plantCountdown;
+        evilTaskTime = evilCountdown;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -78,7 +87,7 @@ public class Inventory : MonoBehaviour
                         pumpkin.increaseWater(waterAmount);                        
                     }
                 }
-                else if (selectedTool == Tool.EvilBag)
+                else if (selectedTool == Tool.EvilBag && pumpkin.inNeedOfEvil)
                 {
                     if (!actionBubble.activeSelf)
                     {
@@ -95,7 +104,7 @@ public class Inventory : MonoBehaviour
             }
             if (withinRangePlant)
             {
-                if(selectedTool == Tool.Shears && plant.inNeedOfPruning)
+                if(selectedTool == Tool.Shears && plant!=null && plant.inNeedOfPruning)
                 {
                     if (!actionBubble.activeSelf)
                     {
@@ -105,8 +114,8 @@ public class Inventory : MonoBehaviour
                     plantCountdown -= Time.deltaTime;
                     if (plantCountdown <= 0)
                     {
-                        resetPlantAction();
-                        plant.reduceGrowthPoints(shearAmount);
+                        plant.reduceGrowthPoints();
+                        resetPlantAction();                        
                     }                    
                 }
             }
@@ -124,20 +133,21 @@ public class Inventory : MonoBehaviour
     private void resetEvilAction()
     {
         actionBubble.SetActive(false);
-        evilCountdown = 3f;
+        evilCountdown = evilTaskTime;
     }
 
-        private void resetPlantAction()
+    private void resetPlantAction()
     {
         actionBubble.SetActive(false);
-        plantCountdown = 3f;
+        plantCountdown = plantTaskTime;
+        plant = null;
 
     }
 
     private void resetWaterAction()
     {
         actionBubble.SetActive(false);
-        waterCountdown = 3f;
+        waterCountdown = waterTaskTime;
 
     }
 
@@ -147,22 +157,22 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
         {
             selectedTool = Tool.WateringCan;
-            Debug.Log("Selected 1");
+            Debug.Log("Selected Watering Can");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
         {
             selectedTool = Tool.Shears;
-            Debug.Log("Selected 2");
+            Debug.Log("Selected Shears");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
         {
             selectedTool = Tool.EvilBag;
-            Debug.Log("Selected 3");
+            Debug.Log("Selected Evil Potion");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
         {
             selectedTool = Tool.HolyBag;
-            Debug.Log("Selected 4");
+            Debug.Log("Selected Holy Potion");
         }
     }   
 
@@ -177,6 +187,7 @@ public class Inventory : MonoBehaviour
         else if(collision.gameObject.tag == plantTag)
         {
             withinRangePlant = true;
+            plant = collision.gameObject.GetComponent<Plant>();
         }
     }
 
@@ -190,6 +201,23 @@ public class Inventory : MonoBehaviour
         else if (collision.gameObject.tag == plantTag)
         {
             withinRangePlant = false;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Gravestone" && CHANGE_hasLeftGravestone)
+        {
+            lvlManager.EndDay();
+            CHANGE_hasLeftGravestone = false;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Gravestone")
+        {
+            CHANGE_hasLeftGravestone = true;
         }
     }
 
