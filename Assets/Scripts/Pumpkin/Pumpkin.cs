@@ -26,7 +26,7 @@ public class Pumpkin : MonoBehaviour
     private int waterLevel = 100;
     public int waterLossRate = 2;
     public float waterFactor = 0.25f;
-    public bool inNeedOfWater = false;
+    private bool inNeedOfWater = false;
 
 
 
@@ -69,8 +69,11 @@ public class Pumpkin : MonoBehaviour
     {
         Debug.Log("Increasing water");
         waterLevel += amount;
-        taskSystem.closeNeedWaterUI();
-        inNeedOfWater = false;
+        if (inNeedOfWater)
+        {
+            taskSystem.closeNeedWaterUI();
+            inNeedOfWater = false;
+        }        
     }
 
     public void reduceEvilLevel(int amount)

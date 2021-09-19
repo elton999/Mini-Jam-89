@@ -116,8 +116,11 @@ public class Inventory : MonoBehaviour
         bubbleText.text = "Watering pumpkin...";
         actionBubble.SetActive(true);
         yield return new WaitForSeconds(3);
-        if(actionBubble.activeSelf)
+        if (actionBubble.activeSelf)
+        {
             pumpkin.increaseWater(waterAmount);
+            actionBubble.SetActive(false);
+        }            
     }
 
     //Collisions
