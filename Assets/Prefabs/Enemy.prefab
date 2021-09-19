@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   minDistance: 2.5
+  minDistanceFromPlayer: 3
 --- !u!114 &6493638853205329077
 MonoBehaviour:
   m_ObjectHideFlags: 0
