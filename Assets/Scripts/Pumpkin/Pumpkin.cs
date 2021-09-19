@@ -16,8 +16,12 @@ public class Pumpkin : MonoBehaviour
     [Header("General")]
     private int accGrowthPoints;
     [HideInInspector]
-    public int levelGrowthPoints = 0;    
-    
+    public int levelGrowthPoints = 0;
+
+
+    public int enemysInPumpkin = 0;
+
+
     public TaskSystem taskSystem;
     private bool taskEnabled = false;
 
