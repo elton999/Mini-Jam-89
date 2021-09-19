@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
     void OnBecameInvisible() {
         if(isRunAway){
             isRunAway = false;
+            hitPumpkin = false;
             gameObject.SetActive(false);
         }
     }
