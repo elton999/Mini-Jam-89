@@ -13,6 +13,8 @@ public class AudioAnimations : AnimData
     AudioSource source;
     void Start() {
         source = GetComponent<AudioSource>();
+        if (clips.Count == 0) noAnims = true;
+        if (noAnims) return;
 
         CalculatePauseTime();
         if (fadeInOnStart)
@@ -23,6 +25,8 @@ public class AudioAnimations : AnimData
 
     float pauseTimer = -1;
     void Update() {
+        if (noAnims) return;
+
         if (startedVolumeControl)
             UpdateVolumeControl();
 
@@ -41,6 +45,13 @@ public class AudioAnimations : AnimData
     }
 
 
+    // easy access OneShot
+    public void PlayOneShot() {
+        source.PlayOneShot(source.clip);
+    }
+    public bool noAnims = false;
+
+    // Advanced animations
     public List<AudioClip> clips;
     public bool startOnStart = false;
     public int repetitions = 1; // = -1 for looping
@@ -55,7 +66,7 @@ public class AudioAnimations : AnimData
     void CalculatePauseTime() {
         float r = 2*Random.value - 1;
         currentPauseTime = pauseTime + r * pauseTimeVariation;
-        Debug.Log(currentPauseTime);
+        //Debug.Log(currentPauseTime);
     }
 
 
@@ -144,9 +155,10 @@ public class AudioAnimations : AnimData
         pauseTimer = -1;
         source.Stop();
         StopVolumeControl();
+        onStop.Invoke();
     }
     [HideInInspector] public bool finished = false;
-
+    public Invoker onStop;
 
 
     // Update volumeMultiplier based on the FloatAnimData
@@ -171,15 +183,16 @@ public class AudioAnimations : AnimData
     void UpdateVolumeControl() {
         bool canAnimVC = (currentVolumeControlData != null);
         bool shouldAnimVC = (startedVolumeControl && !finishedVolumeControl);
-        if (timerVC < 0 && canAnimVC && shouldAnimVC) {
-            timerVC = 0;
+        if (timerVC < 0) {
+            if (canAnimVC && shouldAnimVC)
+                timerVC = 0;
         }
-        else if (timerVC >= 0) {
+        else if (timerVC < currentVolumeControlData.animTime()) {
             timerVC += Time.deltaTime;
             volumeMultiplier = currentVolumeControlData.GetCurrent(timerVC);
             //Debug.Log(volumeMultiplier);
         }
-        else if (timerVC >= currentVolumeControlData.animTime()) {
+        else {
             timerVC = -1;
             StopVolumeControl();
         }

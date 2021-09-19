@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CanvasScaler))]
 public class CanvasController : MonoBehaviour
@@ -13,27 +14,61 @@ public class CanvasController : MonoBehaviour
 
         ResetToDefault();
     }
+    public float DebugSizeSlider = 0;
+    void Update() {
+        //SetSize(DebugSizeSlider);
+
+        if (cursor != null && Settings.customCursor)
+            UpdateCustomCursor();
+    }
+
 
     public Slider masterVolume;
     public Slider musicVolume;
     public Slider sfxVolume;
     public Slider uiScale;
     public Toggle fullscreen;
-    public Toggle customCuror;
+    public Toggle customCursor;
     void PushSettingsToUI() {
         masterVolume.value = Settings.masterVolume;
         musicVolume.value = Settings.musicVolume;
         sfxVolume.value = Settings.sfxVolume;
         uiScale.value = Settings.uiScale;
         fullscreen.isOn = Settings.fullscreen;
-        customCuror.isOn = Settings.customCursor;
+        customCursor.isOn = Settings.customCursor;
     }
     public void ResetToDefault() {
         Settings.ResetToDefault();
         PushSettingsToUI();
+        Save();
     }
 
     
+    public AudioController ac;
+    public void Save() {
+        ac.SetMasterVolume(masterVolume.value);
+        ac.SetMusicVolume(musicVolume.value);
+        ac.SetSFXVolume(sfxVolume.value);
+        SetUIscale(uiScale.value);
+        SetFullscreen(fullscreen.isOn);
+        SetCustomCursor(customCursor.isOn);
+    }
+
+
+    // OnValueChanged for instant feedback
+    void SetUIscale(float val) {
+        Settings.uiScale = val;
+        ApplyUIscale();
+    }
+    public void SetFullscreen(bool val) {
+        Settings.fullscreen = val;
+        ApplyFullscreen();
+    }
+    public void SetCustomCursor(bool val) {
+        Settings.customCursor = val;
+        ApplyCustomCursor();
+    }
+
     public Vector2 minRefRes;
     public Vector2 maxRefRes;
     void ApplyUIscale() {
@@ -42,11 +77,16 @@ public class CanvasController : MonoBehaviour
     void ApplyFullscreen() {
         Screen.SetResolution(Screen.width, Screen.height, Settings.fullscreen);
     }
+    public Image cursor;
     void ApplyCustomCursor() {
-
+        cursor.gameObject.SetActive(Settings.customCursor);
+        Cursor.visible = !Settings.customCursor;
     }
-    void FindCustomCursor() {
-
+    void UpdateCustomCursor() {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        Vector2 screen = new Vector2(Screen.width, Screen.height);
+        cursor.rectTransform.localPosition = 3.5f * ((Vector2)Input.mousePosition - screen / 2);
     }
 
 
@@ -107,10 +147,20 @@ public class CanvasController : MonoBehaviour
 
 
 
-    // Debug
-    public float DebugSizeSlider = 0;
-    void Update() {
-        //SetSize(DebugSizeSlider);
+    
+
+
+    public void LoadScene(string name) {
+        SceneManager.LoadScene(name);
+    }
+    [HideInInspector] public bool paused = false;
+    public void Pause() {
+        Time.timeScale = 0;
+        paused = true;
+    }
+    public void Resume() {
+        Time.timeScale = 1;
+        paused = false;
     }
 
 }

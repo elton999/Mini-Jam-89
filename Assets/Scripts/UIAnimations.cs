@@ -25,14 +25,15 @@ public class UIAnimations : AnimData
     void Update() {
         bool canAnim = (remReps > 0 || looping);
         bool shouldAnim = (started && !finished);
-        if (timer < 0 && canAnim && shouldAnim) {
-            timer = 0;
+        if (timer < 0) {
+            if (canAnim && shouldAnim)
+                timer = 0;
         }
-        else if (timer >= 0) {
+        else if (timer < uiData.animTime()) {
             timer += Time.deltaTime;
             uiData.ApplyTo(targetImages, targetTexts, timer);
         }
-        else if (timer >= uiData.animTime()) {
+        else {
             timer = -1;
             if (!looping) {
                 remReps--;
@@ -52,8 +53,9 @@ public class UIAnimations : AnimData
         started = false;
         finished = true;
         remReps = 0;
+        onStop.Invoke();
     }
     [HideInInspector] public bool finished = false;
-
+    public Invoker onStop;
 
 }
