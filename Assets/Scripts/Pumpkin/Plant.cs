@@ -8,6 +8,8 @@ public class Plant : MonoBehaviour
     [HideInInspector]
     public int levelGrowthPoints = 0;
     public int growthRatePerSecond = 50;
+
+    public bool CHANGE_isActivated = false;
     
     private float countdown=1f;
 
@@ -24,11 +26,21 @@ public class Plant : MonoBehaviour
     {
         TaskBubble.SetActive(false);
         TaskCompleteBubble.SetActive(false);
+        if (CHANGE_isActivated)
+        {
+            inNeedOfPruning = true;
+            activateNeedWaterUI();
+        }
+        else
+        {
+            inNeedOfPruning = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {        
+            /*
         countdown -= Time.deltaTime;
         if (countdown < 0)
         {
@@ -43,6 +55,7 @@ public class Plant : MonoBehaviour
                 }
             }
         }
+            */
         
     }
 

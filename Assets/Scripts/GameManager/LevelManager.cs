@@ -5,7 +5,12 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Level Manager Details")]
     public int currentDay = 1;
+    public int[] dayDurations;
+
+    
+    [Header("Level Details")]    
     public int levelTimeMinutes = 3;
     public bool isFinalLevel = false;
     private bool isEndGame = false;
@@ -22,11 +27,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelTimeMinutes *= 60;
-        prev = levelTimeMinutes;
-        countdown = prev;
-        countdownText.text = prev.ToString();
-        EndLevelMessage.SetActive(false);
+        ProcessDayN(1);
     }
 
     // Update is called once per frame
@@ -64,6 +65,16 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         currentDay += 5;
         messagingText.text = "Onto day " + currentDay;
+    }
+
+    public void ProcessDayN(int n)
+    {
+        levelTimeMinutes = dayDurations[n-1];
+        levelTimeMinutes *= 60;
+        prev = levelTimeMinutes;
+        countdown = prev;
+        countdownText.text = prev.ToString();
+        EndLevelMessage.SetActive(false);
     }
 }
     

@@ -83,7 +83,7 @@ public class Inventory : MonoBehaviour
                         pumpkin.increaseWater(waterAmount);                        
                     }
                 }
-                else if (selectedTool == Tool.EvilBag)
+                else if (selectedTool == Tool.EvilBag && pumpkin.inNeedOfEvil)
                 {
                     if (!actionBubble.activeSelf)
                     {

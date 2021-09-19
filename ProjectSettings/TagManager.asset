@@ -9,6 +9,7 @@ TagManager:
   - Plant
   - Music
   - SFX
+  - Plant - Day 2
   layers:
   - Default
   - TransparentFX
