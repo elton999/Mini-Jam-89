@@ -106,7 +106,8 @@ public class CameraController : MonoBehaviour
             targetPos += offset;
             targetPos += predictiveDistance * (Vector3)(target.transform.position - oldTargetPos).normalized;
             targetPos = ClampWithinBounds(targetPos);
-            transform.position = Vector2.Lerp(transform.position, targetPos, targetLerp);
+            targetPos.z = offset.z;
+            transform.position = Vector3.Lerp(transform.position, targetPos, targetLerp);
 
             oldTargetPos = target.transform.position;
         }
@@ -114,7 +115,7 @@ public class CameraController : MonoBehaviour
     }
 
     public List<Vector2> bounds;
-    Vector3 ClampWithinBounds(Vector3 p) {
+    Vector2 ClampWithinBounds(Vector2 p) {
         if (bounds.Count < 2) {
             Debug.LogError("Insufficient camera bounding points.");
             return Vector3.zero;
