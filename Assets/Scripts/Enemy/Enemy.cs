@@ -17,16 +17,17 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         if(isRunAway) return;
-        /*if(Vector3.Distance(transform.position, target.position) < minDistance)
+        if(Vector3.Distance(transform.position, target.position) < minDistance)
             movement.direction = Vector3.zero;
         else
-            updateTargetPosition();*/
+            updateTargetPosition();
         checkPlayerDistance();
     }
 
     void checkPlayerDistance(){
         var playerPosition = Player.Instance.transform.position;
-        if(Vector3.Distance(playerPosition, transform.position) < minDistanceFromPlayer){
+        var holyPotionFlag = Player.Instance.GetComponent<Inventory>().holyPotionFlag;
+        if(Vector3.Distance(playerPosition, transform.position) < minDistanceFromPlayer && holyPotionFlag){
             runAway(playerPosition);
         }
     }

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public bool hasFlag = false;
     [SerializeField] Movement movement;
     Rigidbody2D rigidBody;
     public static Player Instance;
