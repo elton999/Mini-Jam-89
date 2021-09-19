@@ -1446,7 +1446,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5473518530811899956, guid: f5f512980bcb4e343a2c3705384745a3,
         type: 3}
+      propertyPath: pumpkinTasks.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473518530811899956, guid: f5f512980bcb4e343a2c3705384745a3,
+        type: 3}
       propertyPath: dayDurations.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473518530811899956, guid: f5f512980bcb4e343a2c3705384745a3,
+        type: 3}
+      propertyPath: pumpkinTasks.Array.data[1].water
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5473518530811899957, guid: f5f512980bcb4e343a2c3705384745a3,
