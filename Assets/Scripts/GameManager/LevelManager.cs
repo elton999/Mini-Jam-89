@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     private int prev;
     public Text countdownText;
 
+    public GameObject EndLevelMessage;
     public Text messagingText;
 
     public CycleSystem cycle;
@@ -26,10 +27,11 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelTimeMinutes *= 1;
+        levelTimeMinutes *= 60;
         prev = levelTimeMinutes;
         countdown = prev;
         countdownText.text = prev.ToString();
+        EndLevelMessage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -60,7 +62,7 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator showEndGamemDistribution()
     {
-
+        EndLevelMessage.SetActive(true);
         messagingText.text = "The day has ended!";        
         yield return new WaitForSeconds(3);
         messagingText.text = "Awarding the pumpkin: " + cycle.pumpkinPoints +"\nAwarding the plant: " + cycle.plantPoints ;

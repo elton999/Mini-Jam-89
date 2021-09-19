@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -24,8 +25,12 @@ public class Inventory : MonoBehaviour
     private string pumpkinTag = "Pumpkin";
     private string plantTag = "Plant";
 
-    [Header("Tools")]
-    public int waterAmount = 5;
+    [Header("Bubble")]
+    public GameObject actionBubble;
+    public Text bubbleText;
+
+    [Header("Tools and Amounts")]
+    public int waterAmount = 100;
     public int shearAmount = 5;
     public int evilAmount = 5;
     public int purifyrAmount = 5;
@@ -38,6 +43,7 @@ public class Inventory : MonoBehaviour
         selectedTool = Tool.WateringCan;
         pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
         plant = GameObject.FindGameObjectWithTag(plantTag).GetComponent<Plant>();
+        actionBubble.SetActive(false);
     }
 
     // Update is called once per frame
@@ -50,7 +56,7 @@ public class Inventory : MonoBehaviour
             {
                 if (selectedTool == Tool.WateringCan)
                 {
-                    pumpkin.increaseWater(waterAmount);
+                    StartCoroutine(waterPlantAction());
                 }
                 else if (selectedTool == Tool.EvilBag)
                 {
@@ -69,8 +75,16 @@ public class Inventory : MonoBehaviour
                 }
             }            
         }
+        else
+        {
+            if(withinRangePumpkin && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A)||
+                Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D)))
+            {
+                actionBubble.SetActive(false);
+            }            
+        }
     }
-
+    //Tool selection
     private void updateSelectedTool()
     {
         if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
@@ -95,15 +109,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void withinPumpkinContact(Pumpkin p)
+    //Tool Actions    
+
+    IEnumerator waterPlantAction()
     {
-        pumpkin = p;
+        bubbleText.text = "Watering pumpkin...";
+        actionBubble.SetActive(true);
+        yield return new WaitForSeconds(3);
+        if(actionBubble.activeSelf)
+            pumpkin.increaseWater(waterAmount);
     }
 
-    public void outOfPumpkinContact()
-    {
-        pumpkin = null;
-    }
+    //Collisions
 
     void OnCollisionEnter2D(Collision2D collision)
     {

@@ -71,6 +71,7 @@ public class CycleSystem : MonoBehaviour
         */
     }
 
+
     public float calculateRatio(int pmG, int plG)
     {
         return pmG / (float)plG;
