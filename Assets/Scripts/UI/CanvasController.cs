@@ -85,7 +85,7 @@ public class CanvasController : MonoBehaviour
         Cursor.visible = !Settings.customCursor;
     }
     void UpdateCustomCursor() {
-        Debug.Log(Input.mousePosition + " " + cursor.rectTransform.anchoredPosition);
+        //Debug.Log(Input.mousePosition + " " + cursor.rectTransform.anchoredPosition);
         Vector2 mousePos = Input.mousePosition;
         mousePos.x *= rectTransform.sizeDelta.x / Screen.width;
         mousePos.y *= rectTransform.sizeDelta.y / Screen.height;
