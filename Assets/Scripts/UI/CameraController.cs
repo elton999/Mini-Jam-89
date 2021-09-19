@@ -84,9 +84,9 @@ public class CameraController : MonoBehaviour
     public float predictiveDistance = 2f;
 
     void Start() {
-        transform.position = offset;
         if (target == null)
             Debug.LogError("Camera target is unassigned.");
+        else transform.position = target.position + offset;
     }
     void Update() {
         if (currentCutscene != null) {
