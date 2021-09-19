@@ -434,6 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3429839da5348e4b8872f1e227f1a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holyPotionFlag: 0
   actionBubble: {fileID: 2035202823}
   bubbleText: {fileID: 1883018832}
   waterAmount: 100
@@ -441,3 +442,4 @@ MonoBehaviour:
   evilAmount: 5
   purifyrAmount: 5
   growthAmount: 5
+  waterCountdown: 3

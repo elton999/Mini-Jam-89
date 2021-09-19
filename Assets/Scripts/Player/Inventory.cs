@@ -38,6 +38,8 @@ public class Inventory : MonoBehaviour
     public int purifyrAmount = 5;
     public int growthAmount = 5;
 
+    public float waterCountdown = 3f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,14 +60,37 @@ public class Inventory : MonoBehaviour
             {                
                 holyPotionFlag = true;
             }
+            if (withinRangePumpkin)
+            {
+                if (selectedTool == Tool.WateringCan)
+                {
+                    if (!actionBubble.activeSelf)
+                    {
+                        bubbleText.text = "Watering pumpkin...";
+                        actionBubble.SetActive(true);
+                    }                    
+                    waterCountdown -= Time.deltaTime;
+                    if (waterCountdown <= 0)
+                    {
+                        resetWaterAction();
+                        pumpkin.increaseWater(waterAmount);                        
+                    }
+                }
+                else if (selectedTool == Tool.EvilBag)
+                {
+                    pumpkin.increaseEvilLevel(evilAmount);
+                }
+            }
         } else if (Input.GetKeyUp(KeyCode.E))
         {
             if (selectedTool == Tool.HolyBag)
             {                
-                holyPotionFlag = false;
+                holyPotionFlag = false;                
             }
+            resetWaterAction();
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (withinRangePumpkin)
@@ -94,8 +119,16 @@ public class Inventory : MonoBehaviour
             {
                 actionBubble.SetActive(false);
             }            
-        }
+        }*/
     }
+
+    private void resetWaterAction()
+    {
+        actionBubble.SetActive(false);
+        waterCountdown = 3f;
+
+    }
+
     //Tool selection
     private void updateSelectedTool()
     {
@@ -119,21 +152,7 @@ public class Inventory : MonoBehaviour
             selectedTool = Tool.HolyBag;
             Debug.Log("Selected 4");
         }
-    }
-
-    //Tool Actions    
-
-    IEnumerator waterPlantAction()
-    {
-        bubbleText.text = "Watering pumpkin...";
-        actionBubble.SetActive(true);
-        yield return new WaitForSeconds(3);
-        if (actionBubble.activeSelf)
-        {
-            pumpkin.increaseWater(waterAmount);
-            actionBubble.SetActive(false);
-        }            
-    }
+    }   
 
     //Collisions
 
@@ -154,6 +173,7 @@ public class Inventory : MonoBehaviour
         if (collision.gameObject.tag == pumpkinTag)
         {
             withinRangePumpkin = false;
+            resetWaterAction();
         }
         else if (collision.gameObject.tag == plantTag)
         {
