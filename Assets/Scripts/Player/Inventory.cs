@@ -18,10 +18,13 @@ public class Inventory : MonoBehaviour
     [HideInInspector]
     public bool holyPotionFlag = false;
 
+    public bool CHANGE_hasLeftGravestone = false;
+
     //will only work with one pumpkin
     [Header("Objects")]
     private Pumpkin pumpkin;
     private Plant plant = null;
+    private LevelManager lvlManager;
 
     private bool withinRangePumpkin = false;
     private bool withinRangePlant = false;
@@ -49,6 +52,7 @@ public class Inventory : MonoBehaviour
     {
         selectedTool = Tool.WateringCan;
         pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
+        lvlManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
         plant = null;
         actionBubble.SetActive(false);
         waterTaskTime = waterCountdown;
@@ -197,6 +201,23 @@ public class Inventory : MonoBehaviour
         else if (collision.gameObject.tag == plantTag)
         {
             withinRangePlant = false;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Gravestone" && CHANGE_hasLeftGravestone)
+        {
+            lvlManager.EndDay();
+            CHANGE_hasLeftGravestone = false;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Gravestone")
+        {
+            CHANGE_hasLeftGravestone = true;
         }
     }
 

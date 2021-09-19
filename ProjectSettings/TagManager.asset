@@ -9,7 +9,8 @@ TagManager:
   - Plant
   - Music
   - SFX
-  - Plant - Day 2
+  - Gravestone
+  - LevelManager
   layers:
   - Default
   - TransparentFX

@@ -5,9 +5,14 @@ using UnityEngine;
 public class CycleSystem : MonoBehaviour
 {
     private List<Plant> plants;
-    private Pumpkin pumpkin;
+    [HideInInspector]
+    public Pumpkin pumpkin;
     private string pumpkinTag = "Pumpkin";
     private string plantTag = "Plant";
+
+    [HideInInspector]
+    public int CHANGE_plantsToBePruned = 0;
+    public float CHANGE_plantPercentage = 0.75f;
 
     public int pointsPerLevel = 50;
 
@@ -42,57 +47,38 @@ public class CycleSystem : MonoBehaviour
 
     public void CalculateDistribution()
     {
-        int pumpGrowth = (pumpkin.waterTasks - pumpkin.currWaterTasks) * growthPointsPerTaskDone +
-            (pumpkin.evilTasks - pumpkin.currEvilTasks) * growthPointsPerTaskDone;
-
         int totalPlantGrowthPoints = 0;
         foreach(Plant p in plants)
         {
             if (p.inNeedOfPruning)
             {
-                totalPlantGrowthPoints += pointsPerPlantUnPruned;
+                totalPlantGrowthPoints += 1;
             }
         }
-
-        Debug.Log(pumpGrowth);
+        
         Debug.Log(totalPlantGrowthPoints);
 
-        float ratio = calculateRatio(pumpGrowth, totalPlantGrowthPoints);
+        float ratio = calculateRatio(totalPlantGrowthPoints);
 
         Debug.Log(ratio);
-
-        pumpkinPoints = (int)(pointsPerLevel * ratio);
-        plantPoints = (int)(pointsPerLevel * (1 - ratio));
+        plantPoints = (int)(pointsPerLevel * ratio * CHANGE_plantPercentage);
+        pumpkinPoints = (int)(pointsPerLevel*(1-CHANGE_plantPercentage) - (int)((((pumpkin.inNeedOfWater) ? 1 : 0) + ((pumpkin.inNeedOfEvil) ? 1 : 0) / 2) * (1 - CHANGE_plantPercentage)*pointsPerLevel))
+            + (int)(pointsPerLevel * (1- ratio) * CHANGE_plantPercentage);
+        
     }
 
     public void distributeGrowthPoints()
     {
-        
-
         pumpkin.increaseGrowthPoints(pumpkinPoints);
-
-        /*
-        if (ratio < 0.25)
-        {
-
-        }
-        else if (ratio >= 0.25 && ratio < 0.5)
-        {
-
-        }
-        else if (ratio >= 0.5 && ratio < 0.75) 
-        { 
-        }
-        else if (ratio >= 0.75 && ratio <= 1.0f)
-        {
-
-        }
-        */
     }
 
 
-    public float calculateRatio(int pmG, int plG)
+    public float calculateRatio(int plG)
     {
-        return pmG / ((float)plG + pmG);
+        if(CHANGE_plantsToBePruned == 0)
+        {
+            return 1;
+        }
+        return plantFactor = ((float)plG / CHANGE_plantsToBePruned);
     }
 }

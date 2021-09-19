@@ -20,8 +20,8 @@ public class TaskSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TaskBubble.SetActive(false);
-        TaskCompleteBubble.SetActive(false);
+        containerE.SetActive(false);
+        containerW.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,19 +32,20 @@ public class TaskSystem : MonoBehaviour
 
     public void activateNeedWaterUI()
     {
+        containerW.SetActive(true);
         taskText.text = "NEW TASK:\nGive the pumpkin water!";
         TaskBubble.SetActive(true);
     }
 
     public void closeNeedWaterUI()
-    {
-        Debug.Log("inside2");
+    {        
         StartCoroutine(showTaskComplete(1));
     }
 
     public void activateNeedEvilUI()
     {
-        Debug.Log("inside!");
+        containerE.SetActive(true);
+
         taskTextE.text = "NEW TASK:\nGive the pumpkin evil potion!";
         TaskBubbleE.SetActive(true);
     }

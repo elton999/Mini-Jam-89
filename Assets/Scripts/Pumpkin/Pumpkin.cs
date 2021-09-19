@@ -40,7 +40,7 @@ public class Pumpkin : MonoBehaviour
     private float countdown = 1f;
 
     [Header("Water")]
-    public bool CHANGE_waterTask;
+    //public bool CHANGE_waterTask;
     const int TotalWaterLevel = 100;
     private int waterLevel = 100;
     public int waterLossRate = 2;
@@ -50,7 +50,7 @@ public class Pumpkin : MonoBehaviour
     private bool isWaterTask = false;
     
     [Header("Evil Potion")]
-    public bool CHANGE_evilTask;
+    //public bool CHANGE_evilTask;
     public int evilWaitTime = 5;
     [HideInInspector]
     public bool inNeedOfEvil = false;
@@ -66,17 +66,18 @@ public class Pumpkin : MonoBehaviour
         currEvilTasks = evilTasks;
         tbtCountdown = timeBetweenTasks;
         */
-        if (CHANGE_waterTask)
-        {
-            inNeedOfWater = true;
-            taskSystem.activateNeedWaterUI();
-        }
+    }
 
-        if (CHANGE_evilTask)
-        {
-            inNeedOfEvil = true;
-            taskSystem.activateNeedEvilUI();
-        }
+    public void ActivateWaterTask()
+    {
+        inNeedOfWater = true;
+        taskSystem.activateNeedWaterUI();
+    }
+
+    public void ActivateEvilTask()
+    {
+        inNeedOfEvil = true;
+        taskSystem.activateNeedEvilUI();
     }
 
     // Update is called once per frame

@@ -9,7 +9,7 @@ public class Plant : MonoBehaviour
     public int levelGrowthPoints = 0;
     public int growthRatePerSecond = 50;
 
-    public bool CHANGE_isActivated = false;
+    public int CHANGE_usedInLvl = 1;
     
     private float countdown=1f;
 
@@ -22,19 +22,10 @@ public class Plant : MonoBehaviour
     public Text taskCompleteText;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         TaskBubble.SetActive(false);
         TaskCompleteBubble.SetActive(false);
-        if (CHANGE_isActivated)
-        {
-            inNeedOfPruning = true;
-            activateNeedWaterUI();
-        }
-        else
-        {
-            inNeedOfPruning = false;
-        }
     }
 
     // Update is called once per frame
@@ -69,16 +60,18 @@ public class Plant : MonoBehaviour
         Debug.Log("Reducing Plant Growth points");
         levelGrowthPoints = 0;
         inNeedOfPruning = false;
-        closeNeedWaterUI();
+        closePruneUI();
     }
 
-    public void activateNeedWaterUI()
+    public void activatePruneUI()
     {
+        Debug.Log("Opening Prune UI");
+        inNeedOfPruning = true;
         taskText.text = "NEW TASK:\nPrune the plants!";
         TaskBubble.SetActive(true);
     }
 
-    public void closeNeedWaterUI()
+    public void closePruneUI()
     {        
         StartCoroutine(showTaskComplete(1));
     }
