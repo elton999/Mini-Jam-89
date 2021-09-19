@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Movement movement;
     Rigidbody2D rigidBody;
+    public static Player Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
