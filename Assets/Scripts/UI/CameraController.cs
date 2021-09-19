@@ -133,4 +133,29 @@ public class CameraController : MonoBehaviour
     }
 
 
+    // Elton's camera shake code - moved from Camera script
+    float shakeMagnitude;
+    float shakeTime;
+    float shakeTimer = -1;
+
+    Vector2 GetShake() {
+        if (shakeTimer < 0) return Vector2.zero;
+        else if (shakeTimer < shakeTime) {
+            shakeTimer += Time.deltaTime;
+            Vector2 r = Vector2.zero;
+            while (r == Vector2.zero)
+                r = Random.insideUnitCircle.normalized;
+            return shakeMagnitude * r;
+        }
+        else {
+            shakeTimer = -1;
+            return Vector2.zero;
+        }
+    }
+    public void DoShake(float magnitude, float time) {
+        shakeTime = time;
+        shakeMagnitude = magnitude;
+        shakeTimer = 0;
+    }
+
 }
