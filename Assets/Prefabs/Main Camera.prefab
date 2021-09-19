@@ -93,8 +93,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6214802248372653458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c40f5a94433c049985731452ed52d3, type: 3}
+  m_Script: {fileID: 11500000, guid: aff6ae18c874bca4a95ec0668ecfde04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cutscene1:
+    path: []
+    stopAnimation: {fileID: 0}
+    moveTime: 0
+  cutscene2:
+    path: []
+    stopAnimation: {fileID: 0}
+    moveTime: 0
+  finishedCutscene: 0
+  offset: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
-  speed: 3
+  targetLerp: 0.9
+  predictiveDistance: 2
+  bounds: []
