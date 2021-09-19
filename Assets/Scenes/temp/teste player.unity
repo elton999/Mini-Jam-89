@@ -216,7 +216,7 @@ MonoBehaviour:
   rangeSpawn: 3.03
   maxSpawn: 5
   delayBetweenSpawn: 3
-  target: {fileID: 0}
+  target: {fileID: 1825752589}
 --- !u!4 &512347456
 Transform:
   m_ObjectHideFlags: 0
@@ -451,6 +451,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a88abac1f8599c4580a436ccb3c4122, type: 3}
+--- !u!4 &1825752589 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6145974773477819228, guid: 9a88abac1f8599c4580a436ccb3c4122,
+    type: 3}
+  m_PrefabInstance: {fileID: 1319057974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1993150560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -754,7 +760,7 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1825752589}
     - target: {fileID: 8254818618921113593, guid: 214e67b2fb4f1ec42940f307ae3333dc,
         type: 3}
       propertyPath: m_Name
