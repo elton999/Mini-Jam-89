@@ -82,6 +82,13 @@ public class CameraController : MonoBehaviour
     Vector3 oldTargetPos;
     public float targetLerp = 0.9f;
     public float predictiveDistance = 2f;
+    bool following = false;
+    public void StartFollow() {
+        following = true;
+    }
+    public void StopFollow() {
+        following = false;
+    }
 
     void Start() {
         if (target == null)
@@ -94,19 +101,21 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        Vector3 targetPos = target.transform.position;
-        targetPos += offset;
-        targetPos += predictiveDistance * (Vector3)(target.transform.position - oldTargetPos).normalized;
-        targetPos = ClampWithinBounds(targetPos);
-        targetPos += (Vector3)GetShake();
-        transform.position = Vector2.Lerp(transform.position, targetPos, targetLerp);
-        transform.position = transform.position + offset;
+        if (following) {
+            Vector3 targetPos = target.transform.position;
+            targetPos += offset;
+            targetPos += predictiveDistance * (Vector3)(target.transform.position - oldTargetPos).normalized;
+            targetPos = ClampWithinBounds(targetPos);
+            targetPos.z = offset.z;
+            transform.position = Vector3.Lerp(transform.position, targetPos, targetLerp);
 
-        oldTargetPos = target.transform.position;
+            oldTargetPos = target.transform.position;
+        }
+        
     }
 
     public List<Vector2> bounds;
-    Vector3 ClampWithinBounds(Vector3 p) {
+    Vector2 ClampWithinBounds(Vector2 p) {
         if (bounds.Count < 2) {
             Debug.LogError("Insufficient camera bounding points.");
             return Vector3.zero;
@@ -134,30 +143,5 @@ public class CameraController : MonoBehaviour
         return new Vector2(x, y);
     }
 
-
-    // Elton's camera shake code - moved from Camera script
-    float shakeMagnitude;
-    float shakeTime;
-    float shakeTimer = -1;
-
-    Vector2 GetShake() {
-        if (shakeTimer < 0) return Vector2.zero;
-        else if (shakeTimer < shakeTime) {
-            shakeTimer += Time.deltaTime;
-            Vector2 r = Vector2.zero;
-            while (r == Vector2.zero)
-                r = Random.insideUnitCircle.normalized;
-            return shakeMagnitude * r;
-        }
-        else {
-            shakeTimer = -1;
-            return Vector2.zero;
-        }
-    }
-    public void DoShake(float magnitude, float time) {
-        shakeTime = time;
-        shakeMagnitude = magnitude;
-        shakeTimer = 0;
-    }
 
 }

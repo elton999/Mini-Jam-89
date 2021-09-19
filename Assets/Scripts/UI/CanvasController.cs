@@ -89,7 +89,7 @@ public class CanvasController : MonoBehaviour
         Vector2 mousePos = Input.mousePosition;
         mousePos.x *= rectTransform.sizeDelta.x / Screen.width;
         mousePos.y *= rectTransform.sizeDelta.y / Screen.height;
-        mousePos.y -= cursor.rectTransform.sizeDelta.y;
+        mousePos -= cursor.rectTransform.sizeDelta;
         cursor.rectTransform.anchoredPosition = mousePos;
     }
 

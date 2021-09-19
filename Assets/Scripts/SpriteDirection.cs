@@ -8,6 +8,7 @@ public class SpriteDirection : MonoBehaviour
 {
     Movement movement;
     SpriteRenderer spriteRenderer;
+    Vector3 lastDirection;
     void Awake()
     {
         movement = GetComponent<Movement>();
@@ -15,6 +16,8 @@ public class SpriteDirection : MonoBehaviour
     }
     void Update()
     {
-        spriteRenderer.flipX = movement.direction.x > 0;
+        if( Vector3.Distance(movement.direction, Vector3.zero) != 0)
+            lastDirection = movement.direction;
+        spriteRenderer.flipX = lastDirection.x > 0;
     }
 }
