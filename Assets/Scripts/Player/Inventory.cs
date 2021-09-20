@@ -81,6 +81,7 @@ public class Inventory : MonoBehaviour
             if (selectedTool == Tool.HolyBag)
             {
                 currentImage.sprite = toolIcon[3];
+                actionBubble.SetActive(true);
                 holyPotionFlag = true;
             }
             if (withinRangePumpkin)

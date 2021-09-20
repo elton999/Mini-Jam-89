@@ -35,6 +35,7 @@ public class CycleSystem : MonoBehaviour
         pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
         plants = new List<Plant>();
         GameObject [] plantGOs = GameObject.FindGameObjectsWithTag(plantTag);
+        totalPoints = 0;
         foreach(GameObject go in plantGOs)
         {
             plants.Add(go.GetComponent<Plant>());
@@ -65,7 +66,7 @@ public class CycleSystem : MonoBehaviour
         Debug.Log(ratio);
         plantPoints = (int)(pointsPerLevel * ratio * CHANGE_plantPercentage);
         pumpkinPoints = (int)(pointsPerLevel*(1-CHANGE_plantPercentage) - (int)((((pumpkin.inNeedOfWater) ? 1 : 0) + ((pumpkin.inNeedOfEvil) ? 1 : 0) / 2) * (1 - CHANGE_plantPercentage)*pointsPerLevel))
-            + (int)(pointsPerLevel * (1- ratio) * CHANGE_plantPercentage);
+            + (int)(pointsPerLevel * (1- ratio) * CHANGE_plantPercentage) - pumpkin.enemysInPumpkin;
         totalPoints += pumpkinPoints;
 
 
