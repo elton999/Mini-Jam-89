@@ -16,6 +16,9 @@ public class Inventory : MonoBehaviour
     private Tool selectedTool;
 
     public CanvasGroup w1;
+    public CanvasGroup w2;
+    public CanvasGroup w3;
+    public CanvasGroup w4;
 
     [HideInInspector]
     public bool holyPotionFlag = false;
@@ -174,21 +177,37 @@ public class Inventory : MonoBehaviour
             selectedTool = Tool.WateringCan;
             Debug.Log("Selected Watering Can");
             w1.alpha = 1f;
+            w2.alpha = 0.5f;
+            w3.alpha = 0.5f;
+            w4.alpha = 0.5f;
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
         {
             selectedTool = Tool.Shears;
             Debug.Log("Selected Shears");
+            w1.alpha = 0.5f;
+            w2.alpha = 1f;
+            w3.alpha = 0.5f;
+            w4.alpha = 0.5f;
+
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
         {
             selectedTool = Tool.EvilBag;
             Debug.Log("Selected Evil Potion");
+            w1.alpha = 0.5f;
+            w2.alpha = 0.5f;
+            w3.alpha = 1f;
+            w4.alpha = 0.5f;
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
         {
             selectedTool = Tool.HolyBag;
             Debug.Log("Selected Holy Potion");
+            w1.alpha = 0.5f;
+            w2.alpha = 0.5f;
+            w3.alpha = 0.5f;
+            w4.alpha = 1f;
         }
     }   
 
