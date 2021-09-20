@@ -5,11 +5,30 @@ using UnityEngine;
 public class PumpkinAnimations : MonoBehaviour
 {
 
-    public List<float> pumpkinStages; // 0-1
+    SpriteRenderer pumpkin;
+    Transform vinesParent;
+    void Start() {
+        pumpkin = transform.Find("Pumpkin").GetComponent<SpriteRenderer>();
+        vinesParent = transform.Find("Vines");
+    }
+
     public List<Sprite> pumpkinSprites;
+    public List<float> pumpkinStages; // 0-1
     public List<float> pumpkinSizes; // localScale
     public void SetPumpkinStage(float progress) {
-
+        float size;
+        int stageIndex1 = GetLowerIndex(progress, pumpkinStages);
+        if (stageIndex1 == pumpkinStages.Count-1) {
+            size = pumpkinSizes[stageIndex1];
+        }
+        else {
+            int stageIndex2 = stageIndex1+1;
+            float lerp = GetStageProgress(progress, stageIndex1, stageIndex2, pumpkinStages);
+            size = Mathf.Lerp(pumpkinSizes[stageIndex1], pumpkinSizes[stageIndex2], lerp);
+        }
+        pumpkin.transform.localScale = size * Vector3.one;
+        int pumpIndex = Mathf.RoundToInt(progress * (pumpkinSprites.Count-1));
+        pumpkin.sprite = pumpkinSprites[pumpIndex];
     }
 
     public List<float> plantStages; // 0-1
@@ -88,5 +107,6 @@ public class PumpkinAnimations : MonoBehaviour
     [Range(0, 1)] public float DebugSize = 0;
     void Update() {
         SetPlantStage(DebugSize);
+        SetPumpkinStage(DebugSize);
     }
 }
