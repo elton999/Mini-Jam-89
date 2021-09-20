@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
@@ -86,6 +87,7 @@ public class LevelManager : MonoBehaviour
         {
             gameText.text = "Final points: " + cycle.totalPoints;
             endGO.SetActive(true);
+            return;
             
         }
 
@@ -136,6 +138,11 @@ public class LevelManager : MonoBehaviour
             cycle.pumpkin.ActivateEvilTask();
         }
 
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("Main - ending");
     }
 }
     
