@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Movement movement;
     Rigidbody2D rigidBody;
+    Animator animator;
     public static Player Instance;
 
     void Awake()
@@ -17,6 +18,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();    
+        animator = GetComponent<Animator>();
+    }
+
+    void Update() {
+        if(Vector3.Distance(movement.direction, new Vector3(0,0,movement.direction.z)) != 0)
+            animator.Play("walk");
+        else
+            animator.Play("idle");
     }
     void FixedUpdate()
     {
