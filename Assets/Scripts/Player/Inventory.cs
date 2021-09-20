@@ -206,12 +206,13 @@ public class Inventory : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Gravestone" && CHANGE_hasLeftGravestone)
+        if (collision.gameObject.tag == "Gravestone")
         {
             lvlManager.EndDay();
             CHANGE_hasLeftGravestone = false;
         }
     }
+    /*
 
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -220,5 +221,6 @@ public class Inventory : MonoBehaviour
             CHANGE_hasLeftGravestone = true;
         }
     }
+    */
 
 }

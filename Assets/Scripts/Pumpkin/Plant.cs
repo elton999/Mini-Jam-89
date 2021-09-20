@@ -17,15 +17,15 @@ public class Plant : MonoBehaviour
     public bool inNeedOfPruning = false;
 
     public GameObject TaskBubble;
-    public Text taskText;
-    public GameObject TaskCompleteBubble;
-    public Text taskCompleteText;
+    //public Text taskText;
+    //public GameObject TaskCompleteBubble;
+    //public Text taskCompleteText;
 
     // Start is called before the first frame update
     void Awake()
     {
         TaskBubble.SetActive(false);
-        TaskCompleteBubble.SetActive(false);
+        //TaskCompleteBubble.SetActive(false);
     }
 
     // Update is called once per frame
@@ -67,7 +67,7 @@ public class Plant : MonoBehaviour
     {
         Debug.Log("Opening Prune UI");
         inNeedOfPruning = true;
-        taskText.text = "NEW TASK:\nPrune the plants!";
+        //taskText.text = "NEW TASK:\nPrune the plants!";
         TaskBubble.SetActive(true);
     }
 
@@ -81,11 +81,14 @@ public class Plant : MonoBehaviour
         if (n == 1)
         {
             TaskBubble.SetActive(false);
-            taskCompleteText.text = "TASK COMPLETE!\nPlant is pruned.";
+            yield return new WaitForSeconds(0.4f);
+            //taskCompleteText.text = "TASK COMPLETE!\nPlant is pruned.";
+            /*
             yield return new WaitForSeconds(0.4f);
             TaskCompleteBubble.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             TaskCompleteBubble.SetActive(false);
+            */
         }
     }
 }

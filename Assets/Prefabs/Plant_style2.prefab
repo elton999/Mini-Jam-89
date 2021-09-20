@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &242882592
 RectTransform:
   m_ObjectHideFlags: 0
@@ -212,8 +212,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 130.6}
-  m_SizeDelta: {x: -78.7, y: -392.3}
+  m_AnchoredPosition: {x: 2.899994, y: -116.100006}
+  m_SizeDelta: {x: -923.23, y: -668.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &733180564
 CanvasRenderer:
@@ -243,8 +243,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -9080089864790148309, guid: db9e47edf96a6fd40a85635e1b819825,
+    type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -270,7 +271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1046968684
 RectTransform:
   m_ObjectHideFlags: 0
@@ -425,7 +426,7 @@ GameObject:
   - component: {fileID: 7371178734199441551}
   - component: {fileID: 7371178734199441548}
   m_Layer: 0
-  m_Name: Plant_style2
+  m_Name: Plant_Style2
   m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,6 +563,3 @@ MonoBehaviour:
   CHANGE_usedInLvl: 1
   inNeedOfPruning: 0
   TaskBubble: {fileID: 733180561}
-  taskText: {fileID: 1046968686}
-  TaskCompleteBubble: {fileID: 242882591}
-  taskCompleteText: {fileID: 1635039114}
