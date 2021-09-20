@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1586741302}
   - component: {fileID: 1586741301}
   - component: {fileID: 1586741300}
+  - component: {fileID: 8408794653226215639}
+  - component: {fileID: 8807685017970357543}
   m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
@@ -100,6 +102,72 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!212 &8408794653226215639
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586741298}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &8807685017970357543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586741298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498d9bde13c069146ada98408742a8d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  hitForce: 2.5
+  delayAfterHit: 3
 --- !u!1 &1883018831
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,9 +336,11 @@ GameObject:
   - component: {fileID: 6984802297144741960}
   - component: {fileID: 3782983747551055410}
   - component: {fileID: 3782983747551055409}
+  - component: {fileID: 5843317008483268269}
   - component: {fileID: 9180517912790925739}
   - component: {fileID: 853639418847455988}
   - component: {fileID: 1170859974}
+  - component: {fileID: 8041073690522389775}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -385,6 +455,18 @@ MonoBehaviour:
   speed: 5
   hitForce: 150
   delayAfterHit: 1.5
+--- !u!114 &5843317008483268269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782983747551055414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec97cb3987af44544bc8ec9ec6585e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &9180517912790925739
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -435,12 +517,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holyPotionFlag: 0
+  CHANGE_hasLeftGravestone: 0
   actionBubble: {fileID: 2035202823}
   bubbleText: {fileID: 1883018832}
   waterAmount: 100
-  shearAmount: 60
-  purifyrAmount: 5
-  growthAmount: 5
-  waterCountdown: 3
-  plantCountdown: 3
-  evilCountdown: 3
+  waterTaskTime: 3
+  plantTaskTime: 3
+  evilTaskTime: 3
+--- !u!95 &8041073690522389775
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782983747551055414}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bd397f9f1db10941a5febe9ddb412b9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
