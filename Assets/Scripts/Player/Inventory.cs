@@ -35,6 +35,11 @@ public class Inventory : MonoBehaviour
     public GameObject actionBubble;
     public Text bubbleText;
 
+    [Header("Image")]
+    public Image[] toolIcon;
+    public Image currentImage;
+    
+
     [Header("Tools and Amounts")]
     public int waterAmount = 100;
 
@@ -55,6 +60,8 @@ public class Inventory : MonoBehaviour
         lvlManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
         plant = null;
         actionBubble.SetActive(false);
+        
+
         waterTaskTime = waterCountdown;
         plantTaskTime = plantCountdown;
         evilTaskTime = evilCountdown;
@@ -78,6 +85,7 @@ public class Inventory : MonoBehaviour
                     if (!actionBubble.activeSelf)
                     {
                         bubbleText.text = "Watering pumpkin...";
+                        currentImage = toolIcon[0];
                         actionBubble.SetActive(true);
                     }                    
                     waterCountdown -= Time.deltaTime;
@@ -206,12 +214,13 @@ public class Inventory : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Gravestone" && CHANGE_hasLeftGravestone)
+        if (collision.gameObject.tag == "Gravestone")
         {
             lvlManager.EndDay();
             CHANGE_hasLeftGravestone = false;
         }
     }
+    /*
 
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -220,5 +229,6 @@ public class Inventory : MonoBehaviour
             CHANGE_hasLeftGravestone = true;
         }
     }
+    */
 
 }

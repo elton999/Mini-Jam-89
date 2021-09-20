@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
@@ -24,10 +25,13 @@ public class LevelManager : MonoBehaviour
 
     public CycleSystem cycle;
 
+    public UIAnimations uiAnim;
+    public GameObject unimGO;
+
     // Start is called before the first frame update
     void Start()
     {
-        ProcessDayN(1);
+        ProcessDayN();
     }
 
     // Update is called once per frame
@@ -61,23 +65,33 @@ public class LevelManager : MonoBehaviour
     public void EndDay()
     {
         cycle.CalculateDistribution();
+        unimGO.SetActive(true);
+        uiAnim.StartAnimation();
         StartCoroutine(showEndGamemDistribution());
     }
 
     IEnumerator showEndGamemDistribution()
     {
+        
+        yield return new WaitForSeconds(1);
         EndLevelMessage.SetActive(true);
-        messagingText.text = "The day has ended!";
-        yield return new WaitForSeconds(3);
-        messagingText.text = "Awarding the pumpkin: " + cycle.pumpkinPoints + "\nAwarding the plant: " + cycle.plantPoints;
-        yield return new WaitForSeconds(3);
-        currentDay += 1;
-        messagingText.text = "Onto day " + currentDay*5;
-        ProcessDayN(currentDay);
+        messagingText.text = "The day has ended!\nAwarding the pumpkin: " + cycle.pumpkinPoints + "\nAwarding the plant: " + cycle.plantPoints + "\nTotal Points: " + cycle.totalPoints * 5;        
     }
 
-    public void ProcessDayN(int n)
+    public Text gameText;
+    public GameObject endGO;
+
+    public void ProcessDayN()
     {
+        if (currentDay -1 == pumpkinTasks.Length) 
+        {
+            gameText.text = "Final points: " + cycle.totalPoints;
+            endGO.SetActive(true);
+            return;
+            
+        }
+
+        EndLevelMessage.SetActive(false);
         /*
         levelTimeMinutes = dayDurations[n-1];
         levelTimeMinutes *= 60;
@@ -86,13 +100,13 @@ public class LevelManager : MonoBehaviour
         countdownText.text = prev.ToString();
         */
 
-        SetPumpkin(n-1);
+        SetPumpkin(currentDay-1);
 
         GameObject[] plantGOs = GameObject.FindGameObjectsWithTag("Plant");
         foreach (GameObject go in plantGOs)
         {
             Plant p = go.GetComponent<Plant>();
-            if (p != null && p.CHANGE_usedInLvl <= n)
+            if (p != null && p.CHANGE_usedInLvl <= currentDay)
             {
                 go.SetActive(true);
                 int x = Random.Range(1, 3);
@@ -108,7 +122,7 @@ public class LevelManager : MonoBehaviour
                 go.SetActive(false);
             }
         }
-
+        currentDay++;
         EndLevelMessage.SetActive(false);
     }
 
@@ -124,6 +138,11 @@ public class LevelManager : MonoBehaviour
             cycle.pumpkin.ActivateEvilTask();
         }
 
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("Main - ending");
     }
 }
     
