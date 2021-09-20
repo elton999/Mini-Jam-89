@@ -35,12 +35,14 @@ public class Enemy : MonoBehaviour
     public void runAway(Vector3 position){
         isRunAway = true;
         movement.direction = -(position - transform.position).normalized;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     void OnBecameInvisible() {
         if(isRunAway){
             isRunAway = false;
             hitPumpkin = false;
+            GetComponent<Collider2D>().enabled = true;
             gameObject.SetActive(false);
         }
     }
@@ -57,7 +59,11 @@ public class Enemy : MonoBehaviour
             other.gameObject.GetComponent<Pumpkin>().enemysInPumpkin++;
             hitPumpkin = true;
         }
-         //if(other.collider.CompareTag("Player"))
-         //   movement.takeHit(-other.gameObject.GetComponent<Movement>().direction);    
+
+        if(other.collider.CompareTag("Player")){
+            if(Player.Instance.isAttacking){
+                runAway(target.position);
+            }
+        } 
     }
 }
