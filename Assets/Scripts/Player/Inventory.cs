@@ -20,6 +20,10 @@ public class Inventory : MonoBehaviour
     public CanvasGroup w3;
     public CanvasGroup w4;
 
+    public AudioClip[] SelectSounds;
+
+    public AudioSource AS;
+
     [HideInInspector]
     public bool holyPotionFlag = false;
 
@@ -180,6 +184,8 @@ public class Inventory : MonoBehaviour
             w2.alpha = 0.5f;
             w3.alpha = 0.5f;
             w4.alpha = 0.5f;
+
+            AS.PlayOneShot(SelectSounds[0]);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -190,6 +196,7 @@ public class Inventory : MonoBehaviour
             w3.alpha = 0.5f;
             w4.alpha = 0.5f;
 
+            AS.PlayOneShot(SelectSounds[1]);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -199,6 +206,8 @@ public class Inventory : MonoBehaviour
             w2.alpha = 0.5f;
             w3.alpha = 1f;
             w4.alpha = 0.5f;
+
+            AS.PlayOneShot(SelectSounds[2]);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
         {
@@ -208,6 +217,8 @@ public class Inventory : MonoBehaviour
             w2.alpha = 0.5f;
             w3.alpha = 0.5f;
             w4.alpha = 1f;
+
+            AS.PlayOneShot(SelectSounds[3]);
         }
     }   
 
