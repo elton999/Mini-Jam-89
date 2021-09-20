@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour
 
     private Tool selectedTool;
 
+    public CanvasGroup w1;
+
     [HideInInspector]
     public bool holyPotionFlag = false;
 
@@ -33,10 +35,10 @@ public class Inventory : MonoBehaviour
 
     [Header("Bubble")]
     public GameObject actionBubble;
-    public Text bubbleText;
+    //public Text bubbleText;
 
     [Header("Image")]
-    public Image[] toolIcon;
+    public Sprite[] toolIcon;
     public Image currentImage;
     
 
@@ -60,6 +62,8 @@ public class Inventory : MonoBehaviour
         lvlManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
         plant = null;
         actionBubble.SetActive(false);
+
+        w1.alpha = 0.5f;
         
 
         waterTaskTime = waterCountdown;
@@ -75,7 +79,8 @@ public class Inventory : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
         {
             if (selectedTool == Tool.HolyBag)
-            {                
+            {
+                currentImage.sprite = toolIcon[3];
                 holyPotionFlag = true;
             }
             if (withinRangePumpkin)
@@ -84,8 +89,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (!actionBubble.activeSelf)
                     {
-                        bubbleText.text = "Watering pumpkin...";
-                        currentImage = toolIcon[0];
+                        //bubbleText.text = "Watering pumpkin...";
+                        currentImage.sprite = toolIcon[0];
                         actionBubble.SetActive(true);
                     }                    
                     waterCountdown -= Time.deltaTime;
@@ -99,7 +104,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (!actionBubble.activeSelf)
                     {
-                        bubbleText.text = "Applying evil potion...";
+                        currentImage.sprite = toolIcon[2];
+                        //bubbleText.text = "Applying evil potion...";
                         actionBubble.SetActive(true);
                     }
                     evilCountdown -= Time.deltaTime;
@@ -116,7 +122,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (!actionBubble.activeSelf)
                     {
-                        bubbleText.text = "Pruning plant...";
+                        //bubbleText.text = "Pruning plant...";
+                        currentImage.sprite = toolIcon[1];
                         actionBubble.SetActive(true);
                     }
                     plantCountdown -= Time.deltaTime;
@@ -166,6 +173,7 @@ public class Inventory : MonoBehaviour
         {
             selectedTool = Tool.WateringCan;
             Debug.Log("Selected Watering Can");
+            w1.alpha = 1f;
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
         {
