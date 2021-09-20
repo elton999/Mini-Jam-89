@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Movement movement;
     Rigidbody2D rigidBody;
+    Animator animator;
     public static Player Instance;
 
     void Awake()
@@ -17,6 +18,20 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();    
+        animator = GetComponent<Animator>();
+    }
+
+    void Update() {
+        if(movement.direction.x > 0)
+            animator.Play("walk_right");
+        else if(movement.direction.x < 0)
+            animator.Play("walk_left");
+        else if(movement.direction.y > 0)
+            animator.Play("walk_up");
+        else if(movement.direction.y < 0)
+            animator.Play("walk_down");
+        else
+            animator.Play("idle");
     }
     void FixedUpdate()
     {
