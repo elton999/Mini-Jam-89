@@ -25,6 +25,8 @@ public class CycleSystem : MonoBehaviour
     [HideInInspector]
     public int pumpkinPoints;
     [HideInInspector]
+    public int totalPoints;
+    [HideInInspector]
     public int plantPoints;
 
     // Start is called before the first frame update
@@ -64,7 +66,9 @@ public class CycleSystem : MonoBehaviour
         plantPoints = (int)(pointsPerLevel * ratio * CHANGE_plantPercentage);
         pumpkinPoints = (int)(pointsPerLevel*(1-CHANGE_plantPercentage) - (int)((((pumpkin.inNeedOfWater) ? 1 : 0) + ((pumpkin.inNeedOfEvil) ? 1 : 0) / 2) * (1 - CHANGE_plantPercentage)*pointsPerLevel))
             + (int)(pointsPerLevel * (1- ratio) * CHANGE_plantPercentage);
-        
+        totalPoints += pumpkinPoints;
+
+
     }
 
     public void distributeGrowthPoints()

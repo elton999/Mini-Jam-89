@@ -74,11 +74,21 @@ public class LevelManager : MonoBehaviour
         
         yield return new WaitForSeconds(1);
         EndLevelMessage.SetActive(true);
-        messagingText.text = "The day has ended!\nAwarding the pumpkin: " + cycle.pumpkinPoints + "\nAwarding the plant: " + cycle.plantPoints + "\nOnto day " + currentDay * 5;        
+        messagingText.text = "The day has ended!\nAwarding the pumpkin: " + cycle.pumpkinPoints + "\nAwarding the plant: " + cycle.plantPoints + "\nTotal Points: " + cycle.totalPoints * 5;        
     }
 
+    public Text gameText;
+    public GameObject endGO;
+
     public void ProcessDayN()
-    {        
+    {
+        if (currentDay -1 == pumpkinTasks.Length) 
+        {
+            gameText.text = "Final points: " + cycle.totalPoints;
+            endGO.SetActive(true);
+            
+        }
+
         EndLevelMessage.SetActive(false);
         /*
         levelTimeMinutes = dayDurations[n-1];
