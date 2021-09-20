@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &777759436789178022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8928651170761554264}
+  - component: {fileID: 1736710067}
+  m_Layer: 0
+  m_Name: Pumpkin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8928651170761554264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777759436789178022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1773563388996738257}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1736710067
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777759436789178022}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &1642095123281417575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4833541036493524110}
+  m_Layer: 0
+  m_Name: Vines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4833541036493524110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642095123281417575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1773563388996738257}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1773563388996738262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1773563388996738257}
+  - component: {fileID: 1773563388996738256}
+  m_Layer: 0
+  m_Name: Pumpkin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1773563388996738257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773563388996738262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20, y: -20, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8928651170761554264}
+  - {fileID: 4833541036493524110}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1773563388996738256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773563388996738262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 328503906bcf26245ac6c2098f770de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pumpkinSprites:
+  - {fileID: 21300000, guid: 79a2681c0adfad3408b4148489f719c9, type: 3}
+  - {fileID: 21300000, guid: 80ccb6c4619aeec40a9e730f94331fac, type: 3}
+  - {fileID: 21300000, guid: 54a62d10055a4694a87c2ae47ed90602, type: 3}
+  - {fileID: 21300000, guid: a2abd2409ce7b5c4c9dd2ac3c8805e77, type: 3}
+  - {fileID: 21300000, guid: 96df638ebc97ce74e8f8dd3959b1cc94, type: 3}
+  - {fileID: 21300000, guid: d57cb51ab23d18e418af2a66365194ef, type: 3}
+  - {fileID: 21300000, guid: 1b1c395713b944941930a227deeca6e4, type: 3}
+  - {fileID: 21300000, guid: 9376b0f9cca53b549b5a52295c7923f4, type: 3}
+  - {fileID: 21300000, guid: 8c08d7a694d63a04c83b9e13c73b092d, type: 3}
+  - {fileID: 21300000, guid: 78b422d08c0b8de449c5cbab35ea8629, type: 3}
+  - {fileID: 21300000, guid: 75d0ab047ec8be846b1b62b2f38a0038, type: 3}
+  - {fileID: 21300000, guid: b86b770b8022c424c8045cad4417c75b, type: 3}
+  - {fileID: 21300000, guid: 5ff6d7b61788e9744bf707538533e8ce, type: 3}
+  - {fileID: 21300000, guid: 2cdc8933554e53b46b13934ecc787115, type: 3}
+  - {fileID: 21300000, guid: b3c26c5248eeccc409a9918af94822c7, type: 3}
+  - {fileID: 21300000, guid: c8cb19cfa0de7224babb1d15263dd712, type: 3}
+  - {fileID: 21300000, guid: 582c1ccfdbde503458fd67e1466d66cb, type: 3}
+  - {fileID: 21300000, guid: d7bdc2b8f76330f4cb3f4249be7b97cf, type: 3}
+  - {fileID: 21300000, guid: 92cc6c82003815c41895efbe87ad03e1, type: 3}
+  - {fileID: 21300000, guid: 96f383346767da64c8ce56b266477e92, type: 3}
+  - {fileID: 21300000, guid: e778d963cbb671242998bbebe9e96e9d, type: 3}
+  - {fileID: 21300000, guid: 2b411c86369ec9847a39a01c25db8b0a, type: 3}
+  - {fileID: 21300000, guid: 26c952774d7c26d46a19ca87b052a400, type: 3}
+  - {fileID: 21300000, guid: 344a1479205444649bdc7c409a09ad1d, type: 3}
+  - {fileID: 21300000, guid: dd77ceef627171c4981546bb050d5982, type: 3}
+  - {fileID: 21300000, guid: ede612cce1eb0584ea368612737590d8, type: 3}
+  - {fileID: 21300000, guid: aec5f771b50f3bf4dac30bb9f33cf14b, type: 3}
+  - {fileID: 21300000, guid: 55830c37d0b312c42bf94f452dab7bcf, type: 3}
+  - {fileID: 21300000, guid: 2f59c9b41df5a91418827baeafbb8197, type: 3}
+  - {fileID: 21300000, guid: e5a540a7ac6aee04c854e9fd79998fc5, type: 3}
+  - {fileID: 21300000, guid: 5eda8c76463bf2049829e5f497859cc7, type: 3}
+  - {fileID: 21300000, guid: dec346b9630082c4d8b2209fb784ab60, type: 3}
+  - {fileID: 21300000, guid: 25e300ad311709a4aa038fb2995ac9f1, type: 3}
+  - {fileID: 21300000, guid: ebf6dad1573d9cd44bbb5410a8b7c562, type: 3}
+  - {fileID: 21300000, guid: 581a00f572c3cbd408311ea135672a73, type: 3}
+  - {fileID: 21300000, guid: eeeeae34e64e87d47b0f36998aa529ea, type: 3}
+  - {fileID: 21300000, guid: 8467c66c003242e4bb2844dfa2386efc, type: 3}
+  - {fileID: 21300000, guid: 64c03573bbbeee249ac45c9412ccacc1, type: 3}
+  - {fileID: 21300000, guid: 60d45c2517657c9458840e6974e60c99, type: 3}
+  - {fileID: 21300000, guid: 446c1c1bc9611c3419161efcbbd8e00e, type: 3}
+  - {fileID: 21300000, guid: ad1a44b6e06707b4dbea034a7bc976b4, type: 3}
+  - {fileID: 21300000, guid: 018d60a75ee2aa849ba5d71fddee760b, type: 3}
+  - {fileID: 21300000, guid: ed739d016a4255845818038bcda61312, type: 3}
+  - {fileID: 21300000, guid: 358581c6901d06e40a79743bb38baf7f, type: 3}
+  - {fileID: 21300000, guid: 8cdada9d464122747b5dac067e2ad580, type: 3}
+  - {fileID: 21300000, guid: dd4f55d19fd45f64684f644126a8942d, type: 3}
+  - {fileID: 21300000, guid: c09293bd96eb844489e645d0c4d702fc, type: 3}
+  - {fileID: 21300000, guid: 884a443624f04944eb339379dac28713, type: 3}
+  - {fileID: 21300000, guid: 76fe693b104438c439f449c61a6e7bdd, type: 3}
+  - {fileID: 21300000, guid: 4f3d3c9d55a8f5d49b47432cf6479d30, type: 3}
+  - {fileID: 21300000, guid: 29e091c36b2c66e44a0d22250a5d2aa3, type: 3}
+  - {fileID: 21300000, guid: 9efe63535486bcf448f30ebd02133fb0, type: 3}
+  pumpkinStages:
+  - 0
+  - 0.5
+  - 1
+  pumpkinSizes:
+  - 1
+  - 4
+  - 6
+  plantStages:
+  - 0
+  - 0.25
+  - 0.5
+  - 0.75
+  - 1
+  plantSizes: 0000000001000000050000000700000008000000
+  vineCirclePower: 2.8
+  vinesLeft: {fileID: 7411584852169874039, guid: a5d43f3db3e899f429ee9a2bbdf26cf3,
+    type: 3}
+  vinesMiddle:
+  - {fileID: 881242950004401211, guid: 8846846be52e69149a22a2f240d82f48, type: 3}
+  - {fileID: 2402368060612785168, guid: c426fd8fe891db549b5438d57a89f07d, type: 3}
+  vinesRight: {fileID: 517243998782159277, guid: d814e4b6700ff484fa0d85cfef577b92,
+    type: 3}
+  DebugSize: 0

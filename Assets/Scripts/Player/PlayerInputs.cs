@@ -24,7 +24,7 @@ public class PlayerInputs : MonoBehaviour
 
     void attackInput(){
         Player.Instance.isAttacking = false;
-        if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(1)){
+        if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)){
             Player.Instance.isAttacking = true;
         }
     }
