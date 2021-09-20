@@ -336,7 +336,6 @@ GameObject:
   - component: {fileID: 6984802297144741960}
   - component: {fileID: 3782983747551055410}
   - component: {fileID: 3782983747551055409}
-  - component: {fileID: 5843317008483268269}
   - component: {fileID: 9180517912790925739}
   - component: {fileID: 853639418847455988}
   - component: {fileID: 1170859974}
@@ -455,18 +454,6 @@ MonoBehaviour:
   speed: 5
   hitForce: 150
   delayAfterHit: 1.5
---- !u!114 &5843317008483268269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3782983747551055414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec97cb3987af44544bc8ec9ec6585e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &9180517912790925739
 CircleCollider2D:
   m_ObjectHideFlags: 0

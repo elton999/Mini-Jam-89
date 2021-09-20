@@ -22,8 +22,14 @@ public class Player : MonoBehaviour
     }
 
     void Update() {
-        if(Vector3.Distance(movement.direction, new Vector3(0,0,movement.direction.z)) != 0)
-            animator.Play("walk");
+        if(movement.direction.x > 0)
+            animator.Play("walk_right");
+        else if(movement.direction.x < 0)
+            animator.Play("walk_left");
+        else if(movement.direction.y > 0)
+            animator.Play("walk_up");
+        else if(movement.direction.y < 0)
+            animator.Play("walk_down");
         else
             animator.Play("idle");
     }
