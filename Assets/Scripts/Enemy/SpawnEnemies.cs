@@ -11,7 +11,7 @@ public class SpawnEnemies : MonoBehaviour
     [SerializeField] Transform target;
 
     void Start() {
-        //currentEnemiesNumber = maxSpawn;    
+        currentEnemiesNumber = maxSpawn;    
     }
     void Update()
     {
