@@ -28,6 +28,9 @@ public class LevelManager : MonoBehaviour
     public UIAnimations uiAnim;
     public GameObject unimGO;
 
+    public SpawnEnemies sp;
+    public SpawnEnemies sp1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,6 +94,25 @@ public class LevelManager : MonoBehaviour
             
         }
 
+        if (currentDay > 1){
+            sp.StartAttack();
+        }
+        if (currentDay > 2)
+        {
+            sp.maxSpawn = 10;
+        }
+
+        if (currentDay > 3)
+        {
+            sp1.StartAttack();
+        }
+
+        if (currentDay > 4)
+        {
+            sp1.maxSpawn = 15;
+        }
+
+
         EndLevelMessage.SetActive(false);
         /*
         levelTimeMinutes = dayDurations[n-1];
@@ -128,6 +150,7 @@ public class LevelManager : MonoBehaviour
 
     public void SetPumpkin(int n)
     {
+        cycle.pumpkin.enemysInPumpkin = 0;
         if (pumpkinTasks[n].water)
         {
             cycle.pumpkin.ActivateWaterTask();

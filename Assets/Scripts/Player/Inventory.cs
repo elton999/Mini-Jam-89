@@ -15,6 +15,15 @@ public class Inventory : MonoBehaviour
 
     private Tool selectedTool;
 
+    public CanvasGroup w1;
+    public CanvasGroup w2;
+    public CanvasGroup w3;
+    public CanvasGroup w4;
+
+    public AudioClip[] SelectSounds;
+
+    public AudioSource AS;
+
     [HideInInspector]
     public bool holyPotionFlag = false;
 
@@ -33,10 +42,10 @@ public class Inventory : MonoBehaviour
 
     [Header("Bubble")]
     public GameObject actionBubble;
-    public Text bubbleText;
+    //public Text bubbleText;
 
     [Header("Image")]
-    public Image[] toolIcon;
+    public Sprite[] toolIcon;
     public Image currentImage;
     
 
@@ -60,6 +69,8 @@ public class Inventory : MonoBehaviour
         lvlManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
         plant = null;
         actionBubble.SetActive(false);
+
+        w1.alpha = 0.5f;
         
 
         waterTaskTime = waterCountdown;
@@ -75,7 +86,9 @@ public class Inventory : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
         {
             if (selectedTool == Tool.HolyBag)
-            {                
+            {
+                currentImage.sprite = toolIcon[3];
+                actionBubble.SetActive(true);
                 holyPotionFlag = true;
             }
             if (withinRangePumpkin)
@@ -84,8 +97,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (!actionBubble.activeSelf)
                     {
-                        bubbleText.text = "Watering pumpkin...";
-                        currentImage = toolIcon[0];
+                        //bubbleText.text = "Watering pumpkin...";
+                        currentImage.sprite = toolIcon[0];
                         actionBubble.SetActive(true);
                     }                    
                     waterCountdown -= Time.deltaTime;
@@ -99,7 +112,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (!actionBubble.activeSelf)
                     {
-                        bubbleText.text = "Applying evil potion...";
+                        currentImage.sprite = toolIcon[2];
+                        //bubbleText.text = "Applying evil potion...";
                         actionBubble.SetActive(true);
                     }
                     evilCountdown -= Time.deltaTime;
@@ -116,7 +130,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (!actionBubble.activeSelf)
                     {
-                        bubbleText.text = "Pruning plant...";
+                        //bubbleText.text = "Pruning plant...";
+                        currentImage.sprite = toolIcon[1];
                         actionBubble.SetActive(true);
                     }
                     plantCountdown -= Time.deltaTime;
@@ -166,21 +181,45 @@ public class Inventory : MonoBehaviour
         {
             selectedTool = Tool.WateringCan;
             Debug.Log("Selected Watering Can");
+            w1.alpha = 1f;
+            w2.alpha = 0.5f;
+            w3.alpha = 0.5f;
+            w4.alpha = 0.5f;
+
+            AS.PlayOneShot(SelectSounds[0]);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
         {
             selectedTool = Tool.Shears;
             Debug.Log("Selected Shears");
+            w1.alpha = 0.5f;
+            w2.alpha = 1f;
+            w3.alpha = 0.5f;
+            w4.alpha = 0.5f;
+
+            AS.PlayOneShot(SelectSounds[1]);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
         {
             selectedTool = Tool.EvilBag;
             Debug.Log("Selected Evil Potion");
+            w1.alpha = 0.5f;
+            w2.alpha = 0.5f;
+            w3.alpha = 1f;
+            w4.alpha = 0.5f;
+
+            AS.PlayOneShot(SelectSounds[2]);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
         {
             selectedTool = Tool.HolyBag;
             Debug.Log("Selected Holy Potion");
+            w1.alpha = 0.5f;
+            w2.alpha = 0.5f;
+            w3.alpha = 0.5f;
+            w4.alpha = 1f;
+
+            AS.PlayOneShot(SelectSounds[3]);
         }
     }   
 

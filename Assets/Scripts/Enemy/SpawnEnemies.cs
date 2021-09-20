@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpawnEnemies : MonoBehaviour
 {
     [Range(0,5)] [SerializeField] float rangeSpawn;
-    [SerializeField] int maxSpawn;
+    [SerializeField]public int maxSpawn;
     int currentEnemiesNumber = 0;
     [SerializeField] float delayBetweenSpawn;
     float currentTime = 0;
