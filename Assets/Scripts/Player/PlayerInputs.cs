@@ -9,15 +9,23 @@ public class PlayerInputs : MonoBehaviour
     void Update()
     {
         if(movement.getHit) return;
-        input();
+        moveInput();
+        attackInput();
     }
 
-    void input(){
+    void moveInput(){
         movement.direction = Vector3.zero;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
         movement.direction = new Vector3(horizontal, vertical, 0);
         movement.direction.Normalize();
+    }
+
+    void attackInput(){
+        Player.Instance.isAttacking = false;
+        if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(1)){
+            Player.Instance.isAttacking = true;
+        }
     }
 }

@@ -25,20 +25,25 @@ public class PumpkinAnimations : MonoBehaviour
             float lerp = GetStageProgress(progress, stageIndex1, stageIndex2, plantStages);
             size = Mathf.RoundToInt(Mathf.Lerp(plantSizes[stageIndex1], plantSizes[stageIndex2], lerp));
         }
+        CreateVineCircle(size);
     }
-    List<SpriteRenderer> vines;
+    [Range(0.5f, 3)] public float vineCirclePower = 2;
+    List<SpriteRenderer> vines = new List<SpriteRenderer>();
     void CreateVineCircle(int radius) {
+        DestroyVines();
         for (int i = 0; i < radius; i++) {
-            float circle = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(0.5f * i, 2));
-            int middleIndex = Random.Range(0, vinesMiddle.Count);
-            SpriteRenderer mid = Instantiate(vinesMiddle[middleIndex], transform).GetComponent<SpriteRenderer>();
-            mid.transform.localPosition = new Vector2(0.5f * i, 0);
-            vines.Add(mid);
+            float circle = Mathf.Sqrt(Mathf.Pow(radius, vineCirclePower) - Mathf.Pow(0.5f + i, vineCirclePower));
+            int rowRad = Mathf.RoundToInt(circle);
+
+            CreateVineRow(rowRad, 0.5f + i);
+            CreateVineRow(rowRad, -0.5f - i);
         }
     }
     void DestroyVines() {
-        for (int i = 0; i < vines.Count; i++)
-            Destroy(vines[i].gameObject);
+        for (int i = 0; i < vines.Count; i++) {
+            if (vines[i] != null)
+                Destroy(vines[i].gameObject);
+        }
         vines.Clear();
     }
     public GameObject vinesLeft;
@@ -49,21 +54,21 @@ public class PumpkinAnimations : MonoBehaviour
         for (int i = 0; i < radius-1; i++) {
             int middleIndex = Random.Range(0, vinesMiddle.Count);
             SpriteRenderer mid = Instantiate(vinesMiddle[middleIndex], transform).GetComponent<SpriteRenderer>();
-            mid.transform.localPosition = new Vector2(0.5f * i, yPos);
+            mid.transform.localPosition = new Vector2(0.5f + i, yPos);
             vines.Add(mid);
         }
         SpriteRenderer right = Instantiate(vinesLeft, transform).GetComponent<SpriteRenderer>();
-        right.transform.localPosition = new Vector2(0.5f * radius, yPos);
+        right.transform.localPosition = new Vector2(0.5f + radius-1, yPos);
         vines.Add(right);
         // Left side
         for (int i = 0; i < radius-1; i++) {
             int middleIndex = Random.Range(0, vinesMiddle.Count);
             SpriteRenderer mid = Instantiate(vinesMiddle[middleIndex], transform).GetComponent<SpriteRenderer>();
-            mid.transform.localPosition = new Vector2(-0.5f * i, yPos);
+            mid.transform.localPosition = new Vector2(-0.5f - i, yPos);
             vines.Add(mid);
         }
         SpriteRenderer left = Instantiate(vinesLeft, transform).GetComponent<SpriteRenderer>();
-        left.transform.localPosition = new Vector2(0.5f * radius, yPos);
+        left.transform.localPosition = new Vector2(-0.5f - (radius-1), yPos);
         vines.Add(left);
     }
 
@@ -71,7 +76,7 @@ public class PumpkinAnimations : MonoBehaviour
 
     int GetLowerIndex(float val, List<float> stages) {
         for (int i = 1; i < stages.Count; i++) {
-            if (val > stages[i])
+            if (val < stages[i])
                 return i-1;
         }
         return stages.Count-1;
@@ -80,16 +85,8 @@ public class PumpkinAnimations : MonoBehaviour
         return (val - stages[i1]) / (stages[i2] - stages[i1]);
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [Range(0, 1)] public float DebugSize = 0;
+    void Update() {
+        SetPlantStage(DebugSize);
     }
 }

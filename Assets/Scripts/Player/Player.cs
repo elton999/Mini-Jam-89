@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] Movement movement;
     Rigidbody2D rigidBody;
     Animator animator;
+    public bool isAttacking = false;
     public static Player Instance;
 
     void Awake()
@@ -22,6 +23,10 @@ public class Player : MonoBehaviour
     }
 
     void Update() {
+        Animation();
+    }
+
+    void Animation(){
         if(movement.direction.x > 0)
             animator.Play("walk_right");
         else if(movement.direction.x < 0)
