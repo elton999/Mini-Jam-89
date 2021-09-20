@@ -10,6 +10,9 @@ public class SpawnEnemies : MonoBehaviour
     float currentTime = 0;
     [SerializeField] Transform target;
 
+    void Start() {
+        currentEnemiesNumber = maxSpawn;    
+    }
     void Update()
     {
         if(maxSpawn <= currentEnemiesNumber)
@@ -29,5 +32,9 @@ public class SpawnEnemies : MonoBehaviour
             currentTime = 0.0f;
             currentEnemiesNumber++;
         }
+    }
+
+    public void StartAttack(){
+        currentEnemiesNumber = 0;
     }
 }
