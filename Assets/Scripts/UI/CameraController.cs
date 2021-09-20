@@ -83,9 +83,12 @@ public class CameraController : MonoBehaviour
     public float targetLerp = 0.9f;
     public float predictiveDistance = 2f;
     bool following = false;
+
+    public GameObject uiCanvas;
     public void StartFollow() {
         following = true;
         transform.position = target.position + offset;
+        uiCanvas.SetActive(true);
     }
     public void StopFollow() {
         following = false;
