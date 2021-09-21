@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777759436789178022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1773563388996738257}
@@ -214,18 +214,21 @@ MonoBehaviour:
   - 0
   - 0.5
   - 1
-  pumpkinSizes:
+  pumpkinScales:
+  - 0.5
   - 1
-  - 4
-  - 6
+  - 2
+  pumpkinStartPosY: 0.5
   plantStages:
   - 0
-  - 0.25
   - 0.5
-  - 0.75
   - 1
-  plantSizes: 0000000001000000050000000700000008000000
-  vineCirclePower: 2.8
+  plantSizes: 00000000050000000a000000
+  plantScales:
+  - 0.1
+  - 0.25
+  - 0.4
+  vineCirclePower: 0.6
   vinesLeft: {fileID: 7411584852169874039, guid: a5d43f3db3e899f429ee9a2bbdf26cf3,
     type: 3}
   vinesMiddle:
@@ -233,4 +236,5 @@ MonoBehaviour:
   - {fileID: 2402368060612785168, guid: c426fd8fe891db549b5438d57a89f07d, type: 3}
   vinesRight: {fileID: 517243998782159277, guid: d814e4b6700ff484fa0d85cfef577b92,
     type: 3}
+  vineCircleSquash: 0.8
   DebugSize: 0

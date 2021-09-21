@@ -40,6 +40,7 @@ public class CycleSystem : MonoBehaviour
         {
             plants.Add(go.GetComponent<Plant>());
         }
+        pa = transform.parent.GetComponent<PumpkinAnimations>();
     }
 
     // Update is called once per frame
@@ -85,5 +86,18 @@ public class CycleSystem : MonoBehaviour
             return 1;
         }
         return plantFactor = ((float)plG / CHANGE_plantsToBePruned);
+    }
+
+
+// todo: add max pumpkin points and max plant points
+
+    // Display pumpkin / plant size
+    // // Try to avoid calling these when the player can see the pumpkin
+    // // so between cycles, update pumpkin + plant growth
+    PumpkinAnimations pa;
+    void DisplayPoints() {
+        // pass float 0-1 as args
+        pa.SetPumpkinStage(pumpkinPoints / totalPoints);
+        pa.SetPlantStage(plantPoints / MaxPlantGrowth);
     }
 }
