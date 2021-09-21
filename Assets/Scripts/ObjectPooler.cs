@@ -11,6 +11,13 @@ public class ObjectPooler : MonoBehaviour
     }
     public Queue<GameObject> poolQueue;
     public List<Pool> pools;
+    Pool findPool(string tag) {
+        for (int i = 0; i < pools.Count; i++) {
+            if (pools[i].tag == tag)
+                return pools[i];
+        }
+        return null;
+    }
 
     public static ObjectPooler Instance;
 
@@ -24,7 +31,7 @@ public class ObjectPooler : MonoBehaviour
             Queue<GameObject> objectPool = new Queue<GameObject>();
 
             for(int i = 0; i < pool.size; i++){
-                GameObject obj = Instantiate(pool.prefab);
+                GameObject obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -32,12 +39,13 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    public GameObject SpwanFromPool(Vector3 position, Quaternion rotation){
+    public GameObject SpwanFromPool(Vector3 position, Quaternion rotation, Transform parent){
         GameObject objectToSpawn = poolQueue.Dequeue();
 
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.transform.parent = parent;
 
         poolQueue.Enqueue(objectToSpawn);
 
