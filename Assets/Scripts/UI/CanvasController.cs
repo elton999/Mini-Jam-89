@@ -10,11 +10,15 @@ public class CanvasController : MonoBehaviour
 {
     RectTransform rectTransform;
     CanvasScaler cs;
+    CameraController cc;
     void Start() {
         rectTransform = GetComponent<RectTransform>();
         cs = GetComponent<CanvasScaler>();
+        cc = Camera.main.GetComponent<CameraController>();
+        cc.cc = this;
 
         ResetToDefault();
+        escapeButton = exitButton;
     }
     public float DebugSizeSlider = 0;
     void Update() {
@@ -22,7 +26,11 @@ public class CanvasController : MonoBehaviour
 
         if (cursor != null && Settings.customCursor)
             UpdateCustomCursor();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            escapeButton.onClick.Invoke();
     }
+    Button escapeButton;
+    public Button exitButton;
 
 
     public Slider masterVolume;
@@ -165,6 +173,24 @@ public class CanvasController : MonoBehaviour
     public void Resume() {
         Time.timeScale = 1;
         paused = false;
+    }
+    public void SetEscButton(Button b) {
+        escapeButton = b;
+    }
+    public Transform effectParent;
+    public Transform textParent;
+    public void SkipCutscene() {
+        cc.StopCutscene(false);
+        cc.StartFollow();
+        StopUIanims(effectParent);
+        StopUIanims(textParent);
+    }
+    void StopUIanims(Transform parent) {
+        for (int i = 0; i < parent.childCount; i++) {
+            UIAnimations uiAnim = parent.GetChild(i).GetComponent<UIAnimations>();
+            if (uiAnim != null) uiAnim.StopAnimation(false);
+            parent.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
 }

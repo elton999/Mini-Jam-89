@@ -37,7 +37,7 @@ public class UIAnimations : AnimData
             timer = -1;
             if (!looping) {
                 remReps--;
-                if (remReps <= 0) StopAnimation();
+                if (remReps <= 0) StopAnimation(true);
             }
         }
         
@@ -49,11 +49,11 @@ public class UIAnimations : AnimData
         finished = false;
         remReps = repetitions;
     }
-    public void StopAnimation() {
+    public void StopAnimation(bool doStop) {
         started = false;
         finished = true;
         remReps = 0;
-        onStop.Invoke();
+        if (doStop) onStop.Invoke();
     }
     [HideInInspector] public bool finished = false;
     public Invoker onStop;

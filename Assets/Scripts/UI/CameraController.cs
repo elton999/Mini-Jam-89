@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
         float moveSpeed;
         public void MoveAlongPath(float deltaTime) {
             if (passedIndex >= path.Count-1) {
-                cc.StopCutscene();
+                cc.StopCutscene(true);
                 return;
             }
             Vector2 p1 = path[passedIndex];
@@ -66,9 +66,9 @@ public class CameraController : MonoBehaviour
         finishedCutscene = false;
         currentCutscene.Setup(this);
     }
-    public void StopCutscene() {
+    public void StopCutscene(bool doStop) {
         finishedCutscene = true;
-        if (currentCutscene != null)
+        if (currentCutscene != null && doStop)
             currentCutscene.Stop();
         currentCutscene = null;
     }
@@ -84,11 +84,12 @@ public class CameraController : MonoBehaviour
     public float predictiveDistance = 2f;
     public bool following = false;
 
-    public GameObject uiCanvas;
+    [HideInInspector] public CanvasController cc; // assigned by cc
+
     public void StartFollow() {
         following = true;
         transform.position = target.position + offset;
-        uiCanvas.SetActive(true);
+        //cc.gameObject.SetActive(true);
     }
     public void StopFollow() {
         following = false;
