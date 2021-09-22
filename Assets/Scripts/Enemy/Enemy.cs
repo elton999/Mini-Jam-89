@@ -10,6 +10,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] float minDistance;
     [SerializeField] float minDistanceFromPlayer;
     bool isRunAway = false;
+
+    public AudioSource enemyAS;
+    public AudioClip pumpkinSuck;
+    public AudioClip scareAway;
     void Start()
     {
         movement = GetComponent<Movement>();
@@ -58,11 +62,13 @@ public class Enemy : MonoBehaviour
         if(other.collider.CompareTag("Pumpkin") && !hitPumpkin){
             other.gameObject.GetComponent<Pumpkin>().enemysInPumpkin++;
             hitPumpkin = true;
+            enemyAS.PlayOneShot(pumpkinSuck);
         }
 
         if(other.collider.CompareTag("Player")){
             if(Player.Instance.isAttacking){
                 runAway(target.position);
+                enemyAS.PlayOneShot(scareAway);
             }
         } 
     }
