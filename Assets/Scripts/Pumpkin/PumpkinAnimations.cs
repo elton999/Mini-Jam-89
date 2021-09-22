@@ -151,8 +151,8 @@ public class PumpkinAnimations : MonoBehaviour
 
     [Range(0, 1)] public float DebugSize = 0;
     void Update() {
-        SetPlantStage(DebugSize);
-        SetPumpkinStage(DebugSize);
+        //SetPlantStage(DebugSize);
+        //SetPumpkinStage(DebugSize);
         //DestroyCircle(deb);
         //deb = CreateSpriteCircle(vinesLeft, 1, 1, 2, 0.5f, vinesParent);
     }

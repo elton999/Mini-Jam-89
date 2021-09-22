@@ -27,7 +27,7 @@ public class CanvasController : MonoBehaviour
         if (cursor != null && Settings.customCursor)
             UpdateCustomCursor();
         if (Input.GetKeyDown(KeyCode.Escape))
-            escapeButton.onClick.Invoke();
+            if (escapeButton != null) escapeButton.onClick.Invoke();
     }
     Button escapeButton;
     public Button exitButton;
@@ -104,20 +104,21 @@ public class CanvasController : MonoBehaviour
 
 
     public TMP_Text dayText;
+    public int daysPerCycle = 5;
     public void SetDay(int val) {
-        dayText.text = "Day " + val;
+        dayText.text = "Day " + (val * daysPerCycle);
     }
     
     public Slider sizeSlider;
     public Slider targetSizeSlider;
     public float maxSize = 2000;
     public float targetSize = 500;
-    
     public void SetSize(float val) {
         SetSizeText(val);
         SetSizeSlider(val);
     }
     public TMP_Text sizeText;
+    public TMP_Text targetSizeText;
     public string sizeUnits = "kg";
     public int sizeDecimals = 1;
     public int sizePercentDecimals = 0;
