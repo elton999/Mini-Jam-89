@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     public AudioSource enemyAS;
     public AudioClip pumpkinSuck;
-    public AudioClip scareAway;
+    public AudioClip[] scareAway;
     void Start()
     {
         movement = GetComponent<Movement>();
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         if(other.collider.CompareTag("Player")){
             if(Player.Instance.isAttacking){
                 runAway(target.position);
-                enemyAS.PlayOneShot(scareAway);
+                enemyAS.PlayOneShot(scareAway[Random.Range(0, scareAway.Length)]);
             }
         } 
     }
