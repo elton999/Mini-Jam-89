@@ -132,7 +132,7 @@ public class AudioAnimations : AnimData
 
 
 
-    bool started = false;
+    
     public void StartAudio() {
         started = true;
         finished = false;
@@ -157,6 +157,7 @@ public class AudioAnimations : AnimData
         StopVolumeControl();
         onStop.Invoke();
     }
+    [HideInInspector] public bool started = false;
     [HideInInspector] public bool finished = false;
     public Invoker onStop;
 

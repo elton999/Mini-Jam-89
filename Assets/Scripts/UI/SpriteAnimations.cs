@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class SpriteAnimations : AnimData
 {
 
@@ -12,9 +11,8 @@ public class SpriteAnimations : AnimData
     public bool looping = false;
     public bool startOnStart = false;
 
-    SpriteRenderer sr;
+    public SpriteRenderer sr;
     void Start() {
-        sr = GetComponent<SpriteRenderer>();
         CalculateAnimTime();
         if (startOnStart)
             StartAnimation();

@@ -78,8 +78,9 @@ public class PumpkinAnimations : MonoBehaviour
 
 
 
-    // Todo: generalize CreateSpriteCircle and CreateSpriteRow
+    // Todo:
     // // add watering animation - expand circle outwards, but decrease scale for absorb effect
+    // // add prune animation - cut a vine row
 
 
     SpriteRenderer CreateSprite(GameObject prefab, float x, float y, float localScale, Transform parent) {

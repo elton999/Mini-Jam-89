@@ -11,6 +11,8 @@ TagManager:
   - SFX
   - Gravestone
   - LevelManager
+  - Wet Grass Floor
+  - Stone Floor
   layers:
   - Default
   - TransparentFX
