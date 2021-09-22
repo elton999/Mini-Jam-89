@@ -71,22 +71,25 @@ public class WalkingAnimations : MonoBehaviour
 
 
     void Start() {
-        currentWalkSound = grassWalk;
+        currentWalksound = grass;
     }
 
     public Movement movement;
     Vector3 oldMoveDirection;
     void Update() {
-        if (currentWalkSound == null) return;
-        //Debug.Log(currentWalkSound + " " + currentWalkSound.volumeMultiplier);
-        if (movement.direction != oldMoveDirection) {
-            if (movement.direction == Vector3.zero)
-                currentWalkSound.DoFadeOut();
-            else
-                currentWalkSound.DoFadeIn();
-        }
-        oldMoveDirection = movement.direction;
-        
+        //if (currentWalkSound == null) return;
+        ////Debug.Log(currentWalkSound + " " + currentWalkSound.volumeMultiplier);
+        //if (movement.direction != oldMoveDirection)
+        //{
+        //    if (movement.direction == Vector3.zero)
+        //        currentWalkSound.DoFadeOut();
+        //    else
+        //        currentWalkSound.DoFadeIn();
+        //}
+        //oldMoveDirection = movement.direction;
+
+       
+
     }
 
 
@@ -94,32 +97,61 @@ public class WalkingAnimations : MonoBehaviour
     public AudioAnimations stoneWalk;
     public AudioAnimations wetGrassWalk;
     AudioAnimations currentWalkSound;
-    void ChangeWalkSound(AudioAnimations newWalkSound) {
-        if (currentWalkSound != null) currentWalkSound.StopAudio();
-        currentWalkSound = newWalkSound;
-        if (currentWalkSound != null) currentWalkSound.StartAudio();
-    }
-    void OnTriggerStay2D(Collider2D other) {
-        AudioAnimations newWalkSound = null;
-        if (other.gameObject.tag == "Wet Grass Floor")
-            newWalkSound = wetGrassWalk;
-        if (other.gameObject.tag == "Stone Floor")
-            newWalkSound = stoneWalk;
 
-        if (newWalkSound == null) return;
-        if (newWalkSound != currentWalkSound)
-            ChangeWalkSound(newWalkSound);
-    }
-    void OnTriggerExit2D(Collider2D other) {
-        AudioAnimations newWalkSound = null;
-        if (other.gameObject.tag == "Wet Grass Floor")
-            newWalkSound = grassWalk;
-        if (other.gameObject.tag == "Stone Floor")
-            newWalkSound = grassWalk;
 
-        if (newWalkSound == null) return;
-        if (newWalkSound != currentWalkSound)
-            ChangeWalkSound(newWalkSound);
+    public AudioClip[] currentWalksound;
+    public AudioClip[] stone;
+    public AudioClip[] grass;
+    public AudioSource Pas;
+
+    //void ChangeWalkSound(AudioAnimations newWalkSound) {
+    //    if (currentWalkSound != null) currentWalkSound.StopAudio();
+    //    currentWalkSound = newWalkSound;
+    //    if (currentWalkSound != null) currentWalkSound.StartAudio();
+    //}
+
+    void PlayWalkSound()
+    {
+        Pas.PlayOneShot(currentWalksound[Random.Range(0, currentWalksound.Length)]);
+    }
+    //void OnTriggerStay2D(Collider2D other) {
+    //    AudioAnimations newWalkSound = null;
+    //    if (other.gameObject.tag == "Wet Grass Floor")
+    //        newWalkSound = wetGrassWalk;
+    //    if (other.gameObject.tag == "Stone Floor")
+    //        newWalkSound = stoneWalk;
+
+    //    if (newWalkSound == null) return;
+    //    if (newWalkSound != currentWalkSound)
+    //        ChangeWalkSound(newWalkSound);
+    //}
+    //void OnTriggerExit2D(Collider2D other) {
+    //    AudioAnimations newWalkSound = null;
+    //    if (other.gameObject.tag == "Wet Grass Floor")
+    //        newWalkSound = grassWalk;
+    //    if (other.gameObject.tag == "Stone Floor")
+    //        newWalkSound = grassWalk;
+
+    //    if (newWalkSound == null) return;
+    //    if (newWalkSound != currentWalkSound)
+    //        ChangeWalkSound(newWalkSound);
+    //}
+
+    //private void OnTriggerStay2D(Collider2D other)
+    //{
+    //    currentWalksound = null;
+    //    if (other.gameObject.tag == "Wet Grass Floor")
+    //       currentWalksound = grass;
+    //   if (other.gameObject.tag == "Stone Floor")
+    //       currentWalksound = stone;
+    //}
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        currentWalksound = null;
+        if (other.gameObject.tag == "Wet Grass Floor")
+            currentWalksound = grass;
+        if (other.gameObject.tag == "Stone Floor")
+            currentWalksound = stone;
     }
 
 }

@@ -481,6 +481,108 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 5560068046480997400}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &655264105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2036866604766495240, guid: 0e01060428b321f47a9c2398b42c0c67,
+    type: 3}
+  m_PrefabInstance: {fileID: 2899118380177096050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &655264116
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655264105}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &852546107
 GameObject:
   m_ObjectHideFlags: 0
@@ -6676,6 +6778,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
         type: 3}
+      propertyPath: Pas
+      value: 
+      objectReference: {fileID: 655264116}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
       propertyPath: grassWalk
       value: 
       objectReference: {fileID: 4119195470569695617}
@@ -6689,6 +6796,66 @@ PrefabInstance:
       propertyPath: wetGrassWalk
       value: 
       objectReference: {fileID: 495662660112781847}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: grass.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: stone.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: grass.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 85430f2f8b1913444841ba62eef1e99c, type: 3}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: grass.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 54a04add6ff7e7c41ac30cbb6a28abbd, type: 3}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: grass.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ed84a6485a158e4ca1b3157627b638d, type: 3}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: stone.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e59c9a76ff828684f9ab4fa4c437e215, type: 3}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: stone.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a6c28837c4e00842ac7c058b963bb60, type: 3}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: stone.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: e5cc5986a1940134ab2daaf0d704432d, type: 3}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: currentWalksound.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: currentWalksound.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: currentWalksound.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883008979544132132, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: currentWalksound.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5248026590113750134, guid: 0e01060428b321f47a9c2398b42c0c67,
         type: 3}
       propertyPath: Camera
