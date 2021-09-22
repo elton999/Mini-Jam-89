@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rigidBody;
     Animator animator;
     public bool isAttacking = false;
+    public CameraController Camera;
     public static Player Instance;
 
     void Awake()

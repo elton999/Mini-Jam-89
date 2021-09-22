@@ -8,7 +8,7 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField] Movement movement;
     void Update()
     {
-        if(movement.getHit) return;
+        if(movement.getHit || !Player.Instance.Camera.following) return;
         moveInput();
         attackInput();
     }

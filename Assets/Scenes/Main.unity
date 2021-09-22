@@ -6165,6 +6165,11 @@ PrefabInstance:
       propertyPath: wetGrassWalk
       value: 
       objectReference: {fileID: 495662660112781847}
+    - target: {fileID: 5248026590113750134, guid: 0e01060428b321f47a9c2398b42c0c67,
+        type: 3}
+      propertyPath: Camera
+      value: 
+      objectReference: {fileID: 519420030}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e01060428b321f47a9c2398b42c0c67, type: 3}
 --- !u!224 &2902410283527791520

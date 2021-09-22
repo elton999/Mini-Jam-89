@@ -82,7 +82,7 @@ public class CameraController : MonoBehaviour
     Vector3 oldTargetPos;
     public float targetLerp = 0.9f;
     public float predictiveDistance = 2f;
-    bool following = false;
+    public bool following = false;
 
     public GameObject uiCanvas;
     public void StartFollow() {
