@@ -110,17 +110,20 @@ public class CanvasController : MonoBehaviour
         if (val == 0) val = 1;
         dayText.text = "Day " + (val * daysPerCycle);
     }
-    public UIAnimations fadeToWin;
-    public UIAnimations fadeToLose;
+    public UIAnimations winAnim;
+    public UIAnimations loseAnim;
+    public AudioAnimations endMusic;
     public void DoEnding() {
         if (sizeSlider.value >= targetSizeSlider.value) {
-            fadeToWin.gameObject.SetActive(true);
-            fadeToWin.StartAnimation();
+            winAnim.gameObject.SetActive(true);
+            winAnim.StartAnimation();
         }
         else {
-            fadeToLose.gameObject.SetActive(true);
-            fadeToLose.StartAnimation();
+            loseAnim.gameObject.SetActive(true);
+            loseAnim.StartAnimation();
         }
+        endMusic.StopAudio();
+        endMusic.StartAudio();
     }
     
     public Slider sizeSlider;
