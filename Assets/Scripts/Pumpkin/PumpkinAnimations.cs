@@ -10,6 +10,8 @@ public class PumpkinAnimations : MonoBehaviour
     void Start() {
         pumpkin = transform.Find("Pumpkin").GetComponent<SpriteRenderer>();
         vinesParent = transform.Find("Vines");
+        SetPumpkinStage(0);
+        SetPlantStage(0);
     }
 
     public List<Sprite> pumpkinSprites;
