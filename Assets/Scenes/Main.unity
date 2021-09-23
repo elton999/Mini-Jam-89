@@ -24350,15 +24350,24 @@ MonoBehaviour:
   sizeSlider: {fileID: 1623123222}
   targetSizeSlider: {fileID: 892008222}
   maxSize: 2000
-  targetSize: 500
+  targetSize: 1200
   sizeText: {fileID: 2018419533}
   targetSizeText: {fileID: 238803413}
   sizeUnits: kg
   sizeDecimals: 0
-  sizePercentDecimals: 1
-  sizeSliderColors: []
-  sizeSliderFills: []
-  sizeSliderBlending: 
+  sizePercentDecimals: 0
+  sizeSliderFills:
+  - {fileID: 880941216}
+  sizeSliderColors:
+  - {r: 0.32342464, g: 0.4107629, b: 0.6509434, a: 1}
+  - {r: 0.21223444, g: 0.6886792, b: 0.33701825, a: 1}
+  - {r: 0.87, g: 0.7174675, b: 0.34461036, a: 1}
+  - {r: 1, g: 0.5, b: 0, a: 1}
+  - {r: 1, g: 0.33333334, b: 0, a: 1}
+  sizeSliderBlending: 0101010101
+  targetSizeDecimals: 0
+  waterAlert: {fileID: 592039190}
+  combatAlert: {fileID: 114422740}
   paused: 0
   effectParent: {fileID: 7760617812239229141}
   textParent: {fileID: 7760617810673958014}
