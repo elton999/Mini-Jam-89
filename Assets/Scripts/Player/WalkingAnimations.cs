@@ -74,8 +74,8 @@ public class WalkingAnimations : MonoBehaviour
         currentWalksound = grass;
     }
 
-    public Movement movement;
-    Vector3 oldMoveDirection;
+    //public Movement movement;
+    //Vector3 oldMoveDirection;
     void Update() {
         //if (currentWalkSound == null) return;
         ////Debug.Log(currentWalkSound + " " + currentWalkSound.volumeMultiplier);
@@ -93,15 +93,16 @@ public class WalkingAnimations : MonoBehaviour
     }
 
 
-    public AudioAnimations grassWalk; // default
-    public AudioAnimations stoneWalk;
-    public AudioAnimations wetGrassWalk;
-    AudioAnimations currentWalkSound;
+    //public AudioAnimations grassWalk; // default
+    //public AudioAnimations stoneWalk;
+    //public AudioAnimations wetGrassWalk;
+    //AudioAnimations currentWalkSound;
 
 
     public AudioClip[] currentWalksound;
     public AudioClip[] stone;
     public AudioClip[] grass;
+    public AudioClip[] wetgrass;
     public AudioSource Pas;
 
     //void ChangeWalkSound(AudioAnimations newWalkSound) {
@@ -145,13 +146,38 @@ public class WalkingAnimations : MonoBehaviour
     //   if (other.gameObject.tag == "Stone Floor")
     //       currentWalksound = stone;
     //}
-    private void OnTriggerExit2D(Collider2D other)
+    //private void OnTriggerExit2D(Collider2D other)
+    //{
+        
+    //    if (other.gameObject.tag == "Stone Floor")
+    //    {
+    //        currentWalksound = null;
+    //        currentWalksound = grass;
+    //    }
+            
+
+    //}
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         currentWalksound = null;
-        if (other.gameObject.tag == "Wet Grass Floor")
-            currentWalksound = grass;
+
         if (other.gameObject.tag == "Stone Floor")
+        {
             currentWalksound = stone;
+        }
+            
+        if(other.gameObject.tag == "Grass")
+        {
+            currentWalksound = grass;
+        }
+        if(other.gameObject.tag == "Wet Grass Floor")
+        {
+            currentWalksound = wetgrass;
+        }
+       
+
     }
+
 
 }

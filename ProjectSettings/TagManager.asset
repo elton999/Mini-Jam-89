@@ -13,6 +13,7 @@ TagManager:
   - LevelManager
   - Wet Grass Floor
   - Stone Floor
+  - Grass
   layers:
   - Default
   - TransparentFX
