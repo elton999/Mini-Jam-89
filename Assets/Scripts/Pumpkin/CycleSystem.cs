@@ -99,5 +99,6 @@ public class CycleSystem : MonoBehaviour
         // pass float 0-1 as args
         pa.SetPumpkinStage(pumpkinPoints / totalPoints);
         pa.SetPlantStage(plantPoints / MaxPlantGrowth);
+        Camera.main.GetComponent<CameraController>().cc.SetSize(pumpkinPoints / totalPoints);
     }
 }

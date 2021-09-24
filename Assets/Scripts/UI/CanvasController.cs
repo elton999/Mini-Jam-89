@@ -19,15 +19,16 @@ public class CanvasController : MonoBehaviour
 
         ResetToDefault();
         escapeButton = exitButton;
+        SetTargetSlider(targetSize / maxSize);
     }
-    public float DebugSizeSlider = 0;
+    [Range(0, 1)] public float DebugSizeSlider = 0;
     void Update() {
-        //SetSize(DebugSizeSlider);
+        SetSize(DebugSizeSlider);
 
         if (cursor != null && Settings.customCursor)
             UpdateCustomCursor();
         if (Input.GetKeyDown(KeyCode.Escape))
-            escapeButton.onClick.Invoke();
+            if (escapeButton != null) escapeButton.onClick.Invoke();
     }
     Button escapeButton;
     public Button exitButton;
@@ -104,57 +105,95 @@ public class CanvasController : MonoBehaviour
 
 
     public TMP_Text dayText;
+    public int daysPerCycle = 5;
     public void SetDay(int val) {
-        dayText.text = "Day " + val;
+        if (val == 0) val = 1;
+        dayText.text = "Day " + (val * daysPerCycle);
+    }
+    public UIAnimations winAnim;
+    public UIAnimations loseAnim;
+    public AudioAnimations endMusic;
+    public void DoEnding() {
+        if (sizeSlider.value >= targetSizeSlider.value) {
+            winAnim.gameObject.SetActive(true);
+            winAnim.StartAnimation();
+        }
+        else {
+            loseAnim.gameObject.SetActive(true);
+            loseAnim.StartAnimation();
+        }
+        endMusic.StopAudio();
+        endMusic.StartAudio();
     }
     
     public Slider sizeSlider;
     public Slider targetSizeSlider;
     public float maxSize = 2000;
     public float targetSize = 500;
-    
     public void SetSize(float val) {
         SetSizeText(val);
         SetSizeSlider(val);
     }
     public TMP_Text sizeText;
+    public TMP_Text targetSizeText;
     public string sizeUnits = "kg";
     public int sizeDecimals = 1;
     public int sizePercentDecimals = 0;
     void SetSizeText(float val) {
-        float targetProgress = val / targetSize;
-        float size = RoundDecimals(val, sizeDecimals);
-        float percentage = RoundDecimals(100 * targetProgress, sizePercentDecimals);
-        sizeText.text = val + " " + sizeUnits + " (" + percentage + "%)";
+        float size = RoundDecimals(val * maxSize, sizeDecimals);
+        float percentage = RoundDecimals(100 * val / targetSizeSlider.value, sizePercentDecimals);
+        sizeText.text = size + " " + sizeUnits + " (" + percentage + "%)";
     }
-    public List<Color> sizeSliderColors; // evenly spaced + blending
     public List<Image> sizeSliderFills;
+    public List<Color> sizeSliderColors; // evenly spaced + blending
     public List<bool> sizeSliderBlending;
     void SetSizeSliderFillColors(Color c) {
         for (int i = 0; i < sizeSliderFills.Count; i++)
             sizeSliderFills[i].color = c;
     }
     void SetSizeSlider(float val) {
-        float sliderProgress = Mathf.Clamp(val / maxSize, 0, 1);
-        sizeSlider.value = sliderProgress;
+        sizeSlider.value = val;
         if (sizeSliderColors.Count == 0) return;
         if (sizeSliderColors.Count == 1) {
             SetSizeSliderFillColors(sizeSliderColors[0]);
             return;
         }
-        float colorIndex = sliderProgress * (sizeSliderColors.Count-1);
+        float colorIndex = val * (sizeSliderColors.Count-1);
         int colorIndex1 = Mathf.FloorToInt(colorIndex);
+        if (colorIndex1 >= sizeSliderColors.Count-1) {
+            SetSizeSliderFillColors(sizeSliderColors[sizeSliderColors.Count-1]);
+            return;
+        }
         Color c = sizeSliderColors[colorIndex1];
         int colorIndex2 = colorIndex1+1;
-        if (sizeSliderBlending[colorIndex1]) {
+        if (sizeSliderBlending[colorIndex1] && sizeSliderBlending[colorIndex2]) {
             float prog = (colorIndex - colorIndex1) / (colorIndex2 - colorIndex1);
             c = Color.Lerp(sizeSliderColors[colorIndex1], sizeSliderColors[colorIndex2], prog);
         }
         SetSizeSliderFillColors(c);
     }
+    public int targetSizeDecimals = 0;
+    void SetTargetSlider(float val) {
+        targetSizeSlider.value = val;
+        float size = RoundDecimals(val * maxSize, targetSizeDecimals);
+        targetSizeText.text = size + " " + sizeUnits;
+    }
     float RoundDecimals(float x, int d) {
         float mag = Mathf.Pow(10, d);
         return Mathf.Round(mag * x) / mag;
+    }
+    // Alert messages
+    public void StopAlerts() {
+        waterAlert.StopAnimation(false);
+        combatAlert.StopAnimation(false);
+    }
+    public UIAnimations waterAlert;
+    public void DoWaterAlert() {
+        waterAlert.StartAnimation();
+    }
+    public UIAnimations combatAlert;
+    public void DoCombatAlert() {
+        combatAlert.StartAnimation();
     }
 
 

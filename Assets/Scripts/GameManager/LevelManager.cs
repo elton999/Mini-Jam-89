@@ -95,7 +95,7 @@ public class LevelManager : MonoBehaviour
         }
 
         spm.AttemptAttack(currentDay, maxSpawnDay);
-
+        Camera.main.GetComponent<CameraController>().cc.SetDay(currentDay);
 
         EndLevelMessage.SetActive(false);
         /*

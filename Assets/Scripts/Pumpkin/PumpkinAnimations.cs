@@ -10,6 +10,8 @@ public class PumpkinAnimations : MonoBehaviour
     void Start() {
         pumpkin = transform.Find("Pumpkin").GetComponent<SpriteRenderer>();
         vinesParent = transform.Find("Vines");
+        SetPumpkinStage(0);
+        SetPlantStage(0);
     }
 
     public List<Sprite> pumpkinSprites;
@@ -151,8 +153,8 @@ public class PumpkinAnimations : MonoBehaviour
 
     [Range(0, 1)] public float DebugSize = 0;
     void Update() {
-        SetPlantStage(DebugSize);
-        SetPumpkinStage(DebugSize);
+        //SetPlantStage(DebugSize);
+        //SetPumpkinStage(DebugSize);
         //DestroyCircle(deb);
         //deb = CreateSpriteCircle(vinesLeft, 1, 1, 2, 0.5f, vinesParent);
     }
