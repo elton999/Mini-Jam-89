@@ -113,6 +113,8 @@ public class WalkingAnimations : MonoBehaviour
 
     void PlayWalkSound()
     {
+        if (currentWalksound == null || currentWalksound.Length == 0)
+            return;
         Pas.PlayOneShot(currentWalksound[Random.Range(0, currentWalksound.Length)]);
     }
     //void OnTriggerStay2D(Collider2D other) {
@@ -160,13 +162,10 @@ public class WalkingAnimations : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        currentWalksound = null;
-
         if (other.gameObject.tag == "Stone Floor")
         {
             currentWalksound = stone;
         }
-            
         if(other.gameObject.tag == "Grass")
         {
             currentWalksound = grass;
