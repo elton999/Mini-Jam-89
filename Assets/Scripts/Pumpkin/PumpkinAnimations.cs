@@ -5,9 +5,11 @@ using UnityEngine;
 public class PumpkinAnimations : MonoBehaviour
 {
 
+    [HideInInspector] public PumpkinMechanics mech;
     SpriteRenderer pumpkin;
     Transform vinesParent;
     void Start() {
+        mech = transform.Find("Pumpkin").GetComponent<PumpkinMechanics>();
         pumpkin = transform.Find("Pumpkin").GetComponent<SpriteRenderer>();
         vinesParent = transform.Find("Vines");
         SetPumpkinStage(0);
