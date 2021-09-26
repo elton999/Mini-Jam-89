@@ -33,6 +33,7 @@ public class TaskSpawner : MonoBehaviour
         bool needWater = false;
         bool needPrune = false;
         // Basic plant care
+        Vector2 pumpkinPos = pumpkin.transform.position;
         if (pumpkin.mech.NeedsWater()) {
             SpawnWateringTasks();
         }
@@ -41,13 +42,13 @@ public class TaskSpawner : MonoBehaviour
         }
         // Fertilize
         if (currentUnholyTasks.Count == 0 && daysSinceAttack >= spm.daysBetweenAttacks-1) {
+            // 1 day before combat
             SpawnUnholyTasks();
         }
         if (daysSinceAttack == 0) {
-            for (int i = 0; i < currentUnholyTasks.Count; i++) {
+            for (int i = 0; i < currentUnholyTasks.Count; i++)
                 Destroy(currentUnholyTasks[i]);
-                currentUnholyTasks.RemoveAt(i);
-            }
+            currentUnholyTasks.Clear();
         }
         // Repair
         if (enemyDamagePoints.Count > 0 && daysSinceAttack > 0) {
@@ -71,15 +72,29 @@ public class TaskSpawner : MonoBehaviour
             currentRepairTasks.Add(SpawnTaskAt(currentRepairPoints[i], repairTaskBubble));
         }
     }
-    void SpawnWateringTasks() {
-
+    public float waterRandomVineChance = 0.15f;
+    void SpawnWateringTasks(Vector2 pumpkinPos) {
+        if (!currentWateringTasks.Contains(pumpkinPos)) {
+            float offset = -0.5f; // tmp fix
+            SpawnTaskAt(pumpkinPos + offset * Vector2.right, waterTaskBubble);
+        }
+        if (Ranodm.value < waterRandomVineChance)
+            SpawnTaskAt(pumpkin.RandomMidVine().transform.position, waterTaskBubble);
     }
+    public int pruneCount = 5;
     void SpawnPruningTasks() {
-
+        for (int i = 0; i < pruneCount; i++) {
+            Vector2 vine = pumpkin.RandomOutVine(); // fix overlap
+            SpawnTaskAt(vine.transform.position, pruneTaskBubble);
+        }
     }
-    void SpawnUnholyTasks() {
-
+    void SpawnUnholyTasks(Vector2 pumpkinPos) {
+        if (!currentUnholyTasks.Contains(pumpkinPos)) {
+            float offset = 0.5f; // tmp fix
+            SpawnTaskAt(pumpkinPos + offset * Vector2.right, unholyTaskBubble);
+        }
     }
+// todo: prevent task overlap
 
     public List<GameObject> currentRepairTasks; // gets cleared by Player
     public List<GameObject> currentWateringTasks;
