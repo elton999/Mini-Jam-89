@@ -5,7 +5,7 @@ using UnityEngine;
 public class TaskSpawner : MonoBehaviour
 {
 
-    public GameObject waterTaskBubble; // water, on pumpkin AND vines, most days (when water is low)
+    public GameObject waterTaskBubble; // water, on inner vines, most days (when water is low)
     public GameObject pruneTaskBubble; // prune, on outer vines, all days except combat (when plant vines are too big, then size reduces next day)
     public GameObject unholyTaskBubble; // fertilize, on pumpkin, 1 day before combat
     public GameObject repairTaskBubble; // repair the damage dealt by the ghosts, on vines OR pumpkin, 1-2 days after combat. can also be solved by prune tool!
@@ -35,7 +35,7 @@ public class TaskSpawner : MonoBehaviour
         // Basic plant care
         Vector2 pumpkinPos = pumpkin.transform.position;
         if (pumpkin.mech.NeedsWater()) {
-            SpawnWateringTasks();
+            SpawnWateringTasks(pumpkinPos);
         }
         if (pumpkin.mech.NeedsPrune() && daysSinceAttack > 0) {
             SpawnPruningTasks();
@@ -43,7 +43,7 @@ public class TaskSpawner : MonoBehaviour
         // Fertilize
         if (currentUnholyTasks.Count == 0 && daysSinceAttack >= spm.daysBetweenAttacks-1) {
             // 1 day before combat
-            SpawnUnholyTasks();
+            SpawnUnholyTasks(pumpkinPos);
         }
         if (daysSinceAttack == 0) {
             for (int i = 0; i < currentUnholyTasks.Count; i++)
@@ -74,22 +74,22 @@ public class TaskSpawner : MonoBehaviour
     }
     public float waterRandomVineChance = 0.15f;
     void SpawnWateringTasks(Vector2 pumpkinPos) {
-        if (!currentWateringTasks.Contains(pumpkinPos)) {
+        if (!IsTaskAt(pumpkinPos, currentWateringTasks)) {
             float offset = -0.5f; // tmp fix
             SpawnTaskAt(pumpkinPos + offset * Vector2.right, waterTaskBubble);
         }
-        if (Ranodm.value < waterRandomVineChance)
-            SpawnTaskAt(pumpkin.RandomMidVine().transform.position, waterTaskBubble);
+        if (Random.value < waterRandomVineChance)
+            SpawnTaskAt(pumpkin.GetRandomVine(true, false).transform.position, waterTaskBubble);
     }
     public int pruneCount = 5;
     void SpawnPruningTasks() {
         for (int i = 0; i < pruneCount; i++) {
-            Vector2 vine = pumpkin.RandomOutVine(); // fix overlap
+            SpriteRenderer vine = pumpkin.GetRandomVine(false, true); // fix overlap
             SpawnTaskAt(vine.transform.position, pruneTaskBubble);
         }
     }
     void SpawnUnholyTasks(Vector2 pumpkinPos) {
-        if (!currentUnholyTasks.Contains(pumpkinPos)) {
+        if (!IsTaskAt(pumpkinPos, currentUnholyTasks)) {
             float offset = 0.5f; // tmp fix
             SpawnTaskAt(pumpkinPos + offset * Vector2.right, unholyTaskBubble);
         }
@@ -107,19 +107,14 @@ public class TaskSpawner : MonoBehaviour
         //task.transform.Find("Sprite").GetComponent<SpriteAnimations>().StartAnimation();
         return task;
     }
+    bool IsTaskAt(Vector2 position, List<GameObject> taskList) {
+        foreach (GameObject task in taskList) {
+            if (Vector2.Distance(task.transform.position, position) < 0.01f)
+                return true;
+        }
+        bool found = false;
+        return false;
+    }
     
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

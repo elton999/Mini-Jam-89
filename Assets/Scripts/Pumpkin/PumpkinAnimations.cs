@@ -151,6 +151,49 @@ public class PumpkinAnimations : MonoBehaviour
     }
 
 
+    public SpriteRenderer GetRandomVine(bool includeInner, bool includeOuter) {
+        if (!includeInner && !includeOuter) {
+            Debug.LogError("Must choose from either inner or outer vines.");
+            return null;
+        }
+        if (vines.Count == 0) {
+            Debug.LogError("No vines exist.");
+            return null;
+        }
+        // Choose a row
+        int rowIndex = -1;
+        // // Create a shuffled array of the row indices (yes list with element removal might be faster but screw you)
+        int[] rowChoices = new int[vines.Count];
+        for (int i = 0; i < vines.Count; i++)
+            rowChoices[i] = i;
+        for (int i = 0; i < vines.Count; i++) {
+            int swapIndex = Random.Range(0, vines.Count);
+            rowChoices[i] = swapIndex;
+            rowChoices[swapIndex] = i;
+        }
+        // // Choose a valid vine row
+        for (int i = 0; i < vines.Count; i++) {
+            bool validRow = true;
+            validRow &= (vines[rowChoices[i]].Count >= 2);
+            if (validRow) rowIndex = rowChoices[i];
+        }
+        if (rowIndex == -1) {
+            Debug.LogError("No valid vine rows exist.");
+            return null;
+        }
+        // Choose a vine
+        // // outer vines are last 2 indices
+        // // inner vines are from 0 to count-3
+        int startIndex = 0;
+        int endIndex = vines.Count; // for ints, this is 1 over the actual end index
+        if (!includeOuter)
+            endIndex = vines.Count-2;
+        if (!includeInner)
+            startIndex = vines.Count-2;
+        int vineIndex = Random.Range(startIndex, endIndex);
+        return vines[rowIndex][vineIndex];
+    }
+
 
 
     [Range(0, 1)] public float DebugSize = 0;
@@ -161,6 +204,9 @@ public class PumpkinAnimations : MonoBehaviour
         //deb = CreateSpriteCircle(vinesLeft, 1, 1, 2, 0.5f, vinesParent);
     }
     List<List<SpriteRenderer>> deb;
+
+
+
 
 
 }
