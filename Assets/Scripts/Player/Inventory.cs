@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+
+    //public PumpkinMechanics pumpkin;
+    // todo:
+    // // Call mech.IncreaseUnholyMultiplier(onPumpkin) when unholy potion tool is used
+    // // Delete tasks when the corresponding tool is used near them
+    // // Animate the tool usage - darker soil for watering can (when watering can is used drop water along player's path), opacity fade for pruned plants and pickup vine items to dispose of, particles / light with the potions
+
     private enum Tool
     {
         WateringCan,
@@ -93,7 +100,8 @@ public class Inventory : MonoBehaviour
             }
             if (withinRangePumpkin)
             {
-                if (selectedTool == Tool.WateringCan && pumpkin.inNeedOfWater)
+        // todo: you can use tools even without a task nearby
+                if (selectedTool == Tool.WateringCan/* && pumpkin.inNeedOfWater*/)
                 {
                     if (!actionBubble.activeSelf)
                     {

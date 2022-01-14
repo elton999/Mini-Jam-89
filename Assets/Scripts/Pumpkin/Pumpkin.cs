@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pumpkin : MonoBehaviour
-{   
+{
+
+// This code isnt used - it's been adapted into PumpkinMechanics and TaskSpawner
+
+/*
     public enum Tier
     {
         Small,
@@ -69,7 +73,7 @@ public class Pumpkin : MonoBehaviour
         currWaterTasks = waterTasks;
         currEvilTasks = evilTasks;
         tbtCountdown = timeBetweenTasks;
-        */
+        *//*
     }
 
     public void ActivateWaterTask()
@@ -126,7 +130,7 @@ public class Pumpkin : MonoBehaviour
                 }
             }
         } 
-        */
+        *//*
     }
 
     public void DecideTasks()
@@ -262,4 +266,5 @@ public class Pumpkin : MonoBehaviour
         Debug.Log("Increasing Pumpkin Growth points");
         levelGrowthPoints += amount;
     }
+    */
 }

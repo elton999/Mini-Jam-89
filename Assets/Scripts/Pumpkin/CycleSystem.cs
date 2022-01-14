@@ -4,101 +4,44 @@ using UnityEngine;
 
 public class CycleSystem : MonoBehaviour
 {
-    private List<Plant> plants;
-    [HideInInspector]
-    public Pumpkin pumpkin;
-    private string pumpkinTag = "Pumpkin";
-    private string plantTag = "Plant";
 
-    [HideInInspector]
-    public int CHANGE_plantsToBePruned = 0;
-    public float CHANGE_plantPercentage = 0.75f;
 
-    public int pointsPerLevel = 50;
 
-    public int growthPointsPerTaskDone = 50;
-    public int pointsPerPlantUnPruned = 40;
+    [Header("Level Details")]
+    [SerializeField] int currentDay = 1;
+    [SerializeField] SpawnEnemiesManager spm;
+    [SerializeField] PumpkinMechanics pumpkin;
+    [SerializeField] CanvasController ui;
+    [SerializeField] TaskSpawner tasks;
+    [SerializeField] int maxSpawnDay;
+    public void NextDay() { // To go to next day, player just enters the gravehouse
+        // If tasks are left incomplete, popup Are you sure?
+        // fade to black, lower / slow music
 
-    public static int MaxPlantGrowth = 1000;
-    public static float plantFactor = 0.6f;
+        // advance to next day
+        int daysSinceAttack = spm.GetDaysSinceAttack(currentDay); // gets reset in AttemptAttack(), but required for SpawnTasks()
+        float unholyMultiplier = pumpkin.unholyMultiplier; // gets reset in DoGrowth(), but required for AttemptAttack()
+        float oldPumpkinProgress = pumpkin.pumpkinSize; // gets changed in DoGrowth(), but required for UI slider anim
+        pumpkin.DoGrowth();
+        pumpkin.anim.UpdateVisualPumpkin(pumpkin.pumpkinSize, pumpkin.plantSize);
+        pumpkin.tasks.SpawnTasks(daysSinceAttack);
 
-    [HideInInspector]
-    public int pumpkinPoints;
-    [HideInInspector]
-    public int totalPoints;
-    [HideInInspector]
-    public int plantPoints;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        pumpkin = GameObject.FindGameObjectWithTag(pumpkinTag).GetComponent<Pumpkin>();
-        plants = new List<Plant>();
-        GameObject [] plantGOs = GameObject.FindGameObjectsWithTag(plantTag);
-        totalPoints = 0;
-        foreach(GameObject go in plantGOs)
-        {
-            plants.Add(go.GetComponent<Plant>());
-        }
-        pa = transform.parent.GetComponent<PumpkinAnimations>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void CalculateDistribution()
-    {
-        int totalPlantGrowthPoints = 0;
-        foreach(Plant p in plants)
-        {
-            if (p.inNeedOfPruning)
-            {
-                totalPlantGrowthPoints += 1;
-            }
-        }
+        // display task completion summary
+        //ui.SetSize(pumpkin.pumpkinProgress, oldPumpkinProgress);
+        // wait until player hits ok (or countdown?)
         
-        Debug.Log(totalPlantGrowthPoints);
-
-        float ratio = calculateRatio(totalPlantGrowthPoints);
-
-        Debug.Log(ratio);
-        plantPoints = (int)(pointsPerLevel * ratio * CHANGE_plantPercentage);
-        pumpkinPoints = (int)(pointsPerLevel*(1-CHANGE_plantPercentage) - (int)((((pumpkin.inNeedOfWater) ? 1 : 0) + ((pumpkin.inNeedOfEvil) ? 1 : 0) / 2) * (1 - CHANGE_plantPercentage)*pointsPerLevel))
-            + (int)(pointsPerLevel * (1- ratio) * CHANGE_plantPercentage) - pumpkin.enemysInPumpkin;
-        totalPoints += pumpkinPoints;
-
-
+        // start day
+        ui.SetDay(currentDay); // update UI
+        spm.AttemptAttack(currentDay, maxSpawnDay, unholyMultiplier);
+        // fade from black
+        // bell sfx
+        // resume music
+        // show UI alerts - UI alerts are whispers from the pumpkin
+    }
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Player")
+            NextDay();
+// todo: if the player still has remaining tasks, popup Are you sure?
     }
 
-    public void distributeGrowthPoints()
-    {
-        pumpkin.increaseGrowthPoints(pumpkinPoints);
-    }
-
-
-    public float calculateRatio(int plG)
-    {
-        if(CHANGE_plantsToBePruned == 0)
-        {
-            return 1;
-        }
-        return plantFactor = ((float)plG / CHANGE_plantsToBePruned);
-    }
-
-
-// todo: add max pumpkin points and max plant points
-
-    // Display pumpkin / plant size
-    // // Try to avoid calling these when the player can see the pumpkin
-    // // so between cycles, update pumpkin + plant growth
-    PumpkinAnimations pa;
-    void DisplayPoints() {
-        // pass float 0-1 as args
-        pa.SetPumpkinStage(pumpkinPoints / totalPoints);
-        pa.SetPlantStage(plantPoints / MaxPlantGrowth);
-        Camera.main.GetComponent<CameraController>().cc.SetSize(pumpkinPoints / totalPoints);
-    }
 }

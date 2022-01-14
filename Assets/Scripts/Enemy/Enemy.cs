@@ -1,10 +1,18 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
+    public TaskSpawner tasks; // gets assigned by SpawnEnemies, SpawnEnemiesManager
+    // todo:
+    // // when a vine is damaged, fill up TaskSpawner.enemyDamagePoints
+    // // (over the next days, repair tasks will be spawned on these locations)
+    // enemies just tint the vines to show dmg
+
+    // enemies can dmg vines within a range, and at a frequency.
+
     public Transform target;
     Movement movement;
     [SerializeField] float minDistance;
@@ -60,7 +68,7 @@ public class Enemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         if(other.collider.CompareTag("Pumpkin") && !hitPumpkin){
-            other.gameObject.GetComponent<Pumpkin>().enemysInPumpkin++;
+            //other.gameObject.GetComponent<Pumpkin>().enemysInPumpkin++;
             hitPumpkin = true;
             enemyAS.PlayOneShot(pumpkinSuck);
         }

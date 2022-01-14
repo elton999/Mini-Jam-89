@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Plant : MonoBehaviour
 {
+
+// This code isnt used - it's been adapted into PumpkinMechanics and TaskSpawner
+// // or maybe each vine should have this attached...
+/*
     [HideInInspector]
     public int levelGrowthPoints = 0;
     public int growthRatePerSecond = 50;
@@ -46,7 +50,7 @@ public class Plant : MonoBehaviour
                 }
             }
         }
-            */
+            *//*
         
     }
 
@@ -88,7 +92,8 @@ public class Plant : MonoBehaviour
             TaskCompleteBubble.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             TaskCompleteBubble.SetActive(false);
-            */
+            *//*
         }
     }
+    */
 }

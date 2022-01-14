@@ -196,6 +196,13 @@ public class PumpkinAnimations : MonoBehaviour
 
 
 
+    public void UpdateVisualPumpkin(float pumpkinProgress, float plantProgress) {
+        // pass float 0-1 as args
+        SetPumpkinStage(pumpkinProgress);
+        SetPlantStage(plantProgress);
+    }
+
+    // Used for testing the animations
     [Range(0, 1)] public float DebugSize = 0;
     void Update() {
         //SetPlantStage(DebugSize);
@@ -204,9 +211,4 @@ public class PumpkinAnimations : MonoBehaviour
         //deb = CreateSpriteCircle(vinesLeft, 1, 1, 2, 0.5f, vinesParent);
     }
     List<List<SpriteRenderer>> deb;
-
-
-
-
-
 }

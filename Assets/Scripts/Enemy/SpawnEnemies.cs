@@ -8,12 +8,13 @@ public class SpawnEnemies : MonoBehaviour
     int numToSpawn; // set by StartAttack (called by SpawnEnemiesManager)
     int currentEnemiesNumber = 0;
 
+    float difficultyMultiplier = 1;
     [SerializeField] float delayBetweenSpawn;
     [SerializeField] float variationBetweenSpawn;
     float currentTime = 0;
     float currentDelay = 0;
     void CalculateNewDelay() {
-        currentDelay = Random.Range(delayBetweenSpawn - variationBetweenSpawn, delayBetweenSpawn + variationBetweenSpawn);
+        currentDelay = Random.Range(delayBetweenSpawn - variationBetweenSpawn, delayBetweenSpawn + variationBetweenSpawn) / difficultyMultiplier;
     }
 
     void Start() {
@@ -21,7 +22,7 @@ public class SpawnEnemies : MonoBehaviour
     }
     void Update()
     {
-        if (currentEnemiesNumber < numToSpawn)
+        if (currentEnemiesNumber < numToSpawn * difficultyMultiplier)
             setEnemy();
     }
 
@@ -40,11 +41,14 @@ public class SpawnEnemies : MonoBehaviour
             transform
         );
         enemy.GetComponent<Enemy>().target = target;
+        enemy.GetComponent<Movement>().speed *= Random.Range(1, difficultyMultiplier);
+// extra: add more effects of difficultyMultiplier
         currentEnemiesNumber++;
     }
 
-    public void StartAttack(int numEnemies) {
+    public void StartAttack(int numEnemies, float unholyMultiplier) {
         numToSpawn = numEnemies;
+        difficultyMultiplier = Random.Range(1, unholyMultiplier);
         currentEnemiesNumber = 0;
         currentTime = 0;
         CalculateNewDelay();

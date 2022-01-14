@@ -4,7 +4,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [NonSerializedAttribute] public Vector3 direction;
-    [SerializeField] float speed = 1.0f;
+    public float speed = 1.0f; // these might be modified by unholyModifier in SpawnEnemies script
     [SerializeField] float hitForce = 2.5f;
     [SerializeField] float delayAfterHit = 3.0f;
     [NonSerializedAttribute] public bool getHit = false;

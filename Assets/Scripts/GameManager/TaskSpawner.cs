@@ -5,11 +5,96 @@ using UnityEngine;
 public class TaskSpawner : MonoBehaviour
 {
 
+    // This is a collection of similar tasks, not a single task bubble
+    public class Task {
+        GameObject prefab;
+        Transform parent; // parent of spawned tasks
+        Vector2 offset; // this lets tasks be shifted slightly to avoid overlap, not a perfect fix
+        public Task(GameObject pfab, Transform p, Vector2 o) {
+            prefab = pfab;
+            parent = p;
+            offset = o;
+        }
+
+        public void SpawnTaskAt(Vector2 position) {
+            GameObject task = Instantiate(prefab, parent);
+            if (IsTaskExactlyAt(position)) // this is another messy attempt to prevent task overlap
+                task.transform.position = position + offset + 0.2f * Random.insideUnitCircle.normalized;
+            else task.transform.position = position + offset;
+            //task.transform.Find("Sprite").GetComponent<SpriteAnimations>().StartAnimation();
+            numSpawnedTasks++;
+        }
+        public void DestroyTaskAt(Vector2 position) {
+            GameObject closest = GetClosestTask(position);
+            DestroyTask(closest);
+        }
+        public void DestroyTask(GameObject task) {
+            Destroy(task.gameObject);
+            currentTasks.Remove(task);
+        }
+        public void DestroyAll() {
+            foreach (GameObject task in currentTasks)
+                DestroyTask(task);
+        }
+        public void Reset() {
+            DestroyAll();
+            currentTasks.Clear();
+            numSpawnedTasks = 0;
+        }
+        public GameObject GetClosestTask(Vector2 position) {
+            int closestIndex = -1;
+            float minDist = float.MaxValue;
+            for (int i = 0; i < currentTasks.Count; i++) {
+                float dist = Vector2.Distance(currentTasks[i].transform.position, position + offset);
+                if (dist <= minDist) {
+                    minDist = dist;
+                    closestIndex = i;
+                }
+            }
+            return currentTasks[closestIndex];
+        }
+        public List<GameObject> GetTasksWithinDistance(Vector2 position, float distance) {
+            List<GameObject> inside = new List<GameObject>();
+            foreach (GameObject task in currentTasks) {
+                if (Vector2.Distance(task.transform.position, position + offset) <= distance)
+                    inside.Add(task);
+            }
+            return inside;
+        }
+        public bool IsTaskExactlyAt(Vector2 position) {
+            foreach (GameObject task in currentTasks) {
+                if (Vector2.Distance(task.transform.position, position + offset) < 0.01f)
+                    return true;
+            }
+            return false;
+        }
+        public int NumRemainingTasks() {
+            return currentTasks.Count;
+        }
+
+        List<GameObject> currentTasks;
+        int numSpawnedTasks = 0;
+        public float GetTaskCompletion() { // after currentTasks has been modified, compare remaining to original.
+            return 1 - currentTasks.Count / (float) numSpawnedTasks;
+        }
+    }
+
     public GameObject waterTaskBubble; // water, on inner vines, most days (when water is low)
     public GameObject pruneTaskBubble; // prune, on outer vines, all days except combat (when plant vines are too big, then size reduces next day)
     public GameObject unholyTaskBubble; // fertilize, on pumpkin, 1 day before combat
     public GameObject repairTaskBubble; // repair the damage dealt by the ghosts, on vines OR pumpkin, 1-2 days after combat. can also be solved by prune tool!
 
+    public Task wateringTasks;
+    public Task pruningTasks;
+    public Task unholyTasks;
+    public Task repairTasks;
+    void Start() {
+        wateringTasks = new Task(waterTaskBubble, transform, new Vector2(-0.3f, 0.3f));
+        pruningTasks = new Task(pruneTaskBubble, transform, new Vector2(0.3f, 0.3f));
+        unholyTasks = new Task(unholyTaskBubble, transform, new Vector2(-0.3f, -0.3f));
+        repairTasks = new Task(repairTaskBubble, transform, new Vector2(0.3f, -0.3f));
+    }
+    
     
 
     // // Pumpkin anims are only updated between days
@@ -25,32 +110,25 @@ public class TaskSpawner : MonoBehaviour
     // Damaged vines are included in the pumpkin growth limiter, but not included in the pumpkin growth enhancer
 
     // Note: call spm.AttemptAttack before spawning tasks
-    public PumpkinAnimations pumpkin;
-    public SpawnEnemiesManager spm;
+    [SerializeField] PumpkinAnimations pumpkin;
+    [SerializeField] SpawnEnemiesManager spm;
     public List<float> repairProportions; // 0.5f at index 0 means: spawn 50% of the repair tasks 1 day after combat
-    public void SpawnTasks(int currentDay) {
-        int daysSinceAttack = spm.GetDaysSinceAttack(currentDay);
-        bool needWater = false;
-        bool needPrune = false;
-        // Basic plant care
+    public void SpawnTasks(int daysSinceAttack) {
+        bool needWater = pumpkin.mech.NeedsWater();
+        bool needPrune = pumpkin.mech.NeedsPrune();
         Vector2 pumpkinPos = pumpkin.transform.position;
-        if (pumpkin.mech.NeedsWater()) {
+        if (needWater) {
             SpawnWateringTasks(pumpkinPos);
         }
-        if (pumpkin.mech.NeedsPrune() && daysSinceAttack > 0) {
+        if (needPrune && daysSinceAttack > 0) {
             SpawnPruningTasks();
         }
-        // Fertilize
-        if (currentUnholyTasks.Count == 0 && daysSinceAttack >= spm.daysBetweenAttacks-1) {
-            // 1 day before combat
-            SpawnUnholyTasks(pumpkinPos);
+        if (unholyTasks.NumRemainingTasks() == 0 && daysSinceAttack >= spm.daysBetweenAttacks-1) {
+            SpawnUnholyTasks(pumpkinPos); // 1 day before combat
         }
-        if (daysSinceAttack == 0) {
-            for (int i = 0; i < currentUnholyTasks.Count; i++)
-                Destroy(currentUnholyTasks[i]);
-            currentUnholyTasks.Clear();
+        if (daysSinceAttack == 0) { // delete unholy tasks if the window is missed
+            unholyTasks.Reset();
         }
-        // Repair
         if (enemyDamagePoints.Count > 0 && daysSinceAttack > 0) {
             float proportion = repairProportions[daysSinceAttack-1];
             SpawnRepairTasks(proportion);
@@ -69,52 +147,25 @@ public class TaskSpawner : MonoBehaviour
         }
         // Spawn the tasks
         for (int i = 0; i < currentRepairPoints.Count; i++) {
-            currentRepairTasks.Add(SpawnTaskAt(currentRepairPoints[i], repairTaskBubble));
+            repairTasks.SpawnTaskAt(currentRepairPoints[i]);
         }
     }
     public float waterRandomVineChance = 0.15f;
     void SpawnWateringTasks(Vector2 pumpkinPos) {
-        if (!IsTaskAt(pumpkinPos, currentWateringTasks)) {
-            float offset = -0.5f; // tmp fix
-            SpawnTaskAt(pumpkinPos + offset * Vector2.right, waterTaskBubble);
-        }
+        wateringTasks.SpawnTaskAt(pumpkinPos);
         if (Random.value < waterRandomVineChance)
-            SpawnTaskAt(pumpkin.GetRandomVine(true, false).transform.position, waterTaskBubble);
+            wateringTasks.SpawnTaskAt(pumpkin.GetRandomVine(true, false).transform.position);
     }
-    public int pruneCount = 5;
+    public int pruneCount = 5; // needs to be updated with specific regions or something
     void SpawnPruningTasks() {
         for (int i = 0; i < pruneCount; i++) {
             SpriteRenderer vine = pumpkin.GetRandomVine(false, true); // fix overlap
-            SpawnTaskAt(vine.transform.position, pruneTaskBubble);
+            pruningTasks.SpawnTaskAt(vine.transform.position);
         }
     }
     void SpawnUnholyTasks(Vector2 pumpkinPos) {
-        if (!IsTaskAt(pumpkinPos, currentUnholyTasks)) {
-            float offset = 0.5f; // tmp fix
-            SpawnTaskAt(pumpkinPos + offset * Vector2.right, unholyTaskBubble);
-        }
+        unholyTasks.SpawnTaskAt(pumpkinPos);
     }
-// todo: prevent task overlap
 
-    public List<GameObject> currentRepairTasks; // gets cleared by Player
-    public List<GameObject> currentWateringTasks;
-    public List<GameObject> currentPruningTasks;
-    public List<GameObject> currentUnholyTasks;
-    
-    GameObject SpawnTaskAt(Vector2 position, GameObject prefab) {
-        GameObject task = Instantiate(prefab, transform);
-        task.transform.position = position;
-        //task.transform.Find("Sprite").GetComponent<SpriteAnimations>().StartAnimation();
-        return task;
-    }
-    bool IsTaskAt(Vector2 position, List<GameObject> taskList) {
-        foreach (GameObject task in taskList) {
-            if (Vector2.Distance(task.transform.position, position) < 0.01f)
-                return true;
-        }
-        bool found = false;
-        return false;
-    }
-    
 
 }
